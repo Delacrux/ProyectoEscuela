@@ -8,5 +8,5 @@
  * @author Lenovo
  */
 public class Clase {
-    private string nombre; 
+    
 }
