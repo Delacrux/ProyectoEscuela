@@ -1,6 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
 
 package com.mycompany.proyectoescuela;
 
@@ -11,6 +8,6 @@ package com.mycompany.proyectoescuela;
 public class ProyectoEscuela {
 
     public static void main(String[] args) {
-        System.out.println("Hola Chicos");
+        System.out.println("ya ahora si? Cabros? ");
     }
 }
