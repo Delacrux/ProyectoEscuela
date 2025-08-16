@@ -8,6 +8,7 @@ package com.mycompany.proyectoescuela;
 public class ProyectoEscuela {
 
     public static void main(String[] args) {
-        System.out.println("ya ahora si? Cabros? ");
+        System.out.println("Probando github");
+        
     }
 }
