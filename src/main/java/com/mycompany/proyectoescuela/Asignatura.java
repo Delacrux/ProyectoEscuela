@@ -11,10 +11,11 @@ public class Asignatura {
     private HashMap<String, ArrayList<Nota>> notasAlumnos;
     
 // --------------- Constructor  --------------- Ni idea que es wn xd
-    public Asignatura(Profesor profesorJefe, ArrayList<RecursosDigitales> recursosDigitales, HashMap<String, ArrayList<Nota>> notasAlumnos) {
+    public Asignatura(Profesor profesorJefe, ArrayList<RecursosDigitales> recursosDigitales, HashMap<String, ArrayList<Nota>> notasAlumnos, String nombreAsignatura) {
         this.profesorJefe = profesorJefe;
         this.recursosDigitales = recursosDigitales;
         this.notasAlumnos = notasAlumnos;
+        this.nombreAsignatura = nombreAsignatura;
     }
     // --------------- Getter y Setter  --------------- 
     public String getNombreAsignatura() {
@@ -44,7 +45,7 @@ public class Asignatura {
     public HashMap<String, ArrayList<Nota>> getNotasAlumnos() {
         return notasAlumnos;
     }
-
+    
     public void setNotasAlumnos(HashMap<String, ArrayList<Nota>> notasAlumnos) {
         this.notasAlumnos = notasAlumnos;
     }
