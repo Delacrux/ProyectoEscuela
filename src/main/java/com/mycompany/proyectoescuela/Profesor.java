@@ -58,7 +58,13 @@ public class Profesor {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
+    public void agregarCurso(String curso){
+        listaCursosDeProfe.add(curso);
+    }
+    public void quitarCurso(String curso){
+        listaCursosDeProfe.remove(curso);
+        
+    }
     
     
 }
