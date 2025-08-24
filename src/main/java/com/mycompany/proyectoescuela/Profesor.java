@@ -1,9 +1,10 @@
 package com.mycompany.proyectoescuela;
-
+import java.util.ArrayList;
 public class Profesor {
     // --------------- Atributos ---------------
     private String rut;
     private String nombreApellido;
+    private ArrayList <String> listaCursosDeProfe;
     private String especialidad;
     private String correo;
     private String telefono;
@@ -12,6 +13,7 @@ public class Profesor {
     public Profesor(String rut, String nombreApellido, String especialidad, String correo, String telefono) {
         this.rut = rut;
         this.nombreApellido = nombreApellido;
+        this.listaCursosDeProfe = new ArrayList<String>();
         this.especialidad = especialidad;
         this.correo = correo;
         this.telefono = telefono;
