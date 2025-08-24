@@ -57,6 +57,19 @@ public class Alumno {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    // --------------- ¿Metodos? ---------------
+    // --------------- Metodos ---------------
+    public void mostrarDatosAlumno()
+    {
+        System.out.println("Rut del alumno: " + rut);
+        System.out.println("Nombre del alumno: " + nombreApellido);
+        System.out.println("Curso del alumno: " + curso);
+        System.out.println("Correo del  alumno : " + correo);
+        System.out.println("Telefono del alumno : " + telefono);
+        
+        
+    }
+    
+    
+    
     
 }
