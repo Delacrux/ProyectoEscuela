@@ -4,7 +4,7 @@ public class Profesor {
     // --------------- Atributos ---------------
     private String rut;
     private String nombreApellido;
-    private ArrayList <String> listaCursosDeProfe;
+    private ArrayList <Asignatura> listaAsignaturas;
     private String especialidad;
     private String correo;
     private String telefono;
@@ -13,7 +13,7 @@ public class Profesor {
     public Profesor(String rut, String nombreApellido, String especialidad, String correo, String telefono) {
         this.rut = rut;
         this.nombreApellido = nombreApellido;
-        this.listaCursosDeProfe = new ArrayList<String>();
+        this.listaAsignaturas = new ArrayList<Asignatura>();// incicializando nuevo arrayList
         this.especialidad = especialidad;
         this.correo = correo;
         this.telefono = telefono;
@@ -54,17 +54,31 @@ public class Profesor {
     public String getTelefono() {
         return telefono;
     }
-
-    public void setTelefono(String telefono) {
+    public void setTelefono(String telefono) 
+    {
         this.telefono = telefono;
+    
     }
-    public void agregarCurso(String curso){
-        listaCursosDeProfe.add(curso);
-    }
-    public void quitarCurso(String curso){
-        listaCursosDeProfe.remove(curso);
-        
+    // Metodos que se me ocurren para las Asignaturas
+    public ArrayList<Asignatura> getListaAsignaturas(){
+        return listaAsignaturas; 
     }
     
+    public void agregarAsignatura(Asignatura asignatura){
+        listaAsignaturas.add(asignatura);
+    }
+    public void quitarAsignatura(Asignatura asignatura)
+    {
+        listaAsignaturas.remove(asignatura);
+    }
+    
+    
+    public void informacionContactoProfesor(){
+        System.out.println("Profesor: " + nombreApellido);
+        System.out.println("Especialidad: " + especialidad);
+        System.out.println("Correo: " + correo);
+        System.out.println("Telefono:" + telefono);
+        
+    }
     
 }
