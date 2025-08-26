@@ -6,11 +6,16 @@ public class RecursosDigitales {
     private String url;
     private String detalles;
     
-    // --------------- Constructor  --------------
+    // --------------- Constructor  -------------- Sobrecarga
     public RecursosDigitales(String titulo, String url, String detalles) {
         this.tituloMaterial = titulo;
         this.url = url;
         this.detalles = detalles;
+    }
+    public RecursosDigitales(String titulo, String url) {
+        this.tituloMaterial = titulo;
+        this.url = url;
+        this.detalles = "Sin detalles";
     }
     // --------------- Getter y Setter  ---------------
     public String getTituloMaterial() {
@@ -33,16 +38,12 @@ public class RecursosDigitales {
         this.url = url;
     }
     
-    public void imprimirRecursoDigital() {
+    public void mostrarRecursoDigital() {
         System.out.println(" =============================== ");
         System.out.println(" Título: " + this.tituloMaterial);
         System.out.println("URL: " + this.url);
         System.out.println("Detalles: " + this.detalles);
         System.out.println(" =============================== ");
     }
-    
-    
-    
-    
     
 }
