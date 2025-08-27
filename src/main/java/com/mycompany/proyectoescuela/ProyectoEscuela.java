@@ -3,7 +3,7 @@ package com.mycompany.proyectoescuela;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Sistema {
+public class ProyectoEscuela {
     // ------------------------------------------------------------- Atributos  -------------------------------------------------------------
     private ArrayList<Profesor> listaProfesores;
     private ArrayList<Alumno> listaAlumnos;
@@ -11,7 +11,7 @@ public class Sistema {
     private Scanner scanner;
     
     // ------------------------------------------------------------- Constructor  -------------------------------------------------------------
-    public Sistema() {
+    public ProyectoEscuela() {
         this.listaProfesores = new ArrayList<>();
         this.listaAlumnos = new ArrayList<>();
         this.listaCursos = new ArrayList<>();
@@ -206,6 +206,11 @@ public class Sistema {
         listaCursos.add(curso1);
         listaCursos.add(curso2);
         listaCursos.add(curso3);
+        
+        Alumno alumnoTest = new Alumno("20.123.456-7", "Pedro Pérez", "1° Básico", "pedro.perez@pucv.cl", "+56 9 1111 2222");
+        listaAlumnos.add(alumnoTest);
+        a1.agregarNotaAlumno(alumnoTest, new Nota(6.5f, "Prueba 1"));
+        a1.agregarRecursoDigital(new RecursosDigitales("Video explicativo", "https://www.youtube.com/watch?v=SMWi7CLoZ2Q", "Repaso de contenidos"));
     }
     
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
@@ -363,7 +368,7 @@ public class Sistema {
     // ------------------------------------------------------------- MAIN  -------------------------------------------------------------
     // ------------------------------------------------------------- MAIN  -------------------------------------------------------------
     public static void main(String[] args) {
-       Sistema sistema = new Sistema();
+       ProyectoEscuela sistema = new ProyectoEscuela();
        sistema.llenarDatos();
        sistema.menuInicial();
        sistema.scanner.close();

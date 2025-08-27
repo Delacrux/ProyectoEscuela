@@ -83,6 +83,10 @@ public class Asignatura {
 
     public void mostrarRecursosDigitales(){
         int i;
+        if(recursosDigitales.isEmpty()){
+            System.out.println("No hay recursos Digitales!");
+            return;
+        }
         for(i=0;i<recursosDigitales.size();i++){
             System.out.println("Recurso n° "+ (i+1));
             recursosDigitales.get(i).mostrarRecursoDigital();
