@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Sistema {
-    // --------------- Atributos  ---------------
+    // ------------------------------------------------------------- Atributos  -------------------------------------------------------------
     private ArrayList<Profesor> listaProfesores;
     private ArrayList<Alumno> listaAlumnos;
     private ArrayList<Curso> listaCursos;
     private Scanner scanner;
     
-    // --------------- Constructor  ---------------
+    // ------------------------------------------------------------- Constructor  -------------------------------------------------------------
     public Sistema() {
         this.listaProfesores = new ArrayList<>();
         this.listaAlumnos = new ArrayList<>();
         this.listaCursos = new ArrayList<>();
         this.scanner = new Scanner(System.in);
     }
-    // --------------- Getter y Setter  ---------------
+    // ------------------------------------------------------------- Getter y Setter  -------------------------------------------------------------
     public ArrayList<Profesor> getListaProfesores() {
         return listaProfesores;
     }
@@ -41,7 +41,10 @@ public class Sistema {
     public void setListaCursos(ArrayList<Curso> listaCursos) {
         this.listaCursos = listaCursos;
     }
-    // --------------- Métodos  ---------------
+
+    // ------------------------------------------------------------- Métodos  -------------------------------------------------------------
+    
+     // ------------------------------  Búsqueda ------------------------------ 
     public Alumno buscarAlumnoSistema (String rut) {
         int i;
         for(i = 0 ; i < listaAlumnos.size() ; i++) {
@@ -72,7 +75,8 @@ public class Sistema {
         return null;
     }
     
-    public void mostrarCursosSistema() {
+    // ------------------------------  Mostrar ------------------------------ 
+    public void mostrarCursosMenu() {
         int i;
         for (i = 0 ; i < listaCursos.size() ; i++) {
             System.out.println((i+1) + ". " + listaCursos.get(i).getIdentificador());
@@ -88,6 +92,7 @@ public class Sistema {
         
     }
     
+    // ------------------------------  Métodos menú ------------------------------ 
     public Asignatura getAsignaturaPorMenu(ArrayList<Asignatura> lista, int opcion) {
         if( opcion >= lista.size() || opcion < 0){
             System.out.println("Indice fuera de rango: 0-"+lista.size());
@@ -103,7 +108,6 @@ public class Sistema {
         }
         return lista.get((opcion-1));
     }
-    
     
     public void gestionarAgregarNota(Asignatura materia) {
         System.out.println("Rut del alumno al que desea agregar la nota");
@@ -136,9 +140,9 @@ public class Sistema {
        materia.agregarRecursoDigital(recurso);
    }
     
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
+    // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
+    // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
+    // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
     
     public void menuAlumno (Alumno alumno) {
         Curso cursoAlumno = buscarCursoSistema(alumno.getCurso());
@@ -155,7 +159,7 @@ public class Sistema {
         menuAsignaturaAlumno(materia, alumno);
     }
     
-     // ------------------------------------------------------------- MENU  -------------------------------------------------------------
+     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
     
     public void menuAsignaturaAlumno(Asignatura materia, Alumno alumno) {
         int opcion;
@@ -191,9 +195,9 @@ public class Sistema {
         } while (opcion != 4);
     }
     
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
+    // ------------------------------------------------------------- MENU PROFESOR -------------------------------------------------------------
+    // ------------------------------------------------------------- MENU PROFESOR -------------------------------------------------------------
+    // ------------------------------------------------------------- MENU PROFESOR -------------------------------------------------------------
     
     public void menuProfesor(Profesor profesor) {
         ArrayList<Asignatura> listaAsignaturas = profesor.getListaAsignaturas();
@@ -208,7 +212,7 @@ public class Sistema {
         menuAsignaturaProfesor(materia);
     }
     
-     // ------------------------------------------------------------- MENU  -------------------------------------------------------------
+     // ------------------------------------------------------------- MENU PROFESOR -------------------------------------------------------------
     
     public void menuAsignaturaProfesor(Asignatura materia) {
         int opcion;
@@ -252,68 +256,16 @@ public class Sistema {
         }while(opcion != 6);
     }
     
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
     
     public void menuAdministrador() {
-        int opcion;
-        System.out.println("Sistema de Información (SIA)");
-        System.out.println("Seleccione un curso para ver más detalles.");
-        mostrarCursosSistema();
-        
-        opcion = scanner.nextInt();
-        scanner.nextLine();
-
-        Curso curso = getCursoPorMenu(listaCursos, opcion);
-        menuAdminCurso(curso);
+        System.out.println("Cargando...");
     }
+    // ------------------------------------------------------------- LOGIN -------------------------------------------------------------
+    // ------------------------------------------------------------- LOGIN -------------------------------------------------------------
+    // ------------------------------------------------------------- LOGIN -------------------------------------------------------------
     
-    public void menuAdminCurso(Curso curso) {
-        ArrayList<Asignatura> asignaturasCurso = curso.getListaAsignaturas();
-        
-        System.out.println("Seleccione una asignatura para ver más detalles");
-        mostrarAsignaturasMenu(asignaturasCurso);
-        int opcion = scanner.nextInt();
-        
-        Asignatura asignatura = getAsignaturaPorMenu(asignaturasCurso, opcion);
-        menuAdminAsignatura(asignatura);
-    }
-    
-    //Reutilizacion de menu profe? 
-    public void menuAdminAsignatura(Asignatura materia) {
-        int opcion;
-        do{
-            System.out.println("Asignatura: " + materia.getNombreAsignatura());
-            System.out.println();
-            System.out.println("Seleccione una opción");
-            System.out.println("1. ");
-            System.out.println("2. ");
-            System.out.println("3. ");
-            System.out.println("...");
-            System.out.println();
-        
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-            
-            switch(opcion) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                default:
-                    System.out.println("Opción no válida");
-            }
-        }while(opcion != 3);
-    }
-    
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU  -------------------------------------------------------------
     public void menuInicial () {
-        System.out.println("Bienvenido :p");
+        System.out.println("Bienvenido");
         System.out.println("Ingrese su rut. Ej: 123456789");
         String rut = scanner.nextLine();
         
