@@ -178,7 +178,7 @@ public class Sistema {
 
             switch(opcion) {
                 case 1:
-                    materia.mostrarNotasAlumnos(alumno.getRut());
+                    materia.mostrarNotasAlumnos();
                     break;
                 case 2:
                     materia.mostrarRecursosDigitales();
