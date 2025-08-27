@@ -9,11 +9,11 @@ public class Curso {
     private ArrayList<Asignatura> listaAsignaturas;
     private ArrayList<Alumno> listaAlumnos;
     // --------------- Constructor  ---------------
-    public Curso(Profesor profesorJefe, String identificador, ArrayList<Asignatura> listaAsignaturas, ArrayList<Alumno> listaAlumnos) {
+    public Curso(Profesor profesorJefe, String identificador) {
         this.profesorJefe = profesorJefe;
         this.identificador = identificador;
-        this.listaAsignaturas = listaAsignaturas;
-        this.listaAlumnos = listaAlumnos;
+        this.listaAsignaturas = new ArrayList<>();
+        this.listaAlumnos = new ArrayList<>();
     }
     // --------------- Getter y Setter  ---------------
     public Profesor getProfesorJefe() {
@@ -49,4 +49,99 @@ public class Curso {
     }
     
     
+    //Métodos
+    
+    public void agregarAsignatura(Asignatura materia){
+        
+        if(listaAsignaturas.contains(materia)){
+            System.out.println("Asignatura ya está en Curso");
+            return;
+        }
+        listaAsignaturas.add(materia);
+        
+    }
+    public void eliminarAsignatura(int i){
+        
+        if(i>=listaAsignaturas.size() || i<0){
+            System.out.println("Indice fuera de rango disponible: 0-"+(listaAsignaturas.size()));
+            return;
+        }
+        listaAsignaturas.remove(i);
+    }
+    public void eliminarAsignatura(Asignatura materia){
+        
+        if(!listaAsignaturas.contains(materia)){
+            System.out.println("Asignatura no existente");
+            return;
+        }
+        listaAsignaturas.remove(materia);
+    }
+   
+    public void mostrarAsignaturasCurso(){
+        int i;
+        System.out.println("Asignaturas en Curso:");
+        for(i = 0; i<listaAsignaturas.size(); i++){
+            System.out.println((i+1) + ") "+ listaAsignaturas.get(i).getNombreAsignatura());
+        }
+        
+    }
+    
+    public Asignatura getAsignaturaPorMenu(int i){
+        if(i>=listaAsignaturas.size() || i<0){
+            System.out.println("Indice fuera de rango: 0-"+listaAsignaturas.size());
+            return null;
+        }
+        return listaAsignaturas.get((i-1));
+    }
+    
+    public void agregarAlumno(Alumno estudiante){
+        
+        if(listaAlumnos.contains(estudiante)){
+            System.out.println("Estudiante ya se encuentra en el Curso");
+            return;
+        }
+        listaAlumnos.add(estudiante);
+        
+    }
+    public void eliminarAlumno(int i){
+        if(i>=listaAlumnos.size() || i<0){
+            System.out.println("Indice fuera de rango: 0-"+listaAlumnos.size());
+            return;
+        }
+        listaAlumnos.remove(i);
+    }
+    public void eliminarAlumno(Alumno estudiante){
+        if(!listaAlumnos.contains(estudiante)){
+            System.out.println("Estudiante no registrado en el Curso");
+            return;
+        }
+        listaAlumnos.remove(estudiante);
+    }
+    
+    public void mostrarAlumnosCurso(){
+        int i;
+        for(i = 0; i<listaAlumnos.size();i++){
+            System.out.println((i+1) + ") " + listaAlumnos.get(i).getNombreApellido());
+        }
+        
+        
+    }
+    
+    public Alumno getAlumnoPorMenu(int i){
+        if(i>=listaAlumnos.size() || i<0){
+            System.out.println("Indice fuera de rango: 0-"+listaAlumnos.size());
+            return null;
+        }
+        return listaAlumnos.get((i-1));
+    }
+    
+    public void mostrarCurso(){
+        
+        System.out.println("Curso: " + identificador);
+        System.out.println("Profesor Jefe: " + profesorJefe);
+        System.out.println("Cantidad de Asignaturas: " + listaAsignaturas.size());
+        System.out.println("Cantidad de Alumnos: " + listaAlumnos.size());
+        
+        
+    }
 }

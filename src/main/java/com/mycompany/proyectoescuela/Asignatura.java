@@ -18,7 +18,7 @@ public class Asignatura {
         this.nombreAsignatura = nombreAsignatura;
     }
 
-    // --------------- Métodos  ---------------
+    // --------------- getter y setter  ---------------
     
     public String getNombreAsignatura() {
         return nombreAsignatura;
@@ -34,8 +34,6 @@ public class Asignatura {
         this.profesorJefe = profesorJefe;
     }
     
-    //------Recursos Digitales------:
-    //Sobrecarga
     public ArrayList<RecursosDigitales> getRecursosDigitales() {
         return recursosDigitales;
     }
@@ -44,35 +42,13 @@ public class Asignatura {
         return recursosDigitales.get(i);
     }
     
-    //Sobrecarga: .
     public void setRecursosDigitales(ArrayList<RecursosDigitales> recursosDigitales) {
         this.recursosDigitales = recursosDigitales;
     }
-    public void setRecursosDigitales(RecursosDigitales recurso){
-        recursosDigitales.add(recurso);
-    }
     
-    public boolean eliminarRecursosDigitales(RecursosDigitales recurso){
-        if(recursosDigitales.contains(recurso)){
-            recursosDigitales.remove(recurso);
-            return true;
-        }
-        return false;
-    }
-    
-    /*public void mostrarRecursosDigitales(){
-        int i;
-        for(i=0;i<recursosDigitales.size();i++){
-            System.out.println("Recurso n° "+ (i+1));
-            recursosDigitales.get(i).mostrarRecursoDigital();  <----//Hay una funcion acá que no existe aún, y la marcará como error sin el comentario.
-        }
-    }*/
-
-    //------NotasAlumnos------
     public HashMap<String, ArrayList<Nota>> getNotasAlumnos() {
         return notasAlumnos;
     }
-    
     public Nota getNotasAlumnos(String nombre, int i){
         ArrayList<Nota> notas = notasAlumnos.get(nombre);
         if(notas == null || notas.isEmpty() || i >= notas.size()){
@@ -84,7 +60,31 @@ public class Asignatura {
     public void setNotasAlumnos(HashMap<String, ArrayList<Nota>> notasAlumnos) {
         this.notasAlumnos = notasAlumnos;
     }
+
     
+    //Métodos.
+    
+    public void agregarRecursoDigital(RecursosDigitales recurso){
+        recursosDigitales.add(recurso);
+    }
+    
+    public boolean eliminarRecursoDigital(RecursosDigitales recurso){
+        if(recursosDigitales.contains(recurso)){
+            recursosDigitales.remove(recurso);
+            return true;
+        }
+        return false;
+    }
+    
+    public void mostrarRecursosDigitales(){
+        int i;
+        for(i=0;i<recursosDigitales.size();i++){
+            System.out.println("Recurso n° "+ (i+1));
+            recursosDigitales.get(i).mostrarRecursoDigital();
+        }
+    }
+
+    //------NotasAlumnos------
     public void agregarNotaAlumno(String nombre, Nota evaluacion) {
         //Verificamos si hay una key con ese nombre
         if(!notasAlumnos.containsKey(nombre)){
@@ -93,8 +93,7 @@ public class Asignatura {
         }
         notasAlumnos.get(nombre).add(evaluacion);
     }
-    
-    public void quitarNotaAlumno(String nombre, Nota evaluacion) {
+    public void eliminarNotaAlumno(String nombre, Nota evaluacion) {
         ArrayList<Nota> notas = notasAlumnos.get(nombre);
         if (notas == null || !notas.contains(evaluacion)) {
             System.out.println("Alumno no existe");
