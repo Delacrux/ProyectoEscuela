@@ -164,7 +164,7 @@ public class Asignatura {
             i++;
         }
     }
-
+    
     public void mostrarAsignatura(){
         System.out.println("Asignatura");
         System.out.println("Nombre: "+nombreAsignatura+". Profesor Jefe: "+ profesorJefe.getNombreApellido());

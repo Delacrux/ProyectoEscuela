@@ -123,7 +123,7 @@ public class Sistema {
         String detalle = scanner.nextLine();
         
         Nota notaAlumno = new Nota(nota, detalle);
-        materia.agregarNotaAlumno(rutAlumno, notaAlumno);
+        materia.agregarNotaAlumno(buscarAlumnoSistema(rutAlumno), notaAlumno);
     }
     
    public void gestionarAgregarMaterial(Asignatura materia) {
@@ -139,6 +139,74 @@ public class Sistema {
        RecursosDigitales recurso = new RecursosDigitales(titulo, url, detalle);
        materia.agregarRecursoDigital(recurso);
    }
+   
+       //------------------------------Datos Iniciales ------------------------------
+    public void llenarDatos(){
+        //Profesores
+        Profesor prof1 = new Profesor("12.345.678-9", "María González", "Licenciatura en Matemáticas", "maria.gonzalez@pucv.cl", "+56 9 1234 5678");
+        Profesor prof2 = new Profesor("15.678.234-5", "Jorge Ramírez", "Educación Física", "jorge.ramirez@pucv.cl", "+56 9 2345 6789");
+        Profesor prof3 = new Profesor("18.456.789-0", "Camila Soto", "Lenguaje", "camila.soto@pucv.cl", "+56 9 3456 7890");
+        Profesor prof4 = new Profesor("13.987.654-3", "Luis Contreras", "Biología", "luis.contreras@pucv.cl", "+56 9 4567 8901");
+        Profesor prof5 = new Profesor("17.321.654-2", "Valentina Rojas", "Historia", "valentina.rojas@pucv.cl", "+56 9 5678 9012");
+
+        listaProfesores.add(prof1); listaProfesores.add(prof2); listaProfesores.add(prof3);  listaProfesores.add(prof4); listaProfesores.add(prof5);
+
+        //Asignaturas
+        // 1° Básico
+        Asignatura a1 = new Asignatura(prof1, "Matemáticas");
+        Asignatura a2 = new Asignatura(prof2 ,"Educación Física y Salud");
+        Asignatura a3 = new Asignatura(prof3, "Lenguaje y Comunicación");
+        Asignatura a4 = new Asignatura(prof4 ,"Ciencias Naturales");
+        Asignatura a5 = new Asignatura(prof5, "Historia y Geografía");
+
+        // 2° Básico
+        Asignatura a6 = new Asignatura(prof1, "Matemáticas");
+        Asignatura a7 = new Asignatura(prof2 ,"Educación Física y Salud");
+        Asignatura a8 = new Asignatura(prof3, "Lenguaje y Comunicación");
+        Asignatura a9 = new Asignatura(prof4 ,"Ciencias Naturales");
+        Asignatura a10 = new Asignatura(prof5, "Historia y Geografía");
+
+
+        // 3° Básico
+        Asignatura a11 = new Asignatura(prof1, "Matemáticas");
+        Asignatura a12 = new Asignatura(prof2 ,"Educación Física y Salud");
+        Asignatura a13 = new Asignatura(prof3, "Lenguaje y Comunicación");
+        Asignatura a14 = new Asignatura(prof4 ,"Ciencias Naturales");
+        Asignatura a15 = new Asignatura(prof5, "Historia y Geografía");
+
+        //Agregamos las asignaturas a profesores ;_;
+        prof1.agregarAsignatura(a1); prof1.agregarAsignatura(a6); prof1.agregarAsignatura(a11);
+        prof2.agregarAsignatura(a2); prof2.agregarAsignatura(a7); prof2.agregarAsignatura(a12);
+        prof3.agregarAsignatura(a3); prof3.agregarAsignatura(a8); prof3.agregarAsignatura(a13);
+        prof4.agregarAsignatura(a4); prof4.agregarAsignatura(a9); prof4.agregarAsignatura(a14);
+        prof5.agregarAsignatura(a5); prof5.agregarAsignatura(a10); prof5.agregarAsignatura(a15);
+
+        // -------------------- Cursos --------------------
+        Curso curso1 = new Curso(prof1 ,"1° Básico");
+        curso1.agregarAsignatura(a1);
+        curso1.agregarAsignatura(a2);
+        curso1.agregarAsignatura(a3);
+        curso1.agregarAsignatura(a4);
+        curso1.agregarAsignatura(a5);
+
+        Curso curso2 = new Curso(prof2, "2° Básico");
+        curso2.agregarAsignatura(a6);
+        curso2.agregarAsignatura(a7);
+        curso2.agregarAsignatura(a8);
+        curso2.agregarAsignatura(a9);
+        curso2.agregarAsignatura(a10);
+
+        Curso curso3 = new Curso(prof3 ,"3° Básico");
+        curso3.agregarAsignatura(a11);
+        curso3.agregarAsignatura(a12);
+        curso3.agregarAsignatura(a13);
+        curso3.agregarAsignatura(a14);
+        curso3.agregarAsignatura(a15);
+
+        listaCursos.add(curso1);
+        listaCursos.add(curso2);
+        listaCursos.add(curso3);
+    }
     
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
@@ -296,6 +364,7 @@ public class Sistema {
     // ------------------------------------------------------------- MAIN  -------------------------------------------------------------
     public static void main(String[] args) {
        Sistema sistema = new Sistema();
+       sistema.llenarDatos();
        sistema.menuInicial();
        sistema.scanner.close();
     }
