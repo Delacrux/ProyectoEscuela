@@ -12,9 +12,9 @@ public class Sistema {
     
     // --------------- Constructor  ---------------
     public Sistema() {
-        this.listaProfesores = new ArrayList<Profesor>();
-        this.listaAlumnos = new ArrayList<Alumno>();
-        this.listaCursos = new ArrayList<Curso>();
+        this.listaProfesores = new ArrayList<>();
+        this.listaAlumnos = new ArrayList<>();
+        this.listaCursos = new ArrayList<>();
         this.scanner = new Scanner(System.in);
     }
     // --------------- Getter y Setter  ---------------
@@ -79,12 +79,31 @@ public class Sistema {
         }
     }
     
-    public void mostrarAsignaturasMenu(ArrayList<Asignatura> asignaturas) {
+    public void mostrarAsignaturasMenu(ArrayList<Asignatura> lista){
         int i;
-        for (i = 0 ; i < asignaturas.size() ; i++) {
-            System.out.println((i + 1) + ". " + asignaturas.get(i).getNombreAsignatura());
+        System.out.println("Asignaturas en Curso:");
+        for(i = 0; i<lista.size(); i++){
+            System.out.println((i+1) + ") "+ lista.get(i).getNombreAsignatura());
         }
+        
     }
+    
+    public Asignatura getAsignaturaPorMenu(ArrayList<Asignatura> lista, int opcion) {
+        if( opcion >= lista.size() || opcion < 0){
+            System.out.println("Indice fuera de rango: 0-"+lista.size());
+            return null;
+        }
+        return lista.get((opcion-1));
+    }
+    
+    public Curso getCursoPorMenu(ArrayList<Curso> lista, int opcion) {
+        if( opcion >= lista.size() || opcion < 0){
+            System.out.println("Indice fuera de rango: 0-"+lista.size());
+            return null;
+        }
+        return lista.get((opcion-1));
+    }
+    
     
     public void gestionarAgregarNota(Asignatura materia) {
         System.out.println("Rut del alumno al que desea agregar la nota");
@@ -114,7 +133,7 @@ public class Sistema {
        String detalle = scanner.nextLine();
        
        RecursosDigitales recurso = new RecursosDigitales(titulo, url, detalle);
-       materia.setRecursosDigitales(recurso);
+       materia.agregarRecursoDigital(recurso);
    }
     
     // ------------------------------------------------------------- MENU  -------------------------------------------------------------
@@ -123,25 +142,16 @@ public class Sistema {
     
     public void menuAlumno (Alumno alumno) {
         Curso cursoAlumno = buscarCursoSistema(alumno.getCurso());
-        ArrayList<Asignatura> asignaturasCurso = cursoAlumno.getListaAsignaturas();
+        ArrayList<Asignatura> lista = cursoAlumno.getListaAsignaturas();
         
         System.out.println("Bienvenido(a): " + alumno.getNombreApellido());
         System.out.println("Curso: " + cursoAlumno.getIdentificador());
         System.out.println();
         System.out.println("Seleccione una asignatura para ver más detalles");
-        mostrarAsignaturasMenu(asignaturasCurso);
+        mostrarAsignaturasMenu(lista);
         
-        int numeroAsignatura = scanner.nextInt();
-        Asignatura materia = cursoAlumno.getAsignaturaPorMenu(numeroAsignatura);
-        /* ❌  Falta funcion Curso
-        mostrarAsignaturasCurso muetra el arrayList de asignaturas que tiene el curso, se muestran en el orden en 
-        se ingresaron las asignaturas y se selecciona la asignatura por la posición
-        Indice         0  1   2   3
-        Posicion     1  2   3   4
-        entonces ahora con getAsignaturaPorMenu, el parametro es solo el número de posicion de la asignatura que se quiere obtener,
-        entonces solo hay que retornar la asignatura[posicion -1] para poder acceder a la que se quiere xd
-        
-         O puede set también Asignatura materia = cursoAlumno.get(numeroAsignatura - 1); ??? */
+        int opcion = scanner.nextInt();
+        Asignatura materia = getAsignaturaPorMenu(lista,opcion);
         menuAsignaturaAlumno(materia, alumno);
     }
     
@@ -164,17 +174,14 @@ public class Sistema {
 
             switch(opcion) {
                 case 1:
-                    //✔ Ver notas del alumno en la asignatura 
                     materia.mostrarNotasAlumnos(alumno.getRut());
                     break;
                 case 2:
-                    // X Ver todo el material que hay en al asignatura
                     materia.mostrarRecursosDigitales();
-                    // Habilitar el método skdjk
                     break;
                 case 3:
-                    //Ver datos de contacto del profe encargado de la asignatura, como correo, telefono etc
-                    // ❌ Falta funcion informacionContactoProfesor();
+                    Profesor profesorAsignatura = materia.getProfesorJefe();
+                    profesorAsignatura.informacionContactoProfesor();
                     break;
                 case 4:
                     break;
@@ -189,17 +196,15 @@ public class Sistema {
     // ------------------------------------------------------------- MENU  -------------------------------------------------------------
     
     public void menuProfesor(Profesor profesor) {
-        ArrayList<Asignatura> listaAsignaturas = profesor.get______();
-        //❌ Falta funcion Getter de Profesor, obtiene el arraylist de asignaturas que imparte.
-        
+        ArrayList<Asignatura> listaAsignaturas = profesor.getListaAsignaturas();
+
         System.out.println("Bienvenido(a): " + profesor.getNombreApellido());
         System.out.println();
         System.out.println("Seleccione una asignatura para ver más detalles");
         mostrarAsignaturasMenu(listaAsignaturas);
         
-        int numeroAsignatura = scanner.nextInt();
-        Asignatura materia = listaAsignaturas.getAsignaturaPorMenu(numeroAsignatura);
-        /* La misma funcion que pido antes dskjsd*/
+        int opcion = scanner.nextInt();
+        Asignatura materia = getAsignaturaPorMenu(listaAsignaturas, opcion);
         menuAsignaturaProfesor(materia);
     }
     
@@ -228,20 +233,15 @@ public class Sistema {
                     // ❌ Falta agregar funcion Asignatura, poder ver la lista de todos los alumnos del ramo
                     break;
                 case 2:
-                    // ✔ Ver las notas de los alumnos en la asignatura
                     materia.mostrarNotasAlumnos();
                     break;
                 case 3:
-                    // ❌ Ver todo el material digital que hay en la asignatura 
                     materia.mostrarRecursosDigitales();
-                    // Habilitar el método skdjk
                     break;
                 case 4:
-                    //✔️ Agregar una nota a un alumno en la asignatura 
                     gestionarAgregarNota(materia);
                     break;
                 case 5:
-                    //✔ Agregar meterial digital 
                     gestionarAgregarMaterial(materia);
                     break;
                 case 6:
@@ -264,8 +264,9 @@ public class Sistema {
         
         opcion = scanner.nextInt();
         scanner.nextLine();
-        //Obtener el curso mediante Arraylist curso.get(opcion-1)
-        //menuAdminCurso(curso seleccionado)
+
+        Curso curso = getCursoPorMenu(listaCursos, opcion);
+        menuAdminCurso(curso);
     }
     
     public void menuAdminCurso(Curso curso) {
@@ -273,12 +274,13 @@ public class Sistema {
         
         System.out.println("Seleccione una asignatura para ver más detalles");
         mostrarAsignaturasMenu(asignaturasCurso);
-        int numeroAsignatura = scanner.nextInt();
+        int opcion = scanner.nextInt();
         
-        //Obtener la asignatura mediante ArrayList asignaturasCurso.get(opcion -1)
-        //menuAdminAsignatura(asignatura seleccionada)
+        Asignatura asignatura = getAsignaturaPorMenu(asignaturasCurso, opcion);
+        menuAdminAsignatura(asignatura);
     }
     
+    //Reutilizacion de menu profe? 
     public void menuAdminAsignatura(Asignatura materia) {
         int opcion;
         do{
@@ -343,5 +345,6 @@ public class Sistema {
     public static void main(String[] args) {
        Sistema sistema = new Sistema();
        sistema.menuInicial();
+       sistema.scanner.close();
     }
 }

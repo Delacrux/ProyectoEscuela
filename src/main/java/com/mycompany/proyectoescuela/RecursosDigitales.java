@@ -43,7 +43,6 @@ public class RecursosDigitales {
         System.out.println(" Título: " + this.tituloMaterial);
         System.out.println("URL: " + this.url);
         System.out.println("Detalles: " + this.detalles);
-        System.out.println(" =============================== ");
     }
     
 }

@@ -76,23 +76,6 @@ public class Curso {
         }
         listaAsignaturas.remove(materia);
     }
-   
-    public void mostrarAsignaturasCurso(){
-        int i;
-        System.out.println("Asignaturas en Curso:");
-        for(i = 0; i<listaAsignaturas.size(); i++){
-            System.out.println((i+1) + ") "+ listaAsignaturas.get(i).getNombreAsignatura());
-        }
-        
-    }
-    
-    public Asignatura getAsignaturaPorMenu(int i){
-        if(i>=listaAsignaturas.size() || i<0){
-            System.out.println("Indice fuera de rango: 0-"+listaAsignaturas.size());
-            return null;
-        }
-        return listaAsignaturas.get((i-1));
-    }
     
     public void agregarAlumno(Alumno estudiante){
         
