@@ -94,7 +94,7 @@ public class ProyectoEscuela {
     
     // ------------------------------  Métodos menú ------------------------------ 
     public Asignatura getAsignaturaPorMenu(ArrayList<Asignatura> lista, int opcion) {
-        if( opcion >= lista.size() || opcion < 0){
+        if( opcion > lista.size() || opcion < 0){
             System.out.println("Indice fuera de rango: 0-"+lista.size());
             return null;
         }
@@ -102,7 +102,7 @@ public class ProyectoEscuela {
     }
     
     public Curso getCursoPorMenu(ArrayList<Curso> lista, int opcion) {
-        if( opcion >= lista.size() || opcion < 0){
+        if( opcion > lista.size() || opcion < 0){
             System.out.println("Indice fuera de rango: 0-"+lista.size());
             return null;
         }
@@ -141,76 +141,72 @@ public class ProyectoEscuela {
    }
    
        //------------------------------Datos Iniciales ------------------------------
-    public void llenarDatos(){
-        //Profesores
+    public void llenarDatos() {
+    // ---------------------- 1. Crear y Conectar Profesores y Asignaturas ----------------------
+    // Se crean los objetos 'Profesor'
         Profesor prof1 = new Profesor("12.345.678-9", "María González", "Licenciatura en Matemáticas", "maria.gonzalez@pucv.cl", "+56 9 1234 5678");
         Profesor prof2 = new Profesor("15.678.234-5", "Jorge Ramírez", "Educación Física", "jorge.ramirez@pucv.cl", "+56 9 2345 6789");
         Profesor prof3 = new Profesor("18.456.789-0", "Camila Soto", "Lenguaje", "camila.soto@pucv.cl", "+56 9 3456 7890");
-        Profesor prof4 = new Profesor("13.987.654-3", "Luis Contreras", "Biología", "luis.contreras@pucv.cl", "+56 9 4567 8901");
-        Profesor prof5 = new Profesor("17.321.654-2", "Valentina Rojas", "Historia", "valentina.rojas@pucv.cl", "+56 9 5678 9012");
 
-        listaProfesores.add(prof1); listaProfesores.add(prof2); listaProfesores.add(prof3);  listaProfesores.add(prof4); listaProfesores.add(prof5);
+    // Se añaden los profesores a la lista maestra del Sistema
+        listaProfesores.add(prof1);
+        listaProfesores.add(prof2);
+        listaProfesores.add(prof3);
 
-        //Asignaturas
-        // 1° Básico
+    // Se crean las asignaturas. El profesor se asigna en el constructor.
         Asignatura a1 = new Asignatura(prof1, "Matemáticas");
-        Asignatura a2 = new Asignatura(prof2 ,"Educación Física y Salud");
+        Asignatura a2 = new Asignatura(prof2, "Educación Física y Salud");
         Asignatura a3 = new Asignatura(prof3, "Lenguaje y Comunicación");
-        Asignatura a4 = new Asignatura(prof4 ,"Ciencias Naturales");
-        Asignatura a5 = new Asignatura(prof5, "Historia y Geografía");
 
-        // 2° Básico
-        Asignatura a6 = new Asignatura(prof1, "Matemáticas");
-        Asignatura a7 = new Asignatura(prof2 ,"Educación Física y Salud");
-        Asignatura a8 = new Asignatura(prof3, "Lenguaje y Comunicación");
-        Asignatura a9 = new Asignatura(prof4 ,"Ciencias Naturales");
-        Asignatura a10 = new Asignatura(prof5, "Historia y Geografía");
+    // Se añaden las asignaturas a la lista de cada profesor
+        prof1.agregarAsignatura(a1);
+        prof2.agregarAsignatura(a2);
+        prof3.agregarAsignatura(a3);
 
+    // ---------------------- 2. Crear y Conectar el Curso y sus Asignaturas ----------------------
+    // Se crea el curso
+        Curso curso1 = new Curso(prof1, "1° Básico");
 
-        // 3° Básico
-        Asignatura a11 = new Asignatura(prof1, "Matemáticas");
-        Asignatura a12 = new Asignatura(prof2 ,"Educación Física y Salud");
-        Asignatura a13 = new Asignatura(prof3, "Lenguaje y Comunicación");
-        Asignatura a14 = new Asignatura(prof4 ,"Ciencias Naturales");
-        Asignatura a15 = new Asignatura(prof5, "Historia y Geografía");
-
-        //Agregamos las asignaturas a profesores ;_;
-        prof1.agregarAsignatura(a1); prof1.agregarAsignatura(a6); prof1.agregarAsignatura(a11);
-        prof2.agregarAsignatura(a2); prof2.agregarAsignatura(a7); prof2.agregarAsignatura(a12);
-        prof3.agregarAsignatura(a3); prof3.agregarAsignatura(a8); prof3.agregarAsignatura(a13);
-        prof4.agregarAsignatura(a4); prof4.agregarAsignatura(a9); prof4.agregarAsignatura(a14);
-        prof5.agregarAsignatura(a5); prof5.agregarAsignatura(a10); prof5.agregarAsignatura(a15);
-
-        // -------------------- Cursos --------------------
-        Curso curso1 = new Curso(prof1 ,"1° Básico");
+    // Se añaden las mismas instancias de asignaturas al curso
         curso1.agregarAsignatura(a1);
         curso1.agregarAsignatura(a2);
         curso1.agregarAsignatura(a3);
-        curso1.agregarAsignatura(a4);
-        curso1.agregarAsignatura(a5);
 
-        Curso curso2 = new Curso(prof2, "2° Básico");
-        curso2.agregarAsignatura(a6);
-        curso2.agregarAsignatura(a7);
-        curso2.agregarAsignatura(a8);
-        curso2.agregarAsignatura(a9);
-        curso2.agregarAsignatura(a10);
-
-        Curso curso3 = new Curso(prof3 ,"3° Básico");
-        curso3.agregarAsignatura(a11);
-        curso3.agregarAsignatura(a12);
-        curso3.agregarAsignatura(a13);
-        curso3.agregarAsignatura(a14);
-        curso3.agregarAsignatura(a15);
-
+    // Se añade el curso a la lista maestra del Sistema
         listaCursos.add(curso1);
-        listaCursos.add(curso2);
-        listaCursos.add(curso3);
-        
-        Alumno alumnoTest = new Alumno("20.123.456-7", "Pedro Pérez", "1° Básico", "pedro.perez@pucv.cl", "+56 9 1111 2222");
-        listaAlumnos.add(alumnoTest);
-        a1.agregarNotaAlumno(alumnoTest, new Nota(6.5f, "Prueba 1"));
-        a1.agregarRecursoDigital(new RecursosDigitales("Video explicativo", "https://www.youtube.com/watch?v=SMWi7CLoZ2Q", "Repaso de contenidos"));
+    
+    // ---------------------- 3. Crear y Conectar Alumnos al Curso y Asignaturas ----------------------
+    // Se crean los alumnos
+    // Asegúrate de que este constructor de Alumno (rut, curso, nombre, correo, telefono)
+    // coincide con la definición de tu clase Alumno.
+        Alumno alumno1 = new Alumno("20.123.456-7", "1° Básico", "Pedro Rojas", "pedro.rojas@mail.com", "+56 9 12345678");
+        Alumno alumno2 = new Alumno("21.234.567-8", "1° Básico", "Ana Perez", "ana.perez@mail.com", "+56 9 23456789");
+    
+    // Se añaden los alumnos a la lista maestra del Sistema
+        listaAlumnos.add(alumno1);
+        listaAlumnos.add(alumno2);
+
+    // Se matriculan los alumnos en el curso
+        curso1.agregarAlumno(alumno1);
+        curso1.agregarAlumno(alumno2);
+    
+    // Y lo más importante: se enlazan los alumnos a cada asignatura del curso
+    // Esto asegura que sus datos de notas se puedan guardar y mostrar
+        for(Asignatura asignatura : curso1.getListaAsignaturas()){
+            asignatura.agregarNotaAlumno(alumno1, null);
+            asignatura.agregarNotaAlumno(alumno2, null);
+        }
+
+    // ---------------------- 4. Agregar Datos de Prueba para Comprobar la Conexión ----------------------
+    // Agregar notas al alumno1 en Matemáticas
+        Nota nota1 = new Nota(6.5f, "Evaluación de la unidad 1");
+        Nota nota2 = new Nota(5.8f, "Prueba de la unidad 2");
+        a1.agregarNotaAlumno(alumno1, nota1);
+        a1.agregarNotaAlumno(alumno1, nota2);
+
+    // Agregar un recurso digital a la asignatura de Lenguaje
+        RecursosDigitales recurso1 = new RecursosDigitales("Guía de Comprensión Lectora", "https://ejemplo.com/guia", "Material de apoyo para la prueba.");
+        a3.agregarRecursoDigital(recurso1);
     }
     
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
