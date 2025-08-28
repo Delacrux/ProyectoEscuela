@@ -302,8 +302,7 @@ public class ProyectoEscuela {
             
             switch(opcion) {
                 case 1:
-                    //Ver la lista de los alumnos de la asignatura
-                    // ❌ Falta agregar funcion Asignatura, poder ver la lista de todos los alumnos del ramo
+                    materia.mostrarAlumnos();
                     break;
                 case 2:
                     materia.mostrarNotasAlumnos();
