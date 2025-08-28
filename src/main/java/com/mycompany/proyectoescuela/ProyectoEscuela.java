@@ -112,12 +112,12 @@ public class ProyectoEscuela {
     public void gestionarAgregarNota(Asignatura materia) {
         System.out.println("Rut del alumno al que desea agregar la nota");
         String rutAlumno = scanner.nextLine();
-        scanner.nextLine();
         /*Creo que primero se debería comprobar que el alumno esté en la asignatura 
         ??? Nueva funcion Asignatura? buscarAlumnoAsignatura(rutAlumno) */
         System.out.println("Ingresar la calificación.");
-        float nota = scanner.nextFloat();
-        scanner.nextLine();
+        String notaString = scanner.nextLine();
+        
+        float nota = Float.parseFloat(notaString);
         
         System.out.println("Ingresar el detalle de la nota");
         String detalle = scanner.nextLine();
