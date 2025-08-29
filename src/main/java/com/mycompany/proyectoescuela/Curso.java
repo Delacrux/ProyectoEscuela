@@ -48,7 +48,6 @@ public class Curso {
         this.listaAlumnos = listaAlumnos;
     }
     
-    
     //Métodos
     
     public void agregarAsignatura(Asignatura materia){

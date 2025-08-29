@@ -95,11 +95,14 @@ public class Asignatura {
 
     //------NotasAlumnos------
     public void agregarNotaAlumno(Alumno estudiante, Nota evaluacion) {
+        
+        if(estudiante==null){return;}
         //Verificamos si hay una key con ese nombre
         if(!notasAlumnos.containsKey(estudiante) || notasAlumnos.get(estudiante) == null){
             //No existe esta clave, así que la inicializamos
             notasAlumnos.put(estudiante, new ArrayList<>());
         }
+        
         if (evaluacion != null) {
             notasAlumnos.get(estudiante).add(evaluacion);
         }

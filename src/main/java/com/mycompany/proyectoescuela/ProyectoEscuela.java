@@ -112,8 +112,13 @@ public class ProyectoEscuela {
     public void gestionarAgregarNota(Asignatura materia) {
         System.out.println("Rut del alumno al que desea agregar la nota");
         String rutAlumno = scanner.nextLine();
-        /*Creo que primero se debería comprobar que el alumno esté en la asignatura 
-        ??? Nueva funcion Asignatura? buscarAlumnoAsignatura(rutAlumno) */
+        Alumno student = buscarAlumnoSistema(rutAlumno);
+        
+        if(student==null){
+            System.out.println("Alumno no encontrado");
+            return;
+        }
+        
         System.out.println("Ingresar la calificación.");
         String notaString = scanner.nextLine();
         
@@ -144,9 +149,9 @@ public class ProyectoEscuela {
     public void llenarDatos() {
     // ---------------------- 1. Crear y Conectar Profesores y Asignaturas ----------------------
     // Se crean los objetos 'Profesor'
-        Profesor prof1 = new Profesor("12.345.678-9", "María González", "Licenciatura en Matemáticas", "maria.gonzalez@pucv.cl", "+56 9 1234 5678");
-        Profesor prof2 = new Profesor("15.678.234-5", "Jorge Ramírez", "Educación Física", "jorge.ramirez@pucv.cl", "+56 9 2345 6789");
-        Profesor prof3 = new Profesor("18.456.789-0", "Camila Soto", "Lenguaje", "camila.soto@pucv.cl", "+56 9 3456 7890");
+        Profesor prof1 = new Profesor("123456789", "María González", "Licenciatura en Matemáticas", "maria.gonzalez@pucv.cl", "+56 9 1234 5678");
+        Profesor prof2 = new Profesor("156782345", "Jorge Ramírez", "Educación Física", "jorge.ramirez@pucv.cl", "+56 9 2345 6789");
+        Profesor prof3 = new Profesor("184567890", "Camila Soto", "Lenguaje", "camila.soto@pucv.cl", "+56 9 3456 7890");
 
     // Se añaden los profesores a la lista maestra del Sistema
         listaProfesores.add(prof1);
@@ -179,8 +184,8 @@ public class ProyectoEscuela {
     // Se crean los alumnos
     // Asegúrate de que este constructor de Alumno (rut, curso, nombre, correo, telefono)
     // coincide con la definición de tu clase Alumno.
-        Alumno alumno1 = new Alumno("20.123.456-7", "1° Básico", "Pedro Rojas", "pedro.rojas@mail.com", "+56 9 12345678");
-        Alumno alumno2 = new Alumno("21.234.567-8", "1° Básico", "Ana Perez", "ana.perez@mail.com", "+56 9 23456789");
+        Alumno alumno1 = new Alumno("201234567", "1° Básico", "Pedro Rojas", "pedro.rojas@mail.com", "+56 9 12345678");
+        Alumno alumno2 = new Alumno("212345678", "1° Básico", "Ana Perez", "ana.perez@mail.com", "+56 9 23456789");
     
     // Se añaden los alumnos a la lista maestra del Sistema
         listaAlumnos.add(alumno1);
