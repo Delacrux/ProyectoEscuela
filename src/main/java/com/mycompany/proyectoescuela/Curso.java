@@ -1,18 +1,20 @@
 package com.mycompany.proyectoescuela;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Curso {
     // --------------- Atributos  ---------------
     private Profesor profesorJefe;
     private String identificador;
-    private ArrayList<Asignatura> listaAsignaturas;
+    private HashMap< String , ArrayList<RecursoDigital >> recursosPorAsignatura;
     private ArrayList<Alumno> listaAlumnos;
+    
     // --------------- Constructor  ---------------
     public Curso(Profesor profesorJefe, String identificador) {
         this.profesorJefe = profesorJefe;
         this.identificador = identificador;
-        this.listaAsignaturas = new ArrayList<>();
+        this.recursosPorAsignatura = new HashMap <>();
         this.listaAlumnos = new ArrayList<>();
     }
     // --------------- Getter y Setter  ---------------
@@ -31,13 +33,9 @@ public class Curso {
     public void setIdentificador(String identificador) {
         this.identificador = identificador;
     }
-
-    public ArrayList<Asignatura> getListaAsignaturas() {
-        return listaAsignaturas;
-    }
-
-    public void setListaAsignaturas(ArrayList<Asignatura> listaAsignaturas) {
-        this.listaAsignaturas = listaAsignaturas;
+    
+    public HashMap< String , ArrayList<RecursoDigital>> getRecursosPorAsignatura () {
+        return this.recursosPorAsignatura;
     }
 
     public ArrayList<Alumno> getListaAlumnos() {
@@ -48,8 +46,7 @@ public class Curso {
         this.listaAlumnos = listaAlumnos;
     }
     
-    //Métodos
-    
+/*
     public void agregarAsignatura(Asignatura materia){
         
         if(listaAsignaturas.contains(materia)){
@@ -75,16 +72,15 @@ public class Curso {
         }
         listaAsignaturas.remove(materia);
     }
-    
+    */
     public void agregarAlumno(Alumno estudiante){
-        
         if(listaAlumnos.contains(estudiante)){
             System.out.println("Estudiante ya se encuentra en el Curso");
             return;
         }
         listaAlumnos.add(estudiante);
-        
     }
+    
     public void eliminarAlumno(int i){
         if(i>=listaAlumnos.size() || i<0){
             System.out.println("Indice fuera de rango: 0-"+listaAlumnos.size());
@@ -92,6 +88,7 @@ public class Curso {
         }
         listaAlumnos.remove(i);
     }
+    
     public void eliminarAlumno(Alumno estudiante){
         if(!listaAlumnos.contains(estudiante)){
             System.out.println("Estudiante no registrado en el Curso");
@@ -105,8 +102,6 @@ public class Curso {
         for(i = 0; i<listaAlumnos.size();i++){
             System.out.println((i+1) + ") " + listaAlumnos.get(i).getNombreApellido());
         }
-        
-        
     }
     
     public Alumno getAlumnoPorMenu(int i){
@@ -118,12 +113,9 @@ public class Curso {
     }
     
     public void mostrarCurso(){
-        
         System.out.println("Curso: " + identificador);
         System.out.println("Profesor Jefe: " + profesorJefe);
-        System.out.println("Cantidad de Asignaturas: " + listaAsignaturas.size());
+        System.out.println("Cantidad de Asignaturas: " + recursosPorAsignatura.size());
         System.out.println("Cantidad de Alumnos: " + listaAlumnos.size());
-        
-        
     }
 }

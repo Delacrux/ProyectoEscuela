@@ -1,18 +1,18 @@
 package com.mycompany.proyectoescuela;
 
-public class RecursosDigitales {
+public class RecursoDigital {
     // --------------- Atributos  ---------------
     private String tituloMaterial;
     private String url;
     private String detalles;
     
     // --------------- Constructor  -------------- Sobrecarga
-    public RecursosDigitales(String titulo, String url, String detalles) {
+    public RecursoDigital(String titulo, String url, String detalles) {
         this.tituloMaterial = titulo;
         this.url = url;
         this.detalles = detalles;
     }
-    public RecursosDigitales(String titulo, String url) {
+    public RecursoDigital(String titulo, String url) {
         this.tituloMaterial = titulo;
         this.url = url;
         this.detalles = "Sin detalles";

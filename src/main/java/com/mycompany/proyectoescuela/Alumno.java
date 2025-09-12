@@ -3,18 +3,18 @@ package com.mycompany.proyectoescuela;
 public class Alumno {
     // --------------- Atributos ---------------
     private String rut;
-    private String curso;
     private String nombreApellido;
     private String correo;
     private String telefono;
+    private Curso curso;
     
     // --------------- Constructor ---------------
-    public Alumno(String rut, String curso, String nombre, String correo, String telefono) {
+    public Alumno(String rut, String nombre, String correo, String telefono, Curso curso) {
         this.rut = rut;
-        this.curso = curso;
         this.nombreApellido = nombre;
         this.correo = correo;
         this.telefono = telefono;
+        this.curso = curso;
     }
     
     // --------------- Getter y Setter  ---------------
@@ -26,11 +26,11 @@ public class Alumno {
         this.rut = rut;
     }
 
-    public String getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(String curso) {
+    public void setCurso(Curso curso) {
         this.curso = curso;
     }
 
@@ -62,7 +62,7 @@ public class Alumno {
     {
         System.out.println("Rut del alumno: " + rut);
         System.out.println("Nombre del alumno: " + nombreApellido);
-        System.out.println("Curso del alumno: " + curso);
+        System.out.println("Curso del alumno: " + curso.getIdentificador());
         System.out.println("Correo del  alumno : " + correo);
         System.out.println("Telefono del alumno : " + telefono);
         
