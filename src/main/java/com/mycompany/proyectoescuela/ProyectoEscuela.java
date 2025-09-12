@@ -107,7 +107,7 @@ public class ProyectoEscuela {
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
-    
+    /*
     public void menuAlumno (Alumno alumno) {
         Curso cursoAlumno = alumno.getCurso();
         System.out.println("Bienvenido(a): " + alumno.getNombreApellido());
@@ -155,7 +155,7 @@ public class ProyectoEscuela {
             }
         } while (opcion != 4);
     }
-
+    */
     // ------------------------------------------------------------- MENU PROFESOR -------------------------------------------------------------
     // ------------------------------------------------------------- MENU PROFESOR -------------------------------------------------------------
     // ------------------------------------------------------------- MENU PROFESOR -------------------------------------------------------------
@@ -179,9 +179,10 @@ public class ProyectoEscuela {
         return lista;
     }
     
+    /*
     public ArrayList<String> mostrarAsignaturas ( Curso curso) {
     
-    }
+    } */
     
     public void menuProfesor(Profesor profesor) {
         System.out.println("Bienvenido(a): " + profesor.getNombreApellido());
