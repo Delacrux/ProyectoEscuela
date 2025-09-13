@@ -7,7 +7,7 @@ public class Curso {
     // --------------- Atributos  ---------------
     private Profesor profesorJefe;
     private String identificador;
-    private HashMap< String , ArrayList<RecursoDigital >> recursosPorAsignatura;
+    private HashMap< String, ArrayList<RecursoDigital >> recursosPorAsignatura;
     private ArrayList<Alumno> listaAlumnos;
     
     // --------------- Constructor  ---------------
@@ -46,33 +46,33 @@ public class Curso {
         this.listaAlumnos = listaAlumnos;
     }
     
-/*
-    public void agregarAsignatura(Asignatura materia){
+
+    public void agregarAsignatura(String materia){
         
-        if(listaAsignaturas.contains(materia)){
+        if(recursosPorAsignatura.containsKey(materia)){
             System.out.println("Asignatura ya está en Curso");
             return;
         }
-        listaAsignaturas.add(materia);
+        recursosPorAsignatura.put(materia, new ArrayList<>());
         
     }
     public void eliminarAsignatura(int i){
         
-        if(i>=listaAsignaturas.size() || i<0){
-            System.out.println("Indice fuera de rango disponible: 0-"+(listaAsignaturas.size()));
+        if(i>=recursosPorAsignatura.size() || i<0){
+            System.out.println("Indice fuera de rango disponible: 0-"+(recursosPorAsignatura.size()));
             return;
         }
-        listaAsignaturas.remove(i);
+        recursosPorAsignatura.remove(i);
     }
-    public void eliminarAsignatura(Asignatura materia){
+    public void eliminarAsignatura(String materia){
         
-        if(!listaAsignaturas.contains(materia)){
+        if(!recursosPorAsignatura.containsKey(materia)){
             System.out.println("Asignatura no existente");
             return;
         }
-        listaAsignaturas.remove(materia);
+        recursosPorAsignatura.remove(materia);
     }
-    */
+    
     public void agregarAlumno(Alumno estudiante){
         if(listaAlumnos.contains(estudiante)){
             System.out.println("Estudiante ya se encuentra en el Curso");
@@ -102,6 +102,15 @@ public class Curso {
         for(i = 0; i<listaAlumnos.size();i++){
             System.out.println((i+1) + ") " + listaAlumnos.get(i).getNombreApellido());
         }
+    }
+    
+    public void mostrarAsignaturas(){
+        int i = 1;
+        for(String asignatura: recursosPorAsignatura.keySet()){
+            System.out.println(i + ") " + asignatura);
+            i++;
+        }
+        
     }
     
     public Alumno getAlumnoPorMenu(int i){
