@@ -4,6 +4,8 @@ import java.util.Set;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class ProyectoEscuela {
     // ------------------------------------------------------------- Atributos  -------------------------------------------------------------
@@ -102,7 +104,36 @@ public class ProyectoEscuela {
    
        //------------------------------Datos Iniciales ------------------------------
     public void llenarDatos() {
-        System.out.println("Deam");
+        System.out.println("Cargando datos...");
+        llenadoDeProfesores();
+        llenadoDeAlumnos();
+        llenadoDeCursos();
+        System.out.println("Datos cargados correctamente");
+    }
+    
+    public void llenadoDeProfesores(){
+        try(Scanner sc = new Scanner(new File("profesores.csv"))){
+            while(sc.hasNextLine()){
+                String linea  = sc.nextLine();
+                String[] campos = linea.split(",");
+                if(campos.length == 5)
+                {
+                    Profesor profe = new Profesor(campos[0], campos[1],campos[2],campos[3],campos[4]);
+                    listaProfesores.add(profe);
+                    
+                }
+            }
+         }
+        catch(FileNotFoundException e){
+            System.out.println("Error al leer profesores.csv: " + e.getMessage());
+        }
+    
+    }
+    public void llenadoDeAlumnos(){
+    
+    }
+    public void llenadoDeCursos(){
+    
     }
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
