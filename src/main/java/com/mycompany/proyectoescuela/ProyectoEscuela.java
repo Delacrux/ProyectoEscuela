@@ -106,8 +106,9 @@ public class ProyectoEscuela {
     public void llenarDatos() {
         System.out.println("Cargando datos...");
         llenadoDeProfesores();
-        llenadoDeAlumnos();
         llenadoDeCursos();
+        llenadoDeAlumnos();
+        
         System.out.println("Datos cargados correctamente");
     }
     
@@ -120,7 +121,6 @@ public class ProyectoEscuela {
                 {
                     Profesor profe = new Profesor(campos[0], campos[1],campos[2],campos[3],campos[4]);
                     listaProfesores.add(profe);
-                    
                 }
             }
          }
@@ -133,7 +133,30 @@ public class ProyectoEscuela {
     
     }
     public void llenadoDeCursos(){
-    
+        try(Scanner sc  = new  Scanner(new File("cursos.csv"))){
+            while(sc.hasNextLine()){
+            String linea = sc.nextLine();
+            String [] campos = linea.split(",");
+            if(campos.length == 2)
+            {
+                String rutProfe = campos[0].trim();
+                String identificador = campos[1].trim();
+                Profesor jefe = buscarProfesorSistema(rutProfe);
+                if(jefe != null)
+                {
+                    Curso curso = new Curso(jefe, identificador);
+                    listaCursos.add(curso);
+                }
+                else{
+                    System.out.println("No se encontro el profesor Jefe " +  rutProfe);
+                }
+            }
+            
+            }
+        }
+        catch(FileNotFoundException e){
+            System.out.println("Error al leer cursos.csv: " + e.getMessage());
+        }
     }
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
