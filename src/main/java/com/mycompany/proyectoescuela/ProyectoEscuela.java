@@ -113,7 +113,7 @@ public class ProyectoEscuela {
     }
     
     public void llenadoDeProfesores(){
-        try(Scanner sc = new Scanner(new File("profesores.csv"))){
+        try(Scanner sc = new Scanner(new File("data/profesores.csv"))){
             while(sc.hasNextLine()){
                 String linea  = sc.nextLine();
                 String[] campos = linea.split(",");
@@ -130,7 +130,7 @@ public class ProyectoEscuela {
     
     }
     public void llenadoDeAlumnos(){
-         try(Scanner sc = new Scanner(new File("Alumnos.csv"))){
+         try(Scanner sc = new Scanner(new File("data/cursos.csv"))){
             while(sc.hasNextLine()){
                 String linea = sc.nextLine();
                 String[] campos = linea.split(",");
@@ -160,7 +160,7 @@ public class ProyectoEscuela {
         }
     }
     public void llenadoDeCursos(){
-        try(Scanner sc  = new  Scanner(new File("cursos.csv"))){
+        try(Scanner sc  = new  Scanner(new File("data/alumnos.csv"))){
             while(sc.hasNextLine()){
             String linea = sc.nextLine();
             String [] campos = linea.split(",");
