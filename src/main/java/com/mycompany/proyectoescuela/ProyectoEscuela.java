@@ -130,7 +130,34 @@ public class ProyectoEscuela {
     
     }
     public void llenadoDeAlumnos(){
-    
+         try(Scanner sc = new Scanner(new File("Alumnos.csv"))){
+            while(sc.hasNextLine()){
+                String linea = sc.nextLine();
+                String[] campos = linea.split(",");
+                if(campos.length == 5){
+                    String rut = campos[0].trim();
+                    String nombre = campos[1].trim();
+                    String correo = campos[2].trim();
+                    String telefono = campos[3].trim();
+                    String cursoID = campos[4].trim();
+                    
+                    Curso curso = buscarCursoSistema(cursoID);
+                    if(curso != null)
+                    {
+                        Alumno alumno = new Alumno(rut, nombre, correo, telefono, curso);
+                        listaAlumnos.add(alumno);
+                        curso.agregarAlumno(alumno);
+                    }
+                    else{
+                        System.out.println("Curso no encontrado para Alumno  "  + nombre + "->" + cursoID);
+                    }
+                }
+            
+            }
+        }
+         catch(FileNotFoundException e){
+            System.out.println("Error al leer Alumnos.csv: " + e.getMessage());
+        }
     }
     public void llenadoDeCursos(){
         try(Scanner sc  = new  Scanner(new File("cursos.csv"))){
