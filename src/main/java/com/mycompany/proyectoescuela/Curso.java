@@ -49,67 +49,63 @@ public class Curso {
         }
         return listaAlumnos.get((i-1));
     }
-
+    
     public void setListaAlumnos(ArrayList<Alumno> listaAlumnos) {
         this.listaAlumnos = listaAlumnos;
     }
+    // --------------- Métodos  ---------------
     
-    public void agregarAsignatura(String materia){
+    public void agregarAsignatura(String materia) throws AsignaturaException{
         
         if(recursosPorAsignatura.containsKey(materia)){
-            System.out.println("Asignatura ya está en Curso");
-            return;
+            throw new AsignaturaException("Asignatura ya está en Curso");
         }
         recursosPorAsignatura.put(materia, new ArrayList<>());
         
     }
     
-    public void eliminarAsignatura(int i){
+    public void eliminarAsignatura(int i) throws AsignaturaException{
         
         if(i>=recursosPorAsignatura.size() || i<0){
-            System.out.println("Indice fuera de rango disponible: 0-"+(recursosPorAsignatura.size()));
-            return;
+            throw new AsignaturaException("Indice fuera de rango disponible: 0-"+(recursosPorAsignatura.size()));
         }
-        recursosPorAsignatura.remove(i);
+        
+        String asignatura = (String) recursosPorAsignatura.keySet().toArray()[i-1];
+        recursosPorAsignatura.remove(asignatura);
     }
-    public void eliminarAsignatura(String materia){
+    public void eliminarAsignatura(String materia) throws AsignaturaException{
         
         if(!recursosPorAsignatura.containsKey(materia)){
-            System.out.println("Asignatura no existente");
-            return;
+            throw new AsignaturaException("No se encontró Asignatura");
         }
         recursosPorAsignatura.remove(materia);
     }
     
-    public void agregarAlumno(Alumno estudiante){
+    public void agregarAlumno(Alumno estudiante) throws AlumnoException{
         if(listaAlumnos.contains(estudiante)){
-            System.out.println("Estudiante ya se encuentra en el Curso");
-            return;
+            throw new AlumnoException("Estudiante ya se encuentra en el Curso");
         }
         listaAlumnos.add(estudiante);
     }
     
-    public void eliminarAlumno(int i){
+    public void eliminarAlumno(int i) throws AlumnoException{
         if(i>=listaAlumnos.size() || i<0){
-            System.out.println("Indice fuera de rango: 0-"+listaAlumnos.size());
-            return;
+            throw new AlumnoException("Indice fuera de rango: 0-"+listaAlumnos.size());
         }
         listaAlumnos.remove(i);
     }
     
-    public void eliminarAlumno(Alumno estudiante){
+    public void eliminarAlumno(Alumno estudiante) throws AlumnoException{
         if(!listaAlumnos.contains(estudiante)){
-            System.out.println("Estudiante no registrado en el Curso");
-            return;
+            throw new AlumnoException("Estudiante no registrado en el Curso");
         }
         listaAlumnos.remove(estudiante);
     }
     
-    public void agregarRecursoDigital(String asignatura, RecursoDigital recurso){
+    public void agregarRecursoDigital(String asignatura, RecursoDigital recurso) throws AsignaturaException{
         
         if(!recursosPorAsignatura.containsKey(asignatura)){
-            System.out.println("No se encontró asignatura para agregar recurso");
-            return;
+            throw new AsignaturaException("No se encontró asignatura");
         }
        
          ArrayList<RecursoDigital> lista = recursosPorAsignatura.get(asignatura);
