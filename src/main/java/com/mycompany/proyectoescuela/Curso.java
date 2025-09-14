@@ -41,12 +41,19 @@ public class Curso {
     public ArrayList<Alumno> getListaAlumnos() {
         return listaAlumnos;
     }
+    
+    public Alumno getAlumnoPorMenu(int i){
+        if(i>=listaAlumnos.size() || i<0){
+            System.out.println("Indice fuera de rango: 0-"+listaAlumnos.size());
+            return null;
+        }
+        return listaAlumnos.get((i-1));
+    }
 
     public void setListaAlumnos(ArrayList<Alumno> listaAlumnos) {
         this.listaAlumnos = listaAlumnos;
     }
     
-
     public void agregarAsignatura(String materia){
         
         if(recursosPorAsignatura.containsKey(materia)){
@@ -56,6 +63,7 @@ public class Curso {
         recursosPorAsignatura.put(materia, new ArrayList<>());
         
     }
+    
     public void eliminarAsignatura(int i){
         
         if(i>=recursosPorAsignatura.size() || i<0){
@@ -97,6 +105,27 @@ public class Curso {
         listaAlumnos.remove(estudiante);
     }
     
+    public void agregarRecursoDigital(String asignatura, RecursoDigital recurso){
+        
+        if(!recursosPorAsignatura.containsKey(asignatura)){
+            System.out.println("No se encontró asignatura para agregar recurso");
+            return;
+        }
+       
+         ArrayList<RecursoDigital> lista = recursosPorAsignatura.get(asignatura);
+         int i; RecursoDigital actual;
+            
+         for(i = 0; i<lista.size(); i++){
+             actual = lista.get(i);
+             if(actual == recurso || actual.getUrl().equals(recurso.getUrl())){
+                 System.out.println("Recurso ya existe en " + asignatura);
+                 return;
+             }
+         }
+        
+        lista.add(recurso);
+    }
+    
     public void mostrarAlumnosCurso(){
         int i;
         for(i = 0; i<listaAlumnos.size();i++){
@@ -111,14 +140,6 @@ public class Curso {
             i++;
         }
         
-    }
-    
-    public Alumno getAlumnoPorMenu(int i){
-        if(i>=listaAlumnos.size() || i<0){
-            System.out.println("Indice fuera de rango: 0-"+listaAlumnos.size());
-            return null;
-        }
-        return listaAlumnos.get((i-1));
     }
     
     public void mostrarCurso(){
