@@ -25,7 +25,7 @@ public class Profesor extends Persona{
     }
     
     // ---------------------- Métodos de HASHMAP ----------------------
-    public HashMap< Curso , ArrayList<String>>  GetAsignaturasPorCurso (){
+    public HashMap< Curso , ArrayList<String>>  getAsignaturasPorCurso (){
         return this.asignaturasPorCurso;
     }
     public void setAsignaturasPorCurso(HashMap< Curso , ArrayList<String>>  aux) {

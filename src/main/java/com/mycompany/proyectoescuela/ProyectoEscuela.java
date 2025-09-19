@@ -325,7 +325,7 @@ public class ProyectoEscuela {
     
     }
     public void llenadoDeAlumnos(){
-         try(Scanner sc = new Scanner(new File("data/cursos.csv"))){
+         try(Scanner sc = new Scanner(new File("data/Alumnos.csv"))){
             while(sc.hasNextLine()){
                 String linea = sc.nextLine();
                 String[] campos = linea.split(",");
@@ -361,7 +361,7 @@ public class ProyectoEscuela {
     }
     
     public void llenadoDeCursos(){
-        try(Scanner sc  = new  Scanner(new File("data/alumnos.csv"))){
+        try(Scanner sc  = new  Scanner(new File("data/Curso.csv"))){
             while(sc.hasNextLine()){
             String linea = sc.nextLine();
             String [] campos = linea.split(",");
