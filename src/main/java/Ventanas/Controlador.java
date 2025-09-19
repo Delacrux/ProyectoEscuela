@@ -41,7 +41,8 @@ public class Controlador {
              if(buscado!=null){
                  System.out.println("Profesor encontrado con exito");
                  Profesor encontrado = (Profesor)buscado;
-                // new MenuProfesorFrame(this, encontrado).setVisible(true);
+                 ventanaLogin.dispose(); // cierra el login
+                 new MenuProfesorFrame(encontrado).setVisible(true); 
              }
          }
          
