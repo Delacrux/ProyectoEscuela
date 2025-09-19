@@ -326,8 +326,13 @@ public class ProyectoEscuela {
     }
     public void llenadoDeAlumnos(){
          try(Scanner sc = new Scanner(new File("data/Alumnos.csv"))){
+             boolean primeraLinea = true; 
             while(sc.hasNextLine()){
                 String linea = sc.nextLine();
+                if(primeraLinea){
+                primeraLinea = false;
+                continue;
+                }
                 String[] campos = linea.split(",");
                 if(campos.length == 5){
                     String rut = campos[0].trim();
@@ -362,8 +367,14 @@ public class ProyectoEscuela {
     
     public void llenadoDeCursos(){
         try(Scanner sc  = new  Scanner(new File("data/Curso.csv"))){
+            boolean  primeraLinea = true; 
             while(sc.hasNextLine()){
             String linea = sc.nextLine();
+            if(primeraLinea){
+            primeraLinea = false;
+            continue; // salta  el encabezado
+            }
+            
             String [] campos = linea.split(",");
             if(campos.length == 2)
             {
