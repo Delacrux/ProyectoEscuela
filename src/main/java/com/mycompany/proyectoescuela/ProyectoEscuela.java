@@ -384,6 +384,25 @@ public class ProyectoEscuela {
                 if(jefe != null)
                 {
                     Curso curso = new Curso(jefe, identificador);
+                    // aqui agregamos algunas asignaturas
+                    try{
+                    switch(identificador){
+                        case "MAT101":
+                            curso.agregarAsignatura("Matemáticas"); 
+                            curso.agregarAsignatura("Estadística");
+                            break; 
+                        case "FIS201":
+                                curso.agregarAsignatura("Física");
+                                curso.agregarAsignatura("Química");
+                                break;
+                            default:
+                                curso.agregarAsignatura("Asignatura General");
+                                break; 
+                            }
+                    }catch (AsignaturaException e) {
+                        System.out.println("Error al agregar asignatura: " + e.getMessage());
+                    }
+                    
                     listaCursos.add(curso);
                 }
                 else{
