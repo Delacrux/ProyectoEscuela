@@ -1,4 +1,4 @@
-rut,nombre,correo,telefono,cursoID
-11111111,Martina López,martina@escuela.cl,912345678,MAT101
-22222222,Diego Rojas,diego@escuela.cl,923456789,MAT101
-33333333,Sofía Ramírez,sofia@escuela.cl,934567890,FIS201
+RUT,NombreApellido,Correo,Telefono,CursoID
+12345678,Lucas Pérez,lucas@escuela.cl,912345678,1roA
+23456789,Ana Torres,ana@escuela.cl,987654321,2doB
+34567890,Tomás Silva,tomas@escuela.cl,934567890,3roC

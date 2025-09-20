@@ -1,4 +1,4 @@
-rut,nombreApellido,especialidad,correo,telefono
-12345678,Juan Pérez,Matemáticas,juan@escuela.cl,987654321
-87654321,Ana Torres,Lenguaje,ana@escuela.cl,912345678
-11223344,Carlos Soto,Ciencias,carlos@escuela.cl,934567890
+RUT,NombreApellido,Especialidad,Correo,Telefono
+11111111,Martina López,Matemáticas,martina@escuela.cl,912345678
+22222222,Diego Rojas,Física,diego@escuela.cl,987654321
+33333333,Sofía Ramírez,Biología,sofia@escuela.cl,934567890

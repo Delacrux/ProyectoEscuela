@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 // ----------- Clase ProyectoEscuela -----------
 public class ProyectoEscuela {
@@ -301,69 +302,111 @@ public class ProyectoEscuela {
        //------------------------------ DATOS INICIALES  ------------------------------
     public void llenarDatos() {
         System.out.println("Cargando datos...");
-        llenadoDeProfesores();
         llenadoDeCursos();
+        llenadoDeProfesores();
         llenadoDeAlumnos();
         System.out.println("Datos cargados correctamente");
     }
     
-    public void llenadoDeProfesores(){
-        try(Scanner sc = new Scanner(new File("data/profesores.csv"))){
-            while(sc.hasNextLine()){
-                String linea  = sc.nextLine();
-                String[] campos = linea.split(",");
-                if(campos.length == 5)
-                {
-                    Profesor profe = new Profesor(campos[0], campos[1],campos[2],campos[3],campos[4]);
-                    listaProfesores.add(profe);
-                }
-            }
-         }
-        catch(FileNotFoundException e){
-            System.out.println("Error al leer profesores.csv: " + e.getMessage());
-        }
-    
-    }
-    public void llenadoDeAlumnos(){
-         try(Scanner sc = new Scanner(new File("data/Alumnos.csv"))){
-             boolean primeraLinea = true; 
-            while(sc.hasNextLine()){
-                String linea = sc.nextLine();
-                if(primeraLinea){
+  public void llenadoDeProfesores() {
+    try (Scanner sc = new Scanner(new File("data/profesores.csv"))) {
+        boolean primeraLinea = true;
+        while (sc.hasNextLine()) {
+            String linea = sc.nextLine();
+            if (primeraLinea) {
                 primeraLinea = false;
                 continue;
+            }
+
+            String[] campos = linea.split(",");
+            if (campos.length != 5) {
+                System.out.println("Línea inválida en profesores.csv: " + linea);
+                continue;
+            }
+
+            String rut = campos[0].trim();
+            String nombreApellido = campos[1].trim();
+            String especialidad = campos[2].trim();
+            String correo = campos[3].trim();
+            String telefono = campos[4].trim();
+
+            Profesor profesor = new Profesor(rut, nombreApellido, especialidad, correo, telefono);
+
+            // Buscar un curso sin profesor jefe
+            Curso cursoAsignado = null;
+            for (Curso c : listaCursos) {
+                if (c.getProfesorJefe() == null) {
+                    cursoAsignado = c;
+                    break;
                 }
-                String[] campos = linea.split(",");
-                if(campos.length == 5){
-                    String rut = campos[0].trim();
-                    String nombre = campos[1].trim();
-                    String correo = campos[2].trim();
-                    String telefono = campos[3].trim();
-                    String cursoID = campos[4].trim();
-                    
-                    Curso curso = buscarCursoSistema(cursoID);
-                    if(curso != null)
-                    {
-                        Alumno alumno = new Alumno(rut, nombre, correo, telefono, curso);
-                        listaAlumnos.add(alumno);
-                        try{
-                        curso.agregarAlumno(alumno);
-                        } 
-                        catch(AlumnoException error){
-                            System.out.println("Error al agregar alumno: " + error.getMessage());
-                        }
-                    }
-                    else{
-                        System.out.println("Curso no encontrado para Alumno  "  + nombre + "->" + cursoID);
-                    }
+            }
+
+            if (cursoAsignado != null) {
+                cursoAsignado.setProfesorJefe(profesor);
+
+                // Copiar asignaturas del curso al profesor
+                HashMap<Curso, ArrayList<String>> mapa = profesor.getAsignaturasPorCurso();
+                mapa.put(cursoAsignado, new ArrayList<>(cursoAsignado.getRecursosPorAsignatura().keySet()));
+
+                System.out.println("Profesor " + nombreApellido + " asignado como jefe de curso " + cursoAsignado.getIdentificador());
+            } else {
+                System.out.println("No hay cursos disponibles para asignar al profesor " + nombreApellido);
+            }
+
+            listaProfesores.add(profesor);
+        }
+    } catch (FileNotFoundException e) {
+        System.out.println("Error al leer Profesor.csv: " + e.getMessage());
+    }
+}
+
+  public void llenadoDeAlumnos() {
+    try (Scanner sc = new Scanner(new File("data/Alumnos.csv"))) {
+        boolean primeraLinea = true;
+        while (sc.hasNextLine()) {
+            String linea = sc.nextLine();
+            if (primeraLinea) {
+                primeraLinea = false;
+                continue;
+            }
+
+            String[] campos = linea.split(",");
+            if (campos.length != 5) {
+                System.out.println("Línea inválida en Alumnos.csv: " + linea);
+                continue;
+            }
+
+            String rut = campos[0].trim();
+            String nombreApellido = campos[1].trim();
+            String correo = campos[2].trim();
+            String telefono = campos[3].trim();
+            String cursoID = campos[4].trim();
+
+            // Buscar el curso correspondiente
+            Curso cursoAsignado = null;
+            for (Curso c : listaCursos) {
+                if (c.getIdentificador().equalsIgnoreCase(cursoID)) {
+                    cursoAsignado = c;
+                    break;
                 }
-            
+            }
+
+            if (cursoAsignado != null) {
+                try {
+                    Alumno alumno = new Alumno(rut, nombreApellido, correo, telefono, cursoAsignado);
+                    cursoAsignado.agregarAlumno(alumno);
+                    System.out.println("Alumno " + nombreApellido + " asignado al curso " + cursoID);
+                } catch (AlumnoException e) {
+                    System.out.println("Error al agregar alumno " + nombreApellido + ": " + e.getMessage());
+                }
+            } else {
+                System.out.println("Curso no encontrado para alumno " + nombreApellido + ": " + cursoID);
             }
         }
-         catch(FileNotFoundException e){
-            System.out.println("Error al leer Alumnos.csv: " + e.getMessage());
-        }
+    } catch (FileNotFoundException e) {
+        System.out.println("Error al leer Alumnos.csv: " + e.getMessage());
     }
+}
     
     public void llenadoDeCursos(){
         try(Scanner sc  = new  Scanner(new File("data/Curso.csv"))){
@@ -374,45 +417,38 @@ public class ProyectoEscuela {
             primeraLinea = false;
             continue; // salta  el encabezado
             }
+            String identificador = linea.trim();
+            Curso curso = new Curso(null,identificador); // profesor se agrega después 
             
-            String [] campos = linea.split(",");
-            if(campos.length == 2)
-            {
-                String rutProfe = campos[0].trim();
-                String identificador = campos[1].trim();
-                Profesor jefe = buscarProfesorSistema(rutProfe);
-                if(jefe != null)
-                {
-                    Curso curso = new Curso(jefe, identificador);
-                    // aqui agregamos algunas asignaturas
-                    try{
-                    switch(identificador){
-                        case "MAT101":
-                            curso.agregarAsignatura("Matemáticas"); 
-                            curso.agregarAsignatura("Estadística");
-                            break; 
-                        case "FIS201":
-                                curso.agregarAsignatura("Física");
-                                curso.agregarAsignatura("Química");
-                                break;
-                            default:
-                                curso.agregarAsignatura("Asignatura General");
-                                break; 
-                            }
-                    }catch (AsignaturaException e) {
-                        System.out.println("Error al agregar asignatura: " + e.getMessage());
-                    }
-                    
-                    listaCursos.add(curso);
-                }
-                else{
-                    System.out.println("No se encontro el profesor Jefe " +  rutProfe);
-                }
+            //Asignaturas y recursos que tendría curso 
+            ArrayList<String> Asignaturas =new ArrayList<>();
+            switch(identificador){
+                case "1roA":
+                    Asignaturas.add("Matemáticas");
+                    Asignaturas.add("Lenguaje");
+                    break;
+                case "2doB":
+                    Asignaturas.add("Ciencia");
+                    Asignaturas.add("Historia");
+                    break;
+                case "3roC":
+                    Asignaturas.add("Física");
+                    Asignaturas.add("Biología");
+                    break;
             }
             
+            for(String a : Asignaturas){
+               try{
+                   curso.agregarAsignatura(a);
+                   curso.agregarRecursoDigital(a, new RecursoDigital("Guía de " + a,"pdfs/" + a.toLowerCase() + "_guia.pdf", "Material de apoyo para " + a));
+                   curso.agregarRecursoDigital(a, new RecursoDigital("Video de " + a,"Video/" + a.toLowerCase() + "_Video.mp4", "Clase grabada de  " + a));
+               }catch (AsignaturaException e) {
+                    System.out.println("Error al agregar recurso a la asignatura " + a + ": " + e.getMessage());
+                }
             }
-        }
-        catch(FileNotFoundException e){
+            listaCursos.add(curso);
+            }
+        }catch(FileNotFoundException e){
             System.out.println("Error al leer cursos.csv: " + e.getMessage());
         }
     }
