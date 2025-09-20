@@ -4,13 +4,13 @@ import com.mycompany.proyectoescuela.*;
 import java.awt.*;
 import java.util.*;
 
-public class AsignaturasYAlumnosFrame extends javax.swing.JFrame {
+public class MenuAsignaturasProfesor extends javax.swing.JFrame {
     
     private Profesor docente;
     private Curso curso;
     private Controlador control;
     
-    public AsignaturasYAlumnosFrame(Controlador control, Profesor docente, Curso curso) {
+    public MenuAsignaturasProfesor(Controlador control, Profesor docente, Curso curso) {
         this.docente = docente;
         this.control = control;
         this.curso = curso;
@@ -32,9 +32,9 @@ public class AsignaturasYAlumnosFrame extends javax.swing.JFrame {
 
         lista.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                String index = lista.getSelectedValue();
-                ArrayList<RecursoDigital> recursos = curso.getRecursosPorAsignatura().get(index);
-                control.mostrarAsignatura(index, recursos);
+                String asignatura = lista.getSelectedValue();
+                ArrayList<RecursoDigital> recursos = curso.getRecursosPorAsignatura().get(asignatura);
+                //control.mostrarRecursosProfesor(control, asignatura, recursos);
             }
         });
 
@@ -63,6 +63,7 @@ public class AsignaturasYAlumnosFrame extends javax.swing.JFrame {
         panelAlumnos.add(scroll, BorderLayout.CENTER);
         panelAlumnos.revalidate();
         panelAlumnos.repaint();
+        
 
     }
     
@@ -85,16 +86,25 @@ public class AsignaturasYAlumnosFrame extends javax.swing.JFrame {
         tituloAsignaturas.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
         tituloAsignaturas.setText("ASIGNATURAS");
 
+        panelAlumnos.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout panelAlumnosLayout = new javax.swing.GroupLayout(panelAlumnos);
         panelAlumnos.setLayout(panelAlumnosLayout);
         panelAlumnosLayout.setHorizontalGroup(
             panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 309, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         panelAlumnosLayout.setVerticalGroup(
             panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 424, Short.MAX_VALUE)
         );
+
+        panelAsignaturas.setForeground(new java.awt.Color(255, 255, 255));
+        panelAsignaturas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                panelAsignaturasKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelAsignaturasLayout = new javax.swing.GroupLayout(panelAsignaturas);
         panelAsignaturas.setLayout(panelAsignaturasLayout);
@@ -117,15 +127,15 @@ public class AsignaturasYAlumnosFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(panelAlumnos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(73, 73, 73)
                 .addComponent(tituloAsignaturas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
                 .addComponent(tituloAlumnos)
-                .addGap(80, 80, 80))
+                .addGap(92, 92, 92))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,6 +153,10 @@ public class AsignaturasYAlumnosFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void panelAsignaturasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_panelAsignaturasKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panelAsignaturasKeyPressed
 
     /**
      * @param args the command line arguments
@@ -199,7 +213,7 @@ public class AsignaturasYAlumnosFrame extends javax.swing.JFrame {
     // Crear controlador de prueba
     Controlador control = new Controlador() {
         @Override
-        public void mostrarAsignatura(String nombre, ArrayList<RecursoDigital> recursos) {
+        public void mostrarRecursosAlumno(String nombre, ArrayList<RecursoDigital> recursos) {
             System.out.println("Asignatura seleccionada: " + nombre);
             for (RecursoDigital r : recursos) {
                 System.out.println("- " + r.getTituloMaterial() + " (" + r.getUrl() + ")");
@@ -209,7 +223,7 @@ public class AsignaturasYAlumnosFrame extends javax.swing.JFrame {
 
     // Lanzar ventana
     SwingUtilities.invokeLater(() -> {
-        new AsignaturasYAlumnosFrame(control, prof, curso).setVisible(true);
+        new MenuAsignaturasProfesor(control, prof, curso).setVisible(true);
     });
 }
 

@@ -1,24 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 package Ventanas;
 import javax.swing.*;
 import com.mycompany.proyectoescuela.*;
 import java.awt.*;
 import java.util.*;
 
-/**
- *
- * @author AzukZ
- */
-public class MenuAlumnoFrame extends javax.swing.JFrame {
+public class MenuAsignaturasAlumno extends javax.swing.JFrame {
     
     private Alumno estudiante;
     private Controlador control;
     
-    public MenuAlumnoFrame(Controlador control, Alumno estudiante) {
+    public MenuAsignaturasAlumno(Controlador control, Alumno estudiante) {
         this.estudiante = estudiante;
         this.control = control;
         initComponents();
@@ -39,7 +30,7 @@ public class MenuAlumnoFrame extends javax.swing.JFrame {
             if (!e.getValueIsAdjusting()) {
                 String index = lista.getSelectedValue();
                 ArrayList<RecursoDigital> recursos = estudiante.getCurso().getRecursosPorAsignatura().get(index);
-                control.mostrarAsignatura(index, recursos);
+                control.mostrarRecursosAlumno(index, recursos);
             }
         });
 
@@ -63,7 +54,6 @@ public class MenuAlumnoFrame extends javax.swing.JFrame {
 
         tituloAsignaturas = new javax.swing.JLabel();
         panelAsignaturas = new javax.swing.JPanel();
-        barraAsignaturas = new javax.swing.JScrollBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,13 +64,11 @@ public class MenuAlumnoFrame extends javax.swing.JFrame {
         panelAsignaturas.setLayout(panelAsignaturasLayout);
         panelAsignaturasLayout.setHorizontalGroup(
             panelAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAsignaturasLayout.createSequentialGroup()
-                .addComponent(barraAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 670, Short.MAX_VALUE))
+            .addGap(0, 687, Short.MAX_VALUE)
         );
         panelAsignaturasLayout.setVerticalGroup(
             panelAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(barraAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+            .addGap(0, 424, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -89,11 +77,10 @@ public class MenuAlumnoFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tituloAsignaturas)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 40, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tituloAsignaturas)
+                    .addComponent(panelAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,7 +100,6 @@ public class MenuAlumnoFrame extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollBar barraAsignaturas;
     private javax.swing.JPanel panelAsignaturas;
     private javax.swing.JLabel tituloAsignaturas;
     // End of variables declaration//GEN-END:variables
