@@ -49,6 +49,52 @@ public class ProyectoEscuela {
 
     // ------------------------------------------------------------- Métodos  -------------------------------------------------------------
     
+    // ------------------------------ FUNCIONALIDAD PARA EL NEGOCIO + SOBRECARGA DE METODO ------------------------------
+    
+    public HashMap < String , Curso > asignaturaConMasRecursos() {
+        HashMap <String, Curso> asignaturasMayores = new HashMap<>();
+        int cantMayorRecursos = -1;
+        
+        for (int i = 0 ; i < listaCursos.size() ; i++ ) {
+            Curso curso = listaCursos.get(i);
+            ArrayList <String> asignaturasCurso = new ArrayList<>(curso.getRecursosPorAsignatura().keySet());
+            
+            for (int k = 0 ; k < asignaturasCurso.size() ; k ++) {
+                String asignatura = asignaturasCurso.get(k);
+                int cantRecAsignatura = curso.getRecursosPorAsignatura().get(asignatura).size();
+                
+                if ( cantRecAsignatura > cantMayorRecursos ) {
+                    cantMayorRecursos = cantRecAsignatura;
+                    asignaturasMayores.clear();
+                    asignaturasMayores.put(asignatura, curso);
+                }
+                else if ( cantRecAsignatura == cantMayorRecursos ) {
+                    asignaturasMayores.put(asignatura, curso);
+                }
+            }
+        }
+        return asignaturasMayores;
+    }
+    
+    public HashMap < String , Curso > asignaturaConMasRecursos(int umbral) {
+        HashMap <String, Curso> asignaturasMayores = new HashMap<>();
+        
+        for (int i = 0 ; i < listaCursos.size() ; i++ ) {
+            Curso curso = listaCursos.get(i);
+            ArrayList <String> listaAsignaturas = new ArrayList<>(curso.getRecursosPorAsignatura().keySet());
+            
+            for (int k = 0 ; k < listaAsignaturas.size() ; k++ ) {
+                String asignatura = listaAsignaturas.get(k);
+                if ( curso.getRecursosPorAsignatura().get(asignatura).size() >= umbral) {
+                    asignaturasMayores.put(asignatura, curso);
+                }
+            }
+        }
+        return asignaturasMayores;
+    }
+    
+    // ------------------------------ FUNCIONALIDAD PARA EL NEGOCIO ------------------------------
+    
     // ------------------------------  BUSQUEDA  ------------------------------ 
     public Alumno buscarAlumnoSistema (String rut) {
         int i;
@@ -83,18 +129,19 @@ public class ProyectoEscuela {
     // ------------------------------  AGREGAR  ------------------------------ 
     public Profesor crearYAgregarProfesor(String rut, String nombreApellido, String especialidad, String correo, String telefono) {
         if (buscarProfesorSistema(rut) == null ) {
-            Profesor nuevoProfesor =new Profesor(rut, nombreApellido, especialidad, correo, telefono);
+            Profesor nuevoProfesor = new Profesor(rut, nombreApellido, especialidad, correo, telefono);
             listaProfesores.add(nuevoProfesor);
             return nuevoProfesor;
         }
         return null;
     }
    
-    public Alumno crearYAgregarAlumno(String rut, String nombreApellido, String correo, String telefono, String curso) {
+    public Alumno crearYAgregarAlumno(String rut, String nombreApellido, String correo, String telefono, String curso)  throws AlumnoException {
         Curso cursoAlumno = buscarCursoSistema(curso);
         if (buscarAlumnoSistema(rut) == null && cursoAlumno != null) {
             Alumno nuevoAlumno = new Alumno(rut, nombreApellido, correo, telefono, cursoAlumno);
             listaAlumnos.add(nuevoAlumno);
+            cursoAlumno.agregarAlumno(nuevoAlumno);
             return nuevoAlumno;
         }
         return null;
@@ -144,11 +191,16 @@ public class ProyectoEscuela {
         System.out.println("curso del alumno");
         String curso = scanner.nextLine();
         
-        if (crearYAgregarAlumno(rut, nombreApellido, correo, telefono, curso) == null) {
-            System.out.println("falló");
-        }
-        else {
-            System.out.println("Alumno creado y agregado con exito");
+        try {
+            Alumno alumno = crearYAgregarAlumno(rut, nombreApellido, correo, telefono, curso);
+            if ( alumno != null) {
+                System.out.println("Alumno creado y agregado con exito");
+            }
+            else {
+                System.out.println("falló");
+            }
+        } catch (AlumnoException e) {
+            System.out.println("Error " + e.getMessage());
         }
     }
     
@@ -228,11 +280,17 @@ public class ProyectoEscuela {
         System.out.println("Rut del Alumno a eliminar");
         String rut = scanner.nextLine();
         
-        if (eliminarAlumno(rut) == null) {
-            System.out.println("falló");
-        }
-        else {
-            System.out.println("Alumno eliminado con exito.");
+        try {
+            Alumno alumno = eliminarAlumno(rut);
+            if (alumno != null) {
+                System.out.println("Alumno eliminado con exito.");
+            }
+            else {
+                System.out.println("falló");
+            }
+            
+        } catch (AlumnoException e) {
+            System.out.println("Error " + e.getMessage());
         }
     }
     
@@ -581,8 +639,7 @@ public class ProyectoEscuela {
         }while(opcion != 3);
     }
     */
-    // ------------------------------------------------------------- LOGIN -------------------------------------------------------------
-    // ------------------------------------------------------------- LOGIN -------------------------------------------------------------
+
     // ------------------------------------------------------------- LOGIN -------------------------------------------------------------
     
     public void menuInicial () {
@@ -612,8 +669,6 @@ public class ProyectoEscuela {
         }
     }
     
-    // ------------------------------------------------------------- MAIN  -------------------------------------------------------------
-    // ------------------------------------------------------------- MAIN  -------------------------------------------------------------
     // ------------------------------------------------------------- MAIN  -------------------------------------------------------------
     public static void main(String[] args) {
        ProyectoEscuela sistema = new ProyectoEscuela();

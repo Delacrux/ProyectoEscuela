@@ -37,11 +37,20 @@ public class Curso {
     public HashMap< String , ArrayList<RecursoDigital>> getRecursosPorAsignatura () {
         return this.recursosPorAsignatura;
     }
+    
+    public void setRecursosPorAsignatura(HashMap <String , ArrayList <RecursoDigital>> recursosPorAsignatura) {
+        this.recursosPorAsignatura = recursosPorAsignatura;
+    }
 
     public ArrayList<Alumno> getListaAlumnos() {
         return listaAlumnos;
     }
     
+    public void setListaAlumnos(ArrayList<Alumno> listaAlumnos) {
+        this.listaAlumnos = listaAlumnos;
+    }
+    
+    // --------------- Métodos Menu Consola ---------------
     public Alumno getAlumnoPorMenu(int i){
         if(i>=listaAlumnos.size() || i<0){
             System.out.println("Indice fuera de rango: 0-"+listaAlumnos.size());
@@ -49,32 +58,47 @@ public class Curso {
         }
         return listaAlumnos.get((i-1));
     }
+    // --------------- Métodos  BUSQUEDA  ---------------
     
-    public void setListaAlumnos(ArrayList<Alumno> listaAlumnos) {
-        this.listaAlumnos = listaAlumnos;
+    public Alumno buscarAlumnoEnCurso(String rut) {
+        for ( int i = 0 ; i < listaAlumnos.size() ; i++) {
+            Alumno alumno = listaAlumnos.get(i);
+            if (alumno.getRut().equals(rut)) {
+                return alumno;
+            }
+        }
+        return null;
     }
+    
+    public RecursoDigital buscarRecursoPorTitulo (String tituloRecurso) {
+        for ( ArrayList< RecursoDigital > listaRecursos : this.recursosPorAsignatura.values() ) {
+            for ( RecursoDigital recurso : listaRecursos ) {
+                if ( recurso.getTituloMaterial().equalsIgnoreCase(tituloRecurso)) {
+                    return recurso;
+                }
+            }
+        }
+        return null;
+    }
+    
     // --------------- Métodos  ---------------
     
-    public void agregarAsignatura(String materia) throws AsignaturaException{
-        
-        if(recursosPorAsignatura.containsKey(materia)){
+    public void agregarAsignatura (String materia) throws AsignaturaException{
+        if ( recursosPorAsignatura.containsKey(materia) ){
             throw new AsignaturaException("Asignatura ya está en Curso");
         }
         recursosPorAsignatura.put(materia, new ArrayList<>());
-        
     }
     
-    public void eliminarAsignatura(int i) throws AsignaturaException{
-        
-        if(i>=recursosPorAsignatura.size() || i<0){
+    public void eliminarAsignatura(int i) throws AsignaturaException {
+        if ( i>=recursosPorAsignatura.size() || i<0 ) {
             throw new AsignaturaException("Indice fuera de rango disponible: 0-"+(recursosPorAsignatura.size()));
         }
-        
         String asignatura = (String) recursosPorAsignatura.keySet().toArray()[i-1];
         recursosPorAsignatura.remove(asignatura);
     }
+    
     public void eliminarAsignatura(String materia) throws AsignaturaException{
-        
         if(!recursosPorAsignatura.containsKey(materia)){
             throw new AsignaturaException("No se encontró Asignatura");
         }
@@ -103,15 +127,13 @@ public class Curso {
     }
     
     public void agregarRecursoDigital(String asignatura, RecursoDigital recurso) throws AsignaturaException{
-        
-        if(!recursosPorAsignatura.containsKey(asignatura)){
+        if( !recursosPorAsignatura.containsKey(asignatura) ){
             throw new AsignaturaException("No se encontró asignatura");
         }
-       
          ArrayList<RecursoDigital> lista = recursosPorAsignatura.get(asignatura);
          int i; RecursoDigital actual;
             
-         for(i = 0; i<lista.size(); i++){
+         for ( i = 0; i < lista.size() ; i++ ){
              actual = lista.get(i);
              if(actual == recurso || actual.getUrl().equals(recurso.getUrl())){
                  System.out.println("Recurso ya existe en " + asignatura);
@@ -121,6 +143,8 @@ public class Curso {
         
         lista.add(recurso);
     }
+    
+    // --------------- Métodos Mostrar  ---------------
     
     public void mostrarAlumnosCurso(){
         int i;
@@ -135,7 +159,6 @@ public class Curso {
             System.out.println(i + ") " + asignatura);
             i++;
         }
-        
     }
     
     public void mostrarCurso(){
@@ -144,4 +167,5 @@ public class Curso {
         System.out.println("Cantidad de Asignaturas: " + recursosPorAsignatura.size());
         System.out.println("Cantidad de Alumnos: " + listaAlumnos.size());
     }
+    
 }
