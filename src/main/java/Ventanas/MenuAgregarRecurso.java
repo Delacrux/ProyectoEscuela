@@ -7,10 +7,12 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
     
     private Controlador control;
     private ArrayList<RecursoDigital> materiales;
+    MenuRecursosProfesor padre;
     
-    public MenuAgregarRecurso(Controlador control, ArrayList<RecursoDigital> materiales) {
+    public MenuAgregarRecurso(MenuRecursosProfesor padre, Controlador control, ArrayList<RecursoDigital> materiales) {
         this.control = control;
         this.materiales = materiales;
+        this.padre = padre;
         initComponents();
     }
 
@@ -140,7 +142,8 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
         if(!detalles.isEmpty() && !titulo.isEmpty() && !url.isEmpty()){
             RecursoDigital recurso = new RecursoDigital(titulo, url, detalles);
             control.agregarRecursoDigital(recurso, materiales);
-            
+            padre.llenarTablaAsignaturas(materiales);
+            this.dispose();
         }
     }//GEN-LAST:event_botonAgregarActionPerformed
 

@@ -27,7 +27,8 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
         for (Curso c : cursos) {
             modelo.addRow(new Object[]{
                 c.getIdentificador(),
-                c.getProfesorJefe().getNombreApellido()
+                c.getProfesorJefe().getNombreApellido(),
+                c
             });
         }
         

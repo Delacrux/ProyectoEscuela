@@ -23,7 +23,7 @@ public class MenuAsignaturasProfesor extends javax.swing.JFrame {
     public void mostrarPanelAsignaturas(){
         DefaultListModel<String> modelo = new DefaultListModel<>();
         for (String a : docente.getAsignaturasEnCurso(curso)) {
-          
+            System.out.println(a);
             modelo.addElement(a);
         }
 
@@ -34,16 +34,16 @@ public class MenuAsignaturasProfesor extends javax.swing.JFrame {
             if (!e.getValueIsAdjusting()) {
                 String asignatura = lista.getSelectedValue();
                 ArrayList<RecursoDigital> recursos = curso.getRecursosPorAsignatura().get(asignatura);
-                //control.mostrarRecursosProfesor(control, asignatura, recursos);
+                control.mostrarRecursosProfesor(asignatura, recursos);
             }
         });
 
         JScrollPane scroll = new JScrollPane(lista);
         scroll.setPreferredSize(new Dimension(200, 150));
-        panelAlumnos.setLayout(new BorderLayout());
-        panelAlumnos.add(scroll, BorderLayout.CENTER);
-        panelAlumnos.revalidate();
-        panelAlumnos.repaint();
+        panelAsignaturas.setLayout(new BorderLayout());
+        panelAsignaturas.add(scroll, BorderLayout.CENTER);
+        panelAsignaturas.revalidate();
+        panelAsignaturas.repaint();
 
     }
     
@@ -114,7 +114,7 @@ public class MenuAsignaturasProfesor extends javax.swing.JFrame {
         );
         panelAsignaturasLayout.setVerticalGroup(
             panelAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 424, Short.MAX_VALUE)
         );
 
         tituloAlumnos.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
@@ -144,11 +144,11 @@ public class MenuAsignaturasProfesor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tituloAsignaturas)
                     .addComponent(tituloAlumnos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelAlumnos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelAsignaturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();

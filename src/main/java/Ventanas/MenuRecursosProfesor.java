@@ -31,8 +31,6 @@ public class MenuRecursosProfesor extends javax.swing.JFrame {
                 a.getDetalles()
             });
         }
-
-
     }
     
     @SuppressWarnings("unchecked")
@@ -44,7 +42,6 @@ public class MenuRecursosProfesor extends javax.swing.JFrame {
         tablaRecursos = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         opcionAgregar = new javax.swing.JMenu();
-        opcionEliminar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,6 +75,11 @@ public class MenuRecursosProfesor extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaRecursos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaRecursosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaRecursos);
         if (tablaRecursos.getColumnModel().getColumnCount() > 0) {
             tablaRecursos.getColumnModel().getColumn(0).setResizable(false);
@@ -92,9 +94,6 @@ public class MenuRecursosProfesor extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(opcionAgregar);
-
-        opcionEliminar.setText("Eliminar");
-        jMenuBar1.add(opcionEliminar);
 
         setJMenuBar(jMenuBar1);
 
@@ -126,8 +125,45 @@ public class MenuRecursosProfesor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void opcionAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarMouseClicked
-        control.mostrarMenuAgregarRecurso(control, materiales);
+        control.mostrarMenuAgregarRecurso(this, materiales); //Acá le mostramos una ventana para que llene datos
+        
     }//GEN-LAST:event_opcionAgregarMouseClicked
+
+    private void tablaRecursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaRecursosMouseClicked
+        if (evt.getClickCount() == 2) {    //Hacemos que con 2 clicks le salga la opcion de eliminar un recurso a lo dog
+            int fila = tablaRecursos.getSelectedRow();
+            
+            if (fila != -1) {
+                String titulo = (String) tablaRecursos.getValueAt(fila, 0);
+
+                int confirmacion = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Deseas eliminar el recurso \"" + titulo + "\"?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                if (confirmacion == JOptionPane.YES_OPTION) {
+                    RecursoDigital recursoAEliminar = null;
+                    
+                    for (RecursoDigital r : materiales) {
+                        if (r.getTituloMaterial().equals(titulo)) {
+                            recursoAEliminar = r;
+                            break;
+                        }
+                        
+                    }
+
+                    if (recursoAEliminar != null) {
+                        materiales.remove(recursoAEliminar);
+                        control.eliminarRecursoDigital(recursoAEliminar, materiales); 
+                        llenarTablaAsignaturas(materiales);
+                    }
+                }
+            }
+        }
+
+    }//GEN-LAST:event_tablaRecursosMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -188,7 +224,6 @@ public class MenuRecursosProfesor extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu opcionAgregar;
-    private javax.swing.JMenu opcionEliminar;
     private javax.swing.JTable tablaRecursos;
     private javax.swing.JLabel tituloAsignatura;
     // End of variables declaration//GEN-END:variables
