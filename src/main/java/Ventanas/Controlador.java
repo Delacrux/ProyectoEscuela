@@ -57,7 +57,11 @@ public class Controlador {
         
         MenuRecursosAlumno ventanaRecursos = new MenuRecursosAlumno(nombre, recursos);
         ventanaRecursos.setVisible(true);
-        
+    }
+    
+    public void mostrarRecursosProfesor(String nombre, ArrayList<RecursoDigital> recursos){
+        MenuRecursosProfesor ventanaRecursos = new MenuRecursosProfesor(this, nombre, recursos);
+        ventanaRecursos.setVisible(true);
     }
     
     public void mostrarAsignaturasProfesor(Controlador control, Profesor docente, Curso curso){
@@ -67,14 +71,18 @@ public class Controlador {
         
     }
     
-    public void mostrarMenuAgregarRecurso(Controlador control, ArrayList<RecursoDigital> materiales){
+    public void mostrarMenuAgregarRecurso(MenuRecursosProfesor padre, ArrayList<RecursoDigital> materiales){
         
-        new MenuAgregarRecurso(control, materiales).setVisible(true);
+        new MenuAgregarRecurso(padre, this, materiales).setVisible(true);
     }
     
     public void agregarRecursoDigital(RecursoDigital recurso, ArrayList<RecursoDigital> materiales){
-        
         materiales.add(recurso);
+    }
+    
+    public void eliminarRecursoDigital(RecursoDigital recurso, ArrayList<RecursoDigital> materiales){
+        
+        materiales.remove(recurso);
     }
     
     public static void main(String[] args){

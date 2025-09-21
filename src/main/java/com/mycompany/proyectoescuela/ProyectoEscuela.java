@@ -413,10 +413,13 @@ public class ProyectoEscuela {
                     Alumno alumno = new Alumno(rut, nombreApellido, correo, telefono, cursoAsignado);
                     cursoAsignado.agregarAlumno(alumno);
                     System.out.println("Alumno " + nombreApellido + " asignado al curso " + cursoID);
+                    listaAlumnos.add(alumno);
                 } catch (AlumnoException e) {
                     System.out.println("Error al agregar alumno " + nombreApellido + ": " + e.getMessage());
                 }
-            } else {
+            }
+            
+            else {
                 System.out.println("Curso no encontrado para alumno " + nombreApellido + ": " + cursoID);
             }
         }
