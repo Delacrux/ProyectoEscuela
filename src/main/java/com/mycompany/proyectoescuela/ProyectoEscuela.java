@@ -170,17 +170,26 @@ public class ProyectoEscuela {
     public Profesor eliminarProfesor(String rutProfesor) {
         Profesor profesor = buscarProfesorSistema(rutProfesor);
         if (profesor != null) {
+            for ( Curso curso : listaCursos ) {
+                if (curso.getProfesorJefe() != null && curso.getProfesorJefe().equals(profesor)) {
+                    curso.setProfesorJefe(null);
+                }
+            }
             listaProfesores.remove(profesor);
             return profesor;
         }
         return null;
     }
     
-    public Alumno eliminarAlumno(String rutAlumno) {
+    public Alumno eliminarAlumno(String rutAlumno) throws AlumnoException {
         Alumno alumno = buscarAlumnoSistema(rutAlumno);
         if (alumno != null) {
-            listaAlumnos.remove(alumno);
-            return alumno;
+            Curso cursoAlumno = alumno.getCurso();
+            if (cursoAlumno != null) {
+                cursoAlumno.eliminarAlumno(alumno);
+                listaAlumnos.remove(alumno);
+                return alumno;
+            }
         }
         return null;
     }
@@ -188,6 +197,14 @@ public class ProyectoEscuela {
     public Curso eliminarCurso(String identificador) {
         Curso curso = buscarCursoSistema(identificador);
         if (curso != null) {
+            for ( Alumno alumno : listaAlumnos) {
+                if ( alumno.getCurso() != null && alumno.getCurso().equals(curso)) {
+                    alumno.setCurso(null);
+                }
+            }
+            for ( Profesor profesor : listaProfesores) {
+                profesor.getAsignaturasPorCurso().remove(curso);
+            }
             listaCursos.remove(curso);
             return curso;
         }
