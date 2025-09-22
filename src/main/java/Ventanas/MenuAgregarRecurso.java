@@ -142,7 +142,7 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
         if(!detalles.isEmpty() && !titulo.isEmpty() && !url.isEmpty()){
             RecursoDigital recurso = new RecursoDigital(titulo, url, detalles);
             control.agregarRecursoDigital(recurso, materiales);
-            padre.llenarTablaAsignaturas(materiales);
+            padre.llenarTablaAsignaturas();
             this.dispose();
         }
     }//GEN-LAST:event_botonAgregarActionPerformed

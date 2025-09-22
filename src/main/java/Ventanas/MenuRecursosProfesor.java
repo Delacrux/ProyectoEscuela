@@ -16,10 +16,10 @@ public class MenuRecursosProfesor extends javax.swing.JFrame {
         this.materiales = materiales;
         initComponents();
         tituloAsignatura.setText(asignatura);
-        llenarTablaAsignaturas(materiales);
+        llenarTablaAsignaturas();
     }
     
-    public void llenarTablaAsignaturas(ArrayList<RecursoDigital> materiales){
+    public void llenarTablaAsignaturas(){
         
         DefaultTableModel modelo = (DefaultTableModel) tablaRecursos.getModel();
         modelo.setRowCount(0); 
@@ -157,7 +157,7 @@ public class MenuRecursosProfesor extends javax.swing.JFrame {
                     if (recursoAEliminar != null) {
                         materiales.remove(recursoAEliminar);
                         control.eliminarRecursoDigital(recursoAEliminar, materiales); 
-                        llenarTablaAsignaturas(materiales);
+                        llenarTablaAsignaturas();
                     }
                 }
             }

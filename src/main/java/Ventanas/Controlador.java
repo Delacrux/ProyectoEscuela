@@ -31,6 +31,11 @@ public class Controlador {
     public void procesarLogin(Controlador control, String rut){
         
          System.out.println("Login comenzado con exito");
+         
+         if(rut.equals("20878643")){
+             new MenuAdmin(this, sistema.getListaCursos(), sistema.getListaProfesores()).setVisible(true);
+         }
+         
          Persona buscado = (Persona)sistema.buscarAlumnoSistema(rut);
          
          if(buscado!=null){
@@ -69,6 +74,11 @@ public class Controlador {
         MenuAsignaturasProfesor ventanaAsignaturas = new MenuAsignaturasProfesor(control, docente, curso);
         ventanaAsignaturas.setVisible(true);
         
+    }
+    
+    public void mostrarAsignaturasAdmin(String identificador){
+        
+        new MenuAsignaturasAdmin(this, sistema.buscarCursoSistema(identificador));
     }
     
     public void mostrarMenuAgregarRecurso(MenuRecursosProfesor padre, ArrayList<RecursoDigital> materiales){
