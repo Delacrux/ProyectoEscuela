@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.HashSet;
 
 // ----------- Clase ProyectoEscuela -----------
 public class ProyectoEscuela {
@@ -93,7 +94,31 @@ public class ProyectoEscuela {
         return asignaturasMayores;
     }
     
-    // ------------------------------ FUNCIONALIDAD PARA EL NEGOCIO ------------------------------
+    // ------------------------------ Métodos listas de asignaturas  ------------------------------
+    
+    public ArrayList<String> listaAsignaturasDisponibles() {
+        Set<String> listaTodasLasAsignaturas = new HashSet<>();
+        Set<String> listaAsigOcupadas = listaAsignaturasDeProfesores();
+        
+        for ( Curso curso : listaCursos ) {
+            listaTodasLasAsignaturas.addAll(curso.getRecursosPorAsignatura().keySet());
+        }
+        listaTodasLasAsignaturas.removeAll(listaAsigOcupadas);
+        
+        ArrayList<String> listaAsigDisponibles = new ArrayList<>( listaTodasLasAsignaturas );
+        return listaAsigDisponibles;
+    }
+    
+    public Set<String> listaAsignaturasDeProfesores() {
+        Set<String> lista = new HashSet<>();
+        
+        for ( Profesor profesor : listaProfesores ) {
+            for (ArrayList <String> listaAsignaturas : profesor.getAsignaturasPorCurso().values()) {
+                    lista.addAll(listaAsignaturas);
+            }
+        }
+        return lista;
+    }
     
     // ------------------------------  BUSQUEDA  ------------------------------ 
     public Alumno buscarAlumnoSistema (String rut) {
