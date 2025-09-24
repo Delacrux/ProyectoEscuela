@@ -76,14 +76,45 @@ public class Controlador {
         
     }
     
-    public void mostrarAsignaturasAdmin(String identificador){
+    public void mostrarAgregarProfesor(ArrayList<Curso> listaCursos){
         
+        new MenuAgregarProfesor(this, listaCursos).setVisible(true);
+    }
+    
+    public void mostrarAsignaturasAdmin(String identificador){
+
         new MenuAsignaturasAdmin(this, sistema.buscarCursoSistema(identificador));
+    }
+    
+    public void agregarProfesor(Profesor profesorNuevo){
+        sistema.getListaProfesores().add(profesorNuevo);
+    }
+    
+    public void eliminarProfesor(Profesor profesorEliminar){
+        sistema.getListaProfesores().remove(profesorEliminar);
     }
     
     public void mostrarMenuAgregarRecurso(MenuRecursosProfesor padre, ArrayList<RecursoDigital> materiales){
         
         new MenuAgregarRecurso(padre, this, materiales).setVisible(true);
+    }
+    
+    public ArrayList<String> asignaturasDisponibles(Curso curso){
+        
+        ArrayList<String> asignaturasDisponibles = sistema.listaAsignaturasDisponibles();
+        String[] asignaturasCurso = curso.getRecursosPorAsignatura().keySet().toArray(new String[0]);
+        ArrayList<String> asignaturasDisponiblesCurso = new ArrayList<>();
+        
+        for(int i = 0; i<asignaturasDisponibles.size(); i++){
+            for(int j = 0; j<asignaturasCurso.length; j++){
+                
+                if(asignaturasDisponibles.get(i).equals(asignaturasCurso[j])){
+                    asignaturasDisponiblesCurso.add(asignaturasCurso[j]);
+                }
+            }
+        }
+        
+        return asignaturasDisponiblesCurso;
     }
     
     public void agregarRecursoDigital(RecursoDigital recurso, ArrayList<RecursoDigital> materiales){
@@ -94,6 +125,7 @@ public class Controlador {
         
         materiales.remove(recurso);
     }
+    
     
     public static void main(String[] args){
         

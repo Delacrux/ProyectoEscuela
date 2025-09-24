@@ -18,6 +18,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         this.listaDeProfesores = listaDeProfesores;
         initComponents();
         llenarListaCursos();
+        llenarTablaProfesores();
     }
 
 
@@ -166,7 +167,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_listaCursosMouseClicked
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
-        control.mostrarAgregarProfesor();
+        control.mostrarAgregarProfesor(listaDeCursos);
     }//GEN-LAST:event_botonAgregarActionPerformed
 
     private void tablaProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProfesoresMouseClicked
@@ -187,7 +188,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                     Profesor profesorAEliminar = (Profesor)tablaProfesores.getValueAt(fila, 2);
 
                     if (profesorAEliminar != null) {
-                        control.eliminarRecursoDigital(profesorAEliminar); 
+                        control.eliminarProfesor(profesorAEliminar); 
                         llenarTablaProfesores();
                     }
                 }
@@ -209,7 +210,9 @@ public class MenuAdmin extends javax.swing.JFrame {
     public void llenarTablaProfesores(){
          DefaultTableModel modelo = (DefaultTableModel) tablaProfesores.getModel();
          modelo.setRowCount(0);
-
+         
+         
+         
          for (Profesor p : listaDeProfesores) {
              modelo.addRow(new Object[]{
                  p.getNombreApellido(),
