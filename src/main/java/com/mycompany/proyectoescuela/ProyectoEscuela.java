@@ -510,7 +510,42 @@ public class ProyectoEscuela {
         System.out.println("Error al leer Alumnos.csv: " + e.getMessage());
     }
 }
-    
+  public void llenadoDeAsignaturas(Curso curso)
+  {
+      try(Scanner sc = new Scanner (new File("data/Asignaturas.csv"))){
+      boolean primeraLinea = true; 
+      while(sc.hasNextLine()){
+          String linea = sc.nextLine();
+          if(primeraLinea){
+          primeraLinea = false;
+          continue;
+          }
+          String [] campos = linea.split(",");
+          if(campos.length  >= 5)
+          {
+              String cursoCSV  = campos[0].trim();
+              if(curso.getIdentificador().equals(cursoCSV)){
+                  String asignatura = campos[1].trim();
+                  String titulo  = campos[2].trim();
+                  String url = campos[3].trim();
+                  String detalle = campos[4].trim();
+                  
+                  try{
+                      curso.agregarAsignatura(asignatura);
+                      curso.agregarRecursoDigital(asignatura, new RecursoDigital(titulo, url,detalle));
+                  }catch (AsignaturaException e){
+                      System.out.println("Error al agregar Asignatura o recurso:  " + e.getMessage());
+                  }
+                  
+                  
+              }
+          }
+      }
+      
+      }catch(FileNotFoundException e){
+          System.out.println("Error al leer Asignaturas.csv:  " + e.getMessage());
+      }
+  }
     public void llenadoDeCursos(){
         try(Scanner sc  = new  Scanner(new File("data/Curso.csv"))){
             boolean  primeraLinea = true; 
@@ -521,39 +556,20 @@ public class ProyectoEscuela {
             continue; // salta  el encabezado
             }
             String identificador = linea.trim();
-            Curso curso = new Curso(null,identificador); // profesor se agrega después 
+            Curso curso = new Curso (null,identificador); 
             
-            //Asignaturas y recursos que tendría curso 
-            ArrayList<String> Asignaturas =new ArrayList<>();
-            switch(identificador){
-                case "1roA":
-                    Asignaturas.add("Matemáticas");
-                    Asignaturas.add("Lenguaje");
-                    break;
-                case "2doB":
-                    Asignaturas.add("Ciencia");
-                    Asignaturas.add("Historia");
-                    break;
-                case "3roC":
-                    Asignaturas.add("Física");
-                    Asignaturas.add("Biología");
-                    break;
-            }
+            llenadoDeAsignaturas(curso);
             
-            for(String a : Asignaturas){
-               try{
-                   curso.agregarAsignatura(a);
-                   curso.agregarRecursoDigital(a, new RecursoDigital("Guía de " + a,"pdfs/" + a.toLowerCase() + "_guia.pdf", "Material de apoyo para " + a));
-                   curso.agregarRecursoDigital(a, new RecursoDigital("Video de " + a,"Video/" + a.toLowerCase() + "_Video.mp4", "Clase grabada de  " + a));
-               }catch (AsignaturaException e) {
-                    System.out.println("Error al agregar recurso a la asignatura " + a + ": " + e.getMessage());
-                }
-            }
             listaCursos.add(curso);
             }
         }catch(FileNotFoundException e){
             System.out.println("Error al leer cursos.csv: " + e.getMessage());
         }
+    }
+    
+    public void guardadoDeDatos()
+    {
+        
     }
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
@@ -699,6 +715,7 @@ public class ProyectoEscuela {
        ProyectoEscuela sistema = new ProyectoEscuela();
        sistema.llenarDatos();
        sistema.menuInicial();
+       sistema.guardadoDeDatos();
        sistema.scanner.close();
     }
 }
