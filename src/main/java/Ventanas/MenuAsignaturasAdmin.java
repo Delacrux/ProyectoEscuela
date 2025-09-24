@@ -206,7 +206,29 @@ public class MenuAsignaturasAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAgregarAsigActionPerformed
 
     private void botonAgregarAlumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarAlumActionPerformed
-        // TODO add your handling code here:
+        JTextField nombre = new JTextField();
+        JTextField codigo = new JTextField();
+
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        panel.add(new JLabel("Nombre de la asignatura:"));
+        panel.add(nombre);
+        panel.add(new JLabel("Código:"));
+        panel.add(codigo);
+
+        int resultado = JOptionPane.showConfirmDialog(
+            this,
+            panel,
+            "Agregar nueva asignatura",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (resultado == JOptionPane.OK_OPTION) {
+            String nombreAsignatura = nombre.getText();
+            String codigoAsignatura = codigo.getText();
+            
+        }
+
+
     }//GEN-LAST:event_botonAgregarAlumActionPerformed
 
     private void listaAsignaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaAsignaturasMouseClicked
@@ -296,7 +318,7 @@ public class MenuAsignaturasAdmin extends javax.swing.JFrame {
 
     // Lanzar ventana
     SwingUtilities.invokeLater(() -> {
-        new MenuAsignaturasAdmin(control, prof, curso).setVisible(true);
+        //new MenuAsignaturasAdmin(control, prof, curso).setVisible(true);
     });
 }
 

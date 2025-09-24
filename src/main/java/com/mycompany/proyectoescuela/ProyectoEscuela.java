@@ -531,11 +531,16 @@ public class ProyectoEscuela {
                   String detalle = campos[4].trim();
                   
                   try{
-                      curso.agregarAsignatura(asignatura);
-                      curso.agregarRecursoDigital(asignatura, new RecursoDigital(titulo, url,detalle));
+                    curso.agregarAsignatura(asignatura);
                   }catch (AsignaturaException e){
-                      System.out.println("Error al agregar Asignatura o recurso:  " + e.getMessage());
+                      System.out.println("Error al agregar Asignatura:  " + e.getMessage());
                   }
+                  
+                  try{
+                    curso.agregarRecursoDigital(asignatura, new RecursoDigital(titulo, url,detalle));
+                  }catch(AsignaturaException error){
+                    System.out.println("Error al agregar recurso: "+ error);
+                  } 
                   
                   
               }
