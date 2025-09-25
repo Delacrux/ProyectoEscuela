@@ -64,6 +64,21 @@ public class Controlador {
         ventanaRecursos.setVisible(true);
     }
     
+    public AlumnoException eliminarAlumno(Alumno estudiante){
+        
+        try{
+            sistema.eliminarAlumno(estudiante.getRut());
+        }catch(AlumnoException e){
+            return e;
+        }
+        return null;
+    }
+    
+    public void agregarAlumno(Alumno estudiante){
+        
+         sistema.getListaAlumnos().add(estudiante);
+    }
+    
     public void mostrarRecursosProfesor(String nombre, ArrayList<RecursoDigital> recursos){
         MenuRecursosProfesor ventanaRecursos = new MenuRecursosProfesor(this, nombre, recursos);
         ventanaRecursos.setVisible(true);
@@ -83,7 +98,7 @@ public class Controlador {
     
     public void mostrarAsignaturasAdmin(String identificador){
 
-        new MenuAsignaturasAdmin(this, sistema.buscarCursoSistema(identificador));
+        new MenuAsignaturasAdmin(this, sistema.buscarCursoSistema(identificador)).setVisible(true);
     }
     
     public void agregarProfesor(Profesor profesorNuevo){
@@ -92,6 +107,17 @@ public class Controlador {
     
     public void eliminarProfesor(Profesor profesorEliminar){
         sistema.getListaProfesores().remove(profesorEliminar);
+    }
+    
+    public void eliminarAsignaturaDeProfesores(String asignatura){
+        ArrayList<Profesor> listaProfesores = sistema.getListaProfesores();
+        
+        for(Profesor profe : listaProfesores){
+            for(ArrayList<String> listaAsignaturas : profe.getAsignaturasPorCurso().values()){
+                listaAsignaturas.remove(asignatura);
+            }
+        }
+        
     }
     
     public void mostrarMenuAgregarRecurso(MenuRecursosProfesor padre, ArrayList<RecursoDigital> materiales){
@@ -135,6 +161,7 @@ public class Controlador {
             }
         });
     }
+
         
 }
     

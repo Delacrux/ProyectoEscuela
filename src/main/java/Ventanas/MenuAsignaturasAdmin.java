@@ -8,6 +8,7 @@ public class MenuAsignaturasAdmin extends javax.swing.JFrame {
     
     private Curso curso;
     private Controlador control;
+    private Alumno estudiante;
     
     public MenuAsignaturasAdmin(Controlador control, Curso curso) {
         this.control = control;
@@ -39,7 +40,6 @@ public class MenuAsignaturasAdmin extends javax.swing.JFrame {
 
         listaAlumnos.setModel(modelo);
         listaAlumnos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
     }
     
     /**
@@ -131,18 +131,15 @@ public class MenuAsignaturasAdmin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(botonAgregarAsig)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(botonAgregarAsig)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botonEliminarAsig))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(tituloAsignaturas)))
+                            .addComponent(tituloAsignaturas)
+                            .addComponent(botonEliminarAsig))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
@@ -155,18 +152,18 @@ public class MenuAsignaturasAdmin extends javax.swing.JFrame {
                             .addComponent(jScrollPane2))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                         .addComponent(tituloAlumnos)
-                        .addGap(112, 112, 112))))
+                        .addGap(122, 122, 122))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tituloAsignaturas)
-                    .addComponent(tituloAlumnos))
-                .addGap(3, 3, 3)
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tituloAsignaturas, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tituloAlumnos, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botonAgregarAlum)
@@ -203,18 +200,25 @@ public class MenuAsignaturasAdmin extends javax.swing.JFrame {
             }
 
         }
+        mostrarPanelAsignaturas();
     }//GEN-LAST:event_botonAgregarAsigActionPerformed
 
     private void botonAgregarAlumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarAlumActionPerformed
         JTextField nombre = new JTextField();
-        JTextField codigo = new JTextField();
-
+        JTextField rut = new JTextField();
+        JTextField correo = new JTextField();
+        JTextField telefono = new JTextField();
+        
         JPanel panel = new JPanel(new GridLayout(0, 1));
-        panel.add(new JLabel("Nombre de la asignatura:"));
+        panel.add(new JLabel("Nombre del Alumno:"));
         panel.add(nombre);
-        panel.add(new JLabel("Código:"));
-        panel.add(codigo);
-
+        panel.add(new JLabel("Rut del Alumno:"));
+        panel.add(rut);
+        panel.add(new JLabel("Correo del Alumno:"));
+        panel.add(correo);
+        panel.add(new JLabel("Numero de telefono del Alumno:"));
+        panel.add(telefono);
+        
         int resultado = JOptionPane.showConfirmDialog(
             this,
             panel,
@@ -223,40 +227,88 @@ public class MenuAsignaturasAdmin extends javax.swing.JFrame {
         );
 
         if (resultado == JOptionPane.OK_OPTION) {
-            String nombreAsignatura = nombre.getText();
-            String codigoAsignatura = codigo.getText();
-            
+            String nombreAlumno = nombre.getText();
+            String rutAlumno = rut.getText();
+            String correoAlumno = correo.getText();
+            String telefonoAlumno = telefono.getText();
+            estudiante = new Alumno(rutAlumno, nombreAlumno, correoAlumno, telefonoAlumno, curso);
         }
-
+        
+        try{
+            curso.agregarAlumno(estudiante);
+            
+        }catch(AlumnoException e){
+            JOptionPane.showMessageDialog(this, "Error al agregar alumno: " + e);
+        }
+        
+        mostrarPanelAlumnos();
 
     }//GEN-LAST:event_botonAgregarAlumActionPerformed
 
     private void listaAsignaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaAsignaturasMouseClicked
-         listaAsignaturas.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
+        if(evt.getClickCount()==2){
                 String asignatura = listaAsignaturas.getSelectedValue();
                 ArrayList<RecursoDigital> recursos = curso.getRecursosPorAsignatura().get(asignatura);
                 control.mostrarRecursosProfesor(asignatura, recursos);
             }
-        });
     }//GEN-LAST:event_listaAsignaturasMouseClicked
 
     private void botonEliminarAsigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarAsigActionPerformed
-        // TODO add your handling code here:
+        
+        String asignatura = listaAsignaturas.getSelectedValue();
+        
+        try{
+            curso.eliminarAsignatura(asignatura);
+            control.eliminarAsignaturaDeProfesores(asignatura);
+        }catch(AsignaturaException e){
+            JOptionPane.showMessageDialog(this, "Error al eliminar Asignatura: " + e);
+        }
+        
+        mostrarPanelAsignaturas();
     }//GEN-LAST:event_botonEliminarAsigActionPerformed
 
     private void botonEliminarAlumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarAlumActionPerformed
-        // TODO add your handling code here:
+        
+        String nombre = listaAlumnos.getSelectedValue();
+        ArrayList<Alumno> lista = curso.getListaAlumnos();
+        Alumno alumno = null;
+        for(Alumno a : lista){
+            if(a.getNombreApellido().equals(nombre)){
+                alumno = a;
+                break;
+            }
+        }
+            
+        try{
+            curso.eliminarAlumno(alumno);
+            AlumnoException error = control.eliminarAlumno(alumno);
+            if(error!=null){
+                JOptionPane.showMessageDialog(this, "Error al eliminar Alumno: " + error);
+            }
+        }catch(AlumnoException e){
+            JOptionPane.showMessageDialog(this, "Error al eliminar Alumno: " + e);
+        }
+        
+        mostrarPanelAlumnos();
     }//GEN-LAST:event_botonEliminarAlumActionPerformed
 
     private void listaAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaAlumnosMouseClicked
-        // TODO add your handling code here:
+        
+        String nombre = listaAlumnos.getSelectedValue();
+        ArrayList<Alumno> lista = curso.getListaAlumnos();
+        Alumno alumno = null;
+        for(Alumno a : lista){
+            if(a.getNombreApellido().equals(nombre)){
+                alumno = a;
+                break;
+            }
+        }
+        
+        if(evt.getClickCount()==2){
+            JOptionPane.showMessageDialog(this, alumno.mostrarDatos(), "Datos del Alumno", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_listaAlumnosMouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
-    
+  
     public static void main(String[] args) {
     // Crear profesor
     Profesor prof = new Profesor(
@@ -321,8 +373,6 @@ public class MenuAsignaturasAdmin extends javax.swing.JFrame {
         //new MenuAsignaturasAdmin(control, prof, curso).setVisible(true);
     });
 }
-
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregarAlum;

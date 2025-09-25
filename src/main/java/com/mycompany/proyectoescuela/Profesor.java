@@ -45,12 +45,14 @@ public class Profesor extends Persona{
     }
     
     @Override
-    public void mostrarDatos(){
-        System.out.println("Rut: " + rut);
-        System.out.println("Profesor: " + nombreApellido);
-        System.out.println("Especialidad: " + especialidad);
-        System.out.println("Correo: " + correo);
-        System.out.println("Telefono:" + telefono);
+    public String mostrarDatos()
+    {
+        String mensaje = "Nombre: " + nombreApellido + "\n"
+               + "Rut: " + rut + "\n"
+               + "Especialidad: " + especialidad + "\n"
+               + "Correo: " + correo + "\n"
+               + "Numero de Telefono: " + telefono + "\n";
+        return mensaje;
     }
     
 }

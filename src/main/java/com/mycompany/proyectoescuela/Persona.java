@@ -47,12 +47,13 @@ public class Persona {
     }
     
     // --------------- Metodos ---------------
-    public void mostrarDatos()
+    public String mostrarDatos()
     {
-        System.out.println("Rut: " + rut);
-        System.out.println("Nombre " + nombreApellido);
-        System.out.println("Correo: " + correo);
-        System.out.println("Telefono: " + telefono);
+        String mensaje = "Nombre: " + nombreApellido + "\n"
+               + "Rut: " + rut + "\n"
+               + "Correo: " + correo + "\n"
+               + "Numero de Telefono: " + telefono + "\n";
+        return mensaje;
     }
     
 }

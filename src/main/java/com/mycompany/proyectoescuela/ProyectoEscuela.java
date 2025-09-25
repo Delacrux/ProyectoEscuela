@@ -161,8 +161,8 @@ public class ProyectoEscuela {
         return null;
     }
    
-    public Alumno crearYAgregarAlumno(String rut, String nombreApellido, String correo, String telefono, String curso)  throws AlumnoException {
-        Curso cursoAlumno = buscarCursoSistema(curso);
+    public Alumno crearYAgregarAlumno(String rut, String nombreApellido, String correo, String telefono, Curso curso)  throws AlumnoException {
+        Curso cursoAlumno = buscarCursoSistema(curso.getIdentificador());
         if (buscarAlumnoSistema(rut) == null && cursoAlumno != null) {
             Alumno nuevoAlumno = new Alumno(rut, nombreApellido, correo, telefono, cursoAlumno);
             listaAlumnos.add(nuevoAlumno);
@@ -204,7 +204,7 @@ public class ProyectoEscuela {
         }
     }
     
-    public void gestionarCrearAlumno() {
+    /*public void gestionarCrearAlumno() {
         System.out.println("rut alumno");
         String rut =  scanner.nextLine();
         System.out.println("nombre alumno");
@@ -227,7 +227,7 @@ public class ProyectoEscuela {
         } catch (AlumnoException e) {
             System.out.println("Error " + e.getMessage());
         }
-    }
+    }*/
     
     public void gestionarCrearCurso() {
         System.out.println("Identificador del curso");

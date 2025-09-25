@@ -21,13 +21,14 @@ public class Alumno extends Persona{
     
     // --------------- Metodos ---------------
     @Override
-    public void mostrarDatos()
+    public String mostrarDatos()
     {
-        System.out.println("Rut del alumno: " + rut);
-        System.out.println("Nombre del alumno: " + nombreApellido);
-        System.out.println("Curso del alumno: " + curso.getIdentificador());
-        System.out.println("Correo del  alumno : " + correo);
-        System.out.println("Telefono del alumno : " + telefono);
+        String mensaje = "Nombre: " + nombreApellido + "\n"
+               + "Rut: " + rut + "\n"
+               + "Curso: " + curso.getIdentificador() + "\n"
+               + "Correo: " + correo + "\n"
+               + "Numero de telefono: " + telefono + "\n";
+        return mensaje;
     }
     
 }
