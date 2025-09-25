@@ -1,10 +1,15 @@
 package com.mycompany.proyectoescuela;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -432,7 +437,7 @@ public class ProyectoEscuela {
 
             Profesor profesor = new Profesor(rut, nombreApellido, especialidad, correo, telefono);
 
-            // Buscar un curso sin profesor jefe
+            
             Curso cursoAsignado = null;
             for (Curso c : listaCursos) {
                 if (c.getProfesorJefe() == null) {
@@ -444,7 +449,7 @@ public class ProyectoEscuela {
             if (cursoAsignado != null) {
                 cursoAsignado.setProfesorJefe(profesor);
 
-                // Copiar asignaturas del curso al profesor
+                
                 HashMap<Curso, ArrayList<String>> mapa = profesor.getAsignaturasPorCurso();
                 mapa.put(cursoAsignado, new ArrayList<>(cursoAsignado.getRecursosPorAsignatura().keySet()));
 
@@ -482,7 +487,7 @@ public class ProyectoEscuela {
             String telefono = campos[3].trim();
             String cursoID = campos[4].trim();
 
-            // Buscar el curso correspondiente
+            
             Curso cursoAsignado = null;
             for (Curso c : listaCursos) {
                 if (c.getIdentificador().equalsIgnoreCase(cursoID)) {
@@ -510,47 +515,48 @@ public class ProyectoEscuela {
         System.out.println("Error al leer Alumnos.csv: " + e.getMessage());
     }
 }
-  public void llenadoDeAsignaturas(Curso curso)
-  {
-      try(Scanner sc = new Scanner (new File("data/Asignaturas.csv"))){
-      boolean primeraLinea = true; 
-      while(sc.hasNextLine()){
-          String linea = sc.nextLine();
-          if(primeraLinea){
-          primeraLinea = false;
-          continue;
-          }
-          String [] campos = linea.split(",");
-          if(campos.length  >= 5)
-          {
-              String cursoCSV  = campos[0].trim();
-              if(curso.getIdentificador().equals(cursoCSV)){
-                  String asignatura = campos[1].trim();
-                  String titulo  = campos[2].trim();
-                  String url = campos[3].trim();
-                  String detalle = campos[4].trim();
-                  
-                  try{
-                    curso.agregarAsignatura(asignatura);
-                  }catch (AsignaturaException e){
-                      System.out.println("Error al agregar Asignatura:  " + e.getMessage());
-                  }
-                  
-                  try{
-                    curso.agregarRecursoDigital(asignatura, new RecursoDigital(titulo, url,detalle));
-                  }catch(AsignaturaException error){
-                    System.out.println("Error al agregar recurso: "+ error);
-                  } 
-                  
-                  
-              }
-          }
-      }
-      
-      }catch(FileNotFoundException e){
-          System.out.println("Error al leer Asignaturas.csv:  " + e.getMessage());
-      }
-  }
+public void llenadoDeAsignaturas(Curso curso) {
+    try (Scanner sc = new Scanner(new File("data/Asignaturas.csv"))) {
+        boolean primeraLinea = true;
+        while (sc.hasNextLine()) {
+            String linea = sc.nextLine();
+            if (primeraLinea) {
+                primeraLinea = false;
+                continue;
+            }
+            String[] campos = linea.split(",");
+            if (campos.length >= 5) {
+                String cursoCSV = campos[0].trim();
+                if (curso.getIdentificador().equals(cursoCSV)) {
+                    String asignatura = campos[1].trim();
+
+                    if (!curso.getRecursosPorAsignatura().containsKey(asignatura)) {
+                        String titulo = campos[2].trim();
+                        String url = campos[3].trim();
+                        String detalle = campos[4].trim();
+
+                        try {
+                            curso.agregarAsignatura(asignatura);
+                            System.out.println("Asignatura " + asignatura + " agregada correctamente al curso " + curso.getIdentificador());
+                        } catch (AsignaturaException e) {
+                            System.out.println("Error al agregar Asignatura: " + e.getMessage());
+                        }
+
+                        try {
+                            curso.agregarRecursoDigital(asignatura, new RecursoDigital(titulo, url, detalle));
+                        } catch (AsignaturaException error) {
+                            System.out.println("Error al agregar recurso: " + error);
+                        }
+                    }
+                }
+            }
+        }
+    } catch (FileNotFoundException e) {
+        System.out.println("Error al leer Asignaturas.csv: " + e.getMessage());
+    }
+}
+
+
     public void llenadoDeCursos(){
         try(Scanner sc  = new  Scanner(new File("data/Curso.csv"))){
             boolean  primeraLinea = true; 
@@ -571,120 +577,119 @@ public class ProyectoEscuela {
             System.out.println("Error al leer cursos.csv: " + e.getMessage());
         }
     }
+  
+ public void guardarCursos() {
+    File carpeta = new File("data");
+    if (!carpeta.exists()) {
+        carpeta.mkdir();
+    }
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/Curso.csv"))) {
+        bw.write("Identificador");
+        bw.newLine();
+
+        for (Curso curso : listaCursos) {
+            bw.write(curso.getIdentificador());
+            bw.newLine();
+        }
+        System.out.println("Cursos guardados correctamente.");
+    } catch (IOException e) {
+        System.out.println("Error al guardar cursos: " + e.getMessage());
+    }
+}
+
+public void guardarAlumnos() {
+    File carpeta = new File("data");
+    if (!carpeta.exists()) {
+        carpeta.mkdir();
+    }
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/Alumnos.csv"))) {
+        bw.write("Rut,NombreApellido,Correo,Telefono,Curso");
+        bw.newLine();
+
+        for (Alumno alumno : listaAlumnos) {
+            String linea = String.join(",",
+                alumno.getRut(),
+                alumno.getNombreApellido(),
+                alumno.getCorreo(),
+                alumno.getTelefono(),
+                alumno.getCurso().getIdentificador()
+            );
+            bw.write(linea);
+            bw.newLine();
+        }
+        System.out.println("Alumnos guardados correctamente.");
+    } catch (IOException e) {
+        System.out.println("Error al guardar alumnos: " + e.getMessage());
+    }
+}
     
+public void guardarAsignaturas() {
+    StringBuilder contenido = new StringBuilder();
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/asignaturas.csv"))) {
+        String encabezado = "NombreAsignatura";
+        bw.write(encabezado);
+        bw.newLine();
+        contenido.append(encabezado).append("\n");
+
+        ArrayList<String> listaAsignaturas = listaAsignaturasDisponibles();
+        for (String asignatura : listaAsignaturas) {
+            bw.write(asignatura);
+            bw.newLine();
+            contenido.append(asignatura).append("\n");
+        }
+        System.out.println("Asignaturas guardadas correctamente.");
+        System.out.println("Contenido guardado:\n" + contenido.toString());
+    } catch (IOException e) {
+        System.out.println("Error al guardar asignaturas: " + e.getMessage());
+    }
+}
+
+public void leerAsignaturasGuardadas() {
+        File carpeta = new File("data");
+        if (!carpeta.exists()) {
+            carpeta.mkdir();
+        }
+    try (BufferedReader br = new BufferedReader(new FileReader("data/asignaturas.csv"))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            System.out.println(linea);
+        }
+    } catch (IOException e) {
+        System.out.println("Error al leer asignaturas guardadas: " + e.getMessage());
+    }
+}
+
+
+    public void guardarProfesores(){
+        File carpeta = new File("data");
+        if (!carpeta.exists()) {
+            carpeta.mkdir();
+        }
+        try(BufferedWriter bw  = new BufferedWriter(new FileWriter ("data/profesores.csv"))){
+            bw.write("Rut,NombreApellido,Especialidad,Correo,Telefono");
+            bw.newLine();
+            
+            for (Profesor profe: listaProfesores){
+            String linea = String.join(",",profe.getRut(), profe.getNombreApellido(),profe.getEspecialidad(),
+                    profe.getCorreo(), profe.getTelefono()
+            );
+            bw.write(linea);
+            bw.newLine();
+            }
+        }catch(IOException e ){
+            System.out.println("Error al guardar profesores:  " + e.getMessage());
+        }
+        
+    }
     public void guardadoDeDatos()
     {
-        
-    }
-    // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
-    /*
-    public void menuAlumno (Alumno alumno) {
-        Curso cursoAlumno = alumno.getCurso();
-        System.out.println("Bienvenido(a): " + alumno.getNombreApellido());
-        System.out.println("Curso: " + cursoAlumno.getIdentificador());
-        System.out.println();
-        System.out.println("Seleccione una asignatura para ver más detalles");
-        
-        int opcion = scanner.nextInt();
-        
-        menuAsignaturaAlumno(materia, alumno);
-    }
-     // ------------------------------------------------------------- MENU ALUMNO -------------------------------------------------------------
-    public void menuAsignaturaAlumno(Asignatura materia, Alumno alumno) {
-        int opcion;
-        do {
-            System.out.println("Asignatura: " + materia.getNombreAsignatura());
-            System.out.println();
-            System.out.println("Seleccione una opción");
-            System.out.println("1. Ver notas.");
-            System.out.println("2. Ver material digital");
-            System.out.println("3. Ver contacto profesor.");
-            System.out.println("4. Volver atrás");
-            System.out.println();
-        
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-
-            switch(opcion) {
-                case 1:
-                    materia.mostrarNotasAlumnos();
-                    break;
-                case 2:
-                    materia.mostrarRecursosDigitales();
-                    break;
-                case 3:
-                    Profesor profesorAsignatura = materia.getProfesorJefe();
-                    profesorAsignatura.informacionContactoProfesor();
-                    break;
-                case 4:
-                    break;
-                default:
-                    System.out.println("Opción no válida");
-            }
-        } while (opcion != 4);
-    }
-  
-    // ------------------------------------------------------------- MENU PROFESOR -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU PROFESOR -------------------------------------------------------------
-    // ------------------------------------------------------------- MENU PROFESOR -----------------------------------------------------------
-    public void menuProfesor(Profesor profesor) {
-        System.out.println("Bienvenido(a): " + profesor.getNombreApellido());
-        System.out.println();
-        System.out.println("Seleccione un curso para ver más detalles");
-        ArrayList <Curso> lista = mostrarCursosProfesor(profesor);
-        
-        int opcion = scanner.nextInt();
-        scanner.nextLine();
-        
-        Curso cursoSeleccionado = lista.get(opcion - 1);
-        menuCursoProfesor(profesor, cursoSeleccionado);
+        guardarProfesores();
+        guardarAlumnos();
+        guardarCursos();
+        guardarAsignaturas();
+        leerAsignaturasGuardadas();
     }
     
-     // ------------------------------------------------------------- MENU PROFESOR -------------------------------------------------------------
-    
-    public void menuCursoProfesor(Profesor profesor, Curso curso) {
-        System.out.println("Seleccione una asignatura para ver más detalles");
-        ArrayList<String> lista = mostrarAsignaturas(profesor, curso);
-        
-        int opcion = scanner.nextInt();
-        scanner.nextLine();
-        
-        String asignaturaSeleccionada = lista.get(opcion - 1);
-        menuAsignaturaProfesor(curso, asignaturaSeleccionada);
-    }
-    
-    public void menuAsignaturaProfesor(Curso curso, String asignatura) {
-        int opcion;
-        do{
-            System.out.println("Asignatura: " + asignatura);
-            System.out.println();
-            System.out.println("Seleccione una opción");
-            System.out.println("1. Ver material digital.");
-            System.out.println("2. Agregar material digital.");
-            System.out.println("3. Eliminar material digital.");
-            System.out.println("4. Volver atrás.");
-            System.out.println();
-        
-            opcion = scanner.nextInt();
-            scanner.nextLine();
-            
-            switch(opcion) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                default:
-                    System.out.println("Opción no válida");
-            }
-        }while(opcion != 3);
-    }
-    */
 
     // ------------------------------------------------------------- LOGIN -------------------------------------------------------------
     
