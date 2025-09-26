@@ -1,4 +1,4 @@
-package com.mycompany.proyectoescuela;
+package Modelo;
 
 public class Alumno extends Persona{
     // --------------- Atributos ---------------

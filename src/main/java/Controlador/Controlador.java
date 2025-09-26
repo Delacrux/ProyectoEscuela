@@ -1,6 +1,22 @@
-package Ventanas;
+package Controlador;
 
-import com.mycompany.proyectoescuela.*;
+import Modelo.Persona;
+import Modelo.ProyectoEscuela;
+import Modelo.Curso;
+import Modelo.Profesor;
+import Modelo.Alumno;
+import Modelo.AlumnoException;
+import Modelo.RecursoDigital;
+import Vista.MenuAdmin;
+import Vista.MenuAgregarProfesor;
+import Vista.MenuAgregarRecurso;
+import Vista.MenuAsignaturasAdmin;
+import Vista.MenuAsignaturasAlumno;
+import Vista.MenuAsignaturasProfesor;
+import Vista.MenuCursosProfesor;
+import Vista.MenuLogin;
+import Vista.MenuRecursosAlumno;
+import Vista.MenuRecursosProfesor;
 import java.util.*;
 
 

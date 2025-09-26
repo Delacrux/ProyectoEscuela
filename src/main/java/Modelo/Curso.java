@@ -1,4 +1,4 @@
-package com.mycompany.proyectoescuela;
+package Modelo;
 
 import java.util.HashMap;
 import java.util.ArrayList;

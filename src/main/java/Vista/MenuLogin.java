@@ -1,4 +1,6 @@
-package Ventanas;
+package Vista;
+
+import Controlador.Controlador;
 
 public class MenuLogin extends javax.swing.JFrame {
     

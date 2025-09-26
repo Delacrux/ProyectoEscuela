@@ -1,6 +1,8 @@
-package Ventanas;
+package Vista;
 
-import com.mycompany.proyectoescuela.*;
+import Modelo.Curso;
+import Modelo.Profesor;
+import Controlador.Controlador;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

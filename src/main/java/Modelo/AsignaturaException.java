@@ -1,4 +1,4 @@
-package com.mycompany.proyectoescuela;
+package Modelo;
 
 public class AsignaturaException extends Exception {
     public AsignaturaException(String mensaje){

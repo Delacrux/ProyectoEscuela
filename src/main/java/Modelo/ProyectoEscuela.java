@@ -1,4 +1,4 @@
-package com.mycompany.proyectoescuela;
+package Modelo;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -102,15 +102,14 @@ public class ProyectoEscuela {
     // ------------------------------ Métodos listas de asignaturas  ------------------------------
     
     public ArrayList<String> listaAsignaturasDisponibles() {
-        Set<String> listaTodasLasAsignaturas = new HashSet<>();
         Set<String> listaAsigOcupadas = listaAsignaturasDeProfesores();
         
-        for ( Curso curso : listaCursos ) {
-            listaTodasLasAsignaturas.addAll(curso.getRecursosPorAsignatura().keySet());
-        }
-        listaTodasLasAsignaturas.removeAll(listaAsigOcupadas);
+        ArrayList<String> listaTodasLasAsignaturas = listaAsignaturasTotales();
+        Set<String> todasLasAsignaturasSet = new HashSet<>(listaTodasLasAsignaturas);
+         
+        todasLasAsignaturasSet.removeAll(listaAsigOcupadas);
         
-        ArrayList<String> listaAsigDisponibles = new ArrayList<>( listaTodasLasAsignaturas );
+        ArrayList<String> listaAsigDisponibles = new ArrayList<>( todasLasAsignaturasSet );
         return listaAsigDisponibles;
     }
     
@@ -122,6 +121,15 @@ public class ProyectoEscuela {
                     lista.addAll(listaAsignaturas);
             }
         }
+        return lista;
+    }
+    
+    public ArrayList<String> listaAsignaturasTotales() {
+        Set<String> listaTodasLasAsignaturas = new HashSet<>();
+        for ( Curso curso : listaCursos ) {
+            listaTodasLasAsignaturas.addAll(curso.getRecursosPorAsignatura().keySet());
+        }
+        ArrayList<String> lista = new ArrayList<>( listaTodasLasAsignaturas );
         return lista;
     }
     

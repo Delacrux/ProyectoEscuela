@@ -1,6 +1,8 @@
-package Ventanas;
+package Vista;
+import Modelo.Alumno;
+import Modelo.RecursoDigital;
+import Controlador.Controlador;
 import javax.swing.*;
-import com.mycompany.proyectoescuela.*;
 import java.awt.*;
 import java.util.*;
 

@@ -1,6 +1,7 @@
-package Ventanas;
+package Vista;
 
-import com.mycompany.proyectoescuela.*;
+import Modelo.RecursoDigital;
+import Controlador.Controlador;
 import java.util.*;
 
 public class MenuAgregarRecurso extends javax.swing.JFrame {

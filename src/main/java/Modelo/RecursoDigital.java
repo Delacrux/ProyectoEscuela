@@ -1,4 +1,4 @@
-package com.mycompany.proyectoescuela;
+package Modelo;
 
 public class RecursoDigital {
     // --------------- Atributos  ---------------

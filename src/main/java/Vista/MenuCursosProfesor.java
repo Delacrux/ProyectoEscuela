@@ -1,5 +1,9 @@
-package Ventanas;
-import com.mycompany.proyectoescuela.*;
+package Vista;
+import Modelo.AsignaturaException;
+import Modelo.Curso;
+import Modelo.Profesor;
+import Modelo.RecursoDigital;
+import Controlador.Controlador;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.*;
