@@ -1,12 +1,8 @@
 package Vista;
-import Modelo.AsignaturaException;
 import Modelo.Curso;
 import Modelo.Profesor;
-import Modelo.RecursoDigital;
 import Controlador.Controlador;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.*;
 import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,7 +15,9 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
         this.docente = docente;
         this.control = control;
         initComponents();
+        Bienvenida.setText("Bienvenido/a profesor/a " + docente.getNombreApellido());
         llenarTablaCursos(docente.getAsignaturasPorCurso().keySet());
+        llenarDatosProfesor();
 
     }
 
@@ -49,6 +47,11 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
          
     }
 
+    public void llenarDatosProfesor(){
+        datosProfesor.setText(docente.mostrarDatos());
+        datosProfesor.setEditable(false);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -56,11 +59,16 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaCursos = new javax.swing.JTable();
+        Bienvenida = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        datosProfesor = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        Volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 48)); // NOI18N
-        jLabel1.setText("Cursos");
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        jLabel1.setText("Cursos donde imparte clases");
 
         tablaCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -97,117 +105,90 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
             tablaCursos.getColumnModel().getColumn(2).setMaxWidth(0);
         }
 
+        Bienvenida.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
+        Bienvenida.setText("jLabel2");
+
+        datosProfesor.setColumns(20);
+        datosProfesor.setFont(new java.awt.Font("Sans Serif Collection", 0, 18)); // NOI18N
+        datosProfesor.setRows(5);
+        jScrollPane2.setViewportView(datosProfesor);
+
+        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        jLabel2.setText("Datos del docente:");
+
+        Volver.setBackground(new java.awt.Color(102, 102, 102));
+        Volver.setText("VOLVER");
+        Volver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Volver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                VolverMouseClicked(evt);
+            }
+        });
+        Volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(278, 278, 278)
-                        .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                        .addComponent(Bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuCursosProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuCursosProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuCursosProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuCursosProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-            // Crear el profesor
-        Profesor prof = new Profesor(
-            "12345678-9",
-            "Israel González",
-            "Matemáticas",
-            "israel@colegio.cl",
-            "+56912345678"
-        );
+    private void VolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VolverMouseClicked
 
-        // Crear el curso y asignarlo como jefe
-        Curso curso = new Curso(prof, "4to Medio A");
-        prof.setAsignaturasPorCurso(new HashMap<>()); // aseguramos que esté limpio
-        curso.setProfesorJefe(prof);
+    }//GEN-LAST:event_VolverMouseClicked
 
-        // Agregar asignaturas al curso
-        try {
-            curso.agregarAsignatura("Matemáticas");
-            curso.agregarAsignatura("Física");
-        } catch (AsignaturaException e) {
-            e.printStackTrace();
-        }
-
-        // Crear recursos digitales
-        RecursoDigital recurso1 = new RecursoDigital(
-            "Guía Álgebra",
-            "https://recursos.edu/matematicas/algebra.pdf",
-            "Ejercicios de factorización y ecuaciones"
-        );
-
-        RecursoDigital recurso2 = new RecursoDigital(
-            "Simulador Movimiento",
-            "https://simuladores.edu/fisica/movimiento",
-            "Simula trayectorias y aceleración"
-        );
-
-        // Agregar recursos a asignaturas
-        try {
-            curso.agregarRecursoDigital("Matemáticas", recurso1);
-            curso.agregarRecursoDigital("Física", recurso2);
-        } catch (AsignaturaException e) {
-            e.printStackTrace();
-        }
-
-        // Asociar asignaturas al profesor
-        ArrayList<String> asignaturasDelCurso = new ArrayList<>();
-        asignaturasDelCurso.add("Matemáticas");
-        asignaturasDelCurso.add("Física");
-        prof.getAsignaturasPorCurso().put(curso, asignaturasDelCurso);
-
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new MenuCursosProfesor(prof).setVisible(true);
-            }
-        });
-    }
+    private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_VolverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Bienvenida;
+    private javax.swing.JButton Volver;
+    private javax.swing.JTextArea datosProfesor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaCursos;
     // End of variables declaration//GEN-END:variables
 }

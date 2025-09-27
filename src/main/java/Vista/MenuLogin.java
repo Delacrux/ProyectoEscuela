@@ -37,7 +37,7 @@ public class MenuLogin extends javax.swing.JFrame {
             }
         });
 
-        botonEnviar.setBackground(new java.awt.Color(0, 0, 102));
+        botonEnviar.setBackground(new java.awt.Color(19, 19, 63));
         botonEnviar.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         botonEnviar.setText("LOGIN");
         botonEnviar.addActionListener(new java.awt.event.ActionListener() {

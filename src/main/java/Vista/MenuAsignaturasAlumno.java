@@ -1,9 +1,8 @@
 package Vista;
-import Modelo.Alumno;
+import Modelo.*;
 import Modelo.RecursoDigital;
 import Controlador.Controlador;
 import javax.swing.*;
-import java.awt.*;
 import java.util.*;
 
 public class MenuAsignaturasAlumno extends javax.swing.JFrame {
@@ -14,6 +13,7 @@ public class MenuAsignaturasAlumno extends javax.swing.JFrame {
     public MenuAsignaturasAlumno(Controlador control, Alumno estudiante) {
         this.estudiante = estudiante;
         this.control = control;
+        bienvenida.setText("Bienvenido/a " + estudiante.getNombreApellido());
         initComponents();
         mostrarPanelAsignaturas();
         
@@ -25,49 +25,78 @@ public class MenuAsignaturasAlumno extends javax.swing.JFrame {
             modelo.addElement(a);
         }
 
-        JList<String> lista = new JList<>(modelo);
-        lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listaAsignaturas.setModel(modelo);
+        listaAsignaturas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        lista.addListSelectionListener(e -> {
+        listaAsignaturas.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                String index = lista.getSelectedValue();
+                String index = listaAsignaturas.getSelectedValue();
                 ArrayList<RecursoDigital> recursos = estudiante.getCurso().getRecursosPorAsignatura().get(index);
                 control.mostrarRecursosAlumno(index, recursos);
             }
         });
 
-        JScrollPane scroll = new JScrollPane(lista);
-        scroll.setPreferredSize(new Dimension(200, 150));
-        panelAsignaturas.setLayout(new BorderLayout());
-        panelAsignaturas.add(scroll, BorderLayout.CENTER);
-        panelAsignaturas.revalidate();
-        panelAsignaturas.repaint(); 
-
     }
     
+    public void mostrarDatosAlumno(){
+        datosAlumno.setText( ((Persona)estudiante).mostrarDatos() );
+        datosAlumno.setEditable(false); // para que no se pueda modificar
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Volver = new javax.swing.JButton();
         tituloAsignaturas = new javax.swing.JLabel();
-        panelAsignaturas = new javax.swing.JPanel();
+        bienvenida = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaAsignaturas = new javax.swing.JList<>();
+        tituloDatos = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        datosAlumno = new javax.swing.JTextArea();
+        tituloCurso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tituloAsignaturas.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
-        tituloAsignaturas.setText("ASIGNATURAS");
+        Volver.setBackground(new java.awt.Color(102, 102, 102));
+        Volver.setText("VOLVER");
+        Volver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Volver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                VolverMouseClicked(evt);
+            }
+        });
+        Volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VolverActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout panelAsignaturasLayout = new javax.swing.GroupLayout(panelAsignaturas);
-        panelAsignaturas.setLayout(panelAsignaturasLayout);
-        panelAsignaturasLayout.setHorizontalGroup(
-            panelAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 687, Short.MAX_VALUE)
-        );
-        panelAsignaturasLayout.setVerticalGroup(
-            panelAsignaturasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 424, Short.MAX_VALUE)
-        );
+        tituloAsignaturas.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        tituloAsignaturas.setText("Asignaturas:");
+
+        bienvenida.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
+        bienvenida.setText("jLabel1");
+
+        listaAsignaturas.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(listaAsignaturas);
+
+        tituloDatos.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        tituloDatos.setText("Datos Alumno:");
+
+        datosAlumno.setColumns(20);
+        datosAlumno.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        datosAlumno.setRows(5);
+        jScrollPane2.setViewportView(datosAlumno);
+
+        tituloCurso.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        tituloCurso.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,26 +105,69 @@ public class MenuAsignaturasAlumno extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tituloAsignaturas)
-                    .addComponent(panelAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tituloDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tituloCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 37, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tituloAsignaturas)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tituloAsignaturas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bienvenida))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(tituloAsignaturas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(tituloCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tituloDatos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void VolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VolverMouseClicked
+
+    }//GEN-LAST:event_VolverMouseClicked
+
+    private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_VolverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel panelAsignaturas;
+    private javax.swing.JButton Volver;
+    private javax.swing.JLabel bienvenida;
+    private javax.swing.JTextArea datosAlumno;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> listaAsignaturas;
     private javax.swing.JLabel tituloAsignaturas;
+    private javax.swing.JLabel tituloCurso;
+    private javax.swing.JLabel tituloDatos;
     // End of variables declaration//GEN-END:variables
 }
