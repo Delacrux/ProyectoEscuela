@@ -391,7 +391,7 @@ public class ProyectoEscuela {
     
     public void mostrarAlumnosSistema() {
         System.out.println("Cantidad de alumnos registrados en el sistema: " + listaAlumnos.size());
-        for (int i = 0 ; i < listaCursos.size() ; i++) {
+        for (int i = 0 ; i < listaAlumnos.size() ; i++) {
             Alumno alumno = listaAlumnos.get(i);
             System.out.println((i + 1) + ". " + alumno.nombreApellido + " - " + alumno.rut );
         }
@@ -421,58 +421,59 @@ public class ProyectoEscuela {
         System.out.println("Datos cargados correctamente");
     }
     
-  public void llenadoDeProfesores() {
-    try (Scanner sc = new Scanner(new File("data/profesores.csv"))) {
-        boolean primeraLinea = true;
-        while (sc.hasNextLine()) {
-            String linea = sc.nextLine();
-            if (primeraLinea) {
-                primeraLinea = false;
-                continue;
-            }
-
-            String[] campos = linea.split(",");
-            if (campos.length != 5) {
-                System.out.println("Línea inválida en profesores.csv: " + linea);
-                continue;
-            }
-
-            String rut = campos[0].trim();
-            String nombreApellido = campos[1].trim();
-            String especialidad = campos[2].trim();
-            String correo = campos[3].trim();
-            String telefono = campos[4].trim();
-
-            Profesor profesor = new Profesor(rut, nombreApellido, especialidad, correo, telefono);
-
-            
-            Curso cursoAsignado = null;
-            for (Curso c : listaCursos) {
-                if (c.getProfesorJefe() == null) {
-                    cursoAsignado = c;
-                    break;
+  private ArrayList <String []> leerLineasProfesores(String rutaArchivo ){
+        ArrayList<String[]> registros = new ArrayList<>();
+        try (Scanner sc  = new Scanner (new File(rutaArchivo))){
+            boolean primeraLinea = true; 
+            while(sc.hasNextLine()){
+                String linea = sc.nextLine();
+                if(primeraLinea)
+                {
+                    primeraLinea = false;
+                    continue; 
                 }
+                String [] campos  = linea.split(",");
+                if(campos.length != 5)
+                {
+                    System.out.println("Línea invalida en profesores.csv:  " + linea);
+                    continue;
+                }
+                registros.add(campos);
             }
-
-            if (cursoAsignado != null) {
-                cursoAsignado.setProfesorJefe(profesor);
-
-                
-                HashMap<Curso, ArrayList<String>> mapa = profesor.getAsignaturasPorCurso();
-                mapa.put(cursoAsignado, new ArrayList<>(cursoAsignado.getRecursosPorAsignatura().keySet()));
-
-                System.out.println("Profesor " + nombreApellido + " asignado como jefe de curso " + cursoAsignado.getIdentificador());
-            } else {
-                System.out.println("No hay cursos disponibles para asignar al profesor " + nombreApellido);
-            }
-
-            listaProfesores.add(profesor);
+        }catch (FileNotFoundException e){
+            System.out.println("Error al leer profesores.csv:  " + e.getMessage());
         }
-    } catch (FileNotFoundException e) {
-        System.out.println("Error al leer Profesor.csv: " + e.getMessage());
-    }
-}
+        return registros; 
 
+    }
+    private Profesor crearProfesor(String [] campos){
+        return new Profesor(campos[0].trim(), campos[1].trim(),campos[2].trim(), campos[3].trim(),campos[4].trim());
+        
+    }
+    private boolean asignarCursoJefe(Profesor profesor){
+        for(Curso c : listaCursos){
+            if(c.getProfesorJefe() == null){
+                c.setProfesorJefe(profesor);
+                
+                HashMap <Curso, ArrayList<String>>  mapa = profesor.getAsignaturasPorCurso();
+                mapa.put(c, new ArrayList<>(c.getRecursosPorAsignatura().keySet()));
+                System.out.println("Profesor " + profesor.getNombreApellido() + " asignado como jefe de curso " + c.getIdentificador());
+                return true; 
+            }
+        }
+        System.out.println("No hay cursos disponibles para asignar al profesor  " + profesor.getNombreApellido());
+        return false;
+    }
+    public void llenadoDeProfesores(){
+        ArrayList<String[]> registros = leerLineasProfesores ("data/profesores.csv");
+        for(String[] campos :  registros){
+            Profesor profesor = crearProfesor (campos);
+            asignarCursoJefe(profesor);
+            listaProfesores.add(profesor); 
+        }
+    }
+ 
+ 
   public void llenadoDeAlumnos() {
     try (Scanner sc = new Scanner(new File("data/Alumnos.csv"))) {
         boolean primeraLinea = true;
