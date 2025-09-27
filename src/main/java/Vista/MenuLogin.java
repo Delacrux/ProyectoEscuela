@@ -23,10 +23,10 @@ public class MenuLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Titulo.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
+        Titulo.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
         Titulo.setText("INICIO DE SESION");
 
-        tituloRut.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        tituloRut.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         tituloRut.setText("RUT");
 
         entradaRut.setForeground(new java.awt.Color(102, 102, 102));
@@ -38,8 +38,8 @@ public class MenuLogin extends javax.swing.JFrame {
         });
 
         botonEnviar.setBackground(new java.awt.Color(0, 0, 102));
-        botonEnviar.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
-        botonEnviar.setText("ENVIAR");
+        botonEnviar.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        botonEnviar.setText("LOGIN");
         botonEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonEnviarActionPerformed(evt);
@@ -50,33 +50,37 @@ public class MenuLogin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(93, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(Titulo)
+                        .addGap(83, 83, 83))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(entradaRut, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 106, 106))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(324, 324, 324)
+                        .addGap(220, 220, 220)
                         .addComponent(tituloRut))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(208, 208, 208)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(entradaRut, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Titulo)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(270, 270, 270)
+                        .addGap(191, 191, 191)
                         .addComponent(botonEnviar)))
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addGap(47, 47, 47)
                 .addComponent(Titulo)
-                .addGap(33, 33, 33)
+                .addGap(45, 45, 45)
                 .addComponent(tituloRut, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(entradaRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(botonEnviar)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
         );
 
         pack();
