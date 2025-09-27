@@ -1,24 +1,27 @@
 package Vista;
-import Modelo.AsignaturaException;
 import Modelo.Curso;
 import Modelo.Alumno;
 import Modelo.Profesor;
 import Modelo.RecursoDigital;
 import Controlador.Controlador;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import java.util.*;
 
-public class MenuAsignaturasProfesor extends javax.swing.JFrame {
+public class MenuCursoProfesor extends javax.swing.JFrame {
     
     private Profesor docente;
     private Curso curso;
     private Controlador control;
     
-    public MenuAsignaturasProfesor(Controlador control, Profesor docente, Curso curso) {
+    public MenuCursoProfesor(Controlador control, Profesor docente, Curso curso) {
         this.docente = docente;
         this.control = control;
         this.curso = curso;
+        configurarVentana();
         initComponents();
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         tituloCurso.setText(curso.getIdentificador());
         mostrarListaAsignaturas();
         mostrarPanelAlumnos();
@@ -121,7 +124,6 @@ public class MenuAsignaturasProfesor extends javax.swing.JFrame {
         tituloAlumnos1.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         tituloAlumnos1.setText("Datos de Curso:");
 
-        Volver.setBackground(new java.awt.Color(102, 102, 102));
         Volver.setText("VOLVER");
         Volver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         Volver.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -212,71 +214,26 @@ public class MenuAsignaturasProfesor extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_VolverActionPerformed
 
-    public static void main(String[] args) {
-    // Crear profesor
-    Profesor prof = new Profesor(
-        "12345678-9",
-        "Israel González",
-        "Matemáticas",
-        "israel@colegio.cl",
-        "+56912345678"
-    );
+    private void configurarVentana() {
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // bloquea cierre directo
 
-    // Crear curso
-    Curso curso = new Curso(prof, "4to Medio A");
-    curso.setProfesorJefe(prof);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int opcion = JOptionPane.showConfirmDialog(
+                    MenuCursoProfesor.this, // ventana actual
+                    "¿Deseas cerrar esta ventana? Se perderán los cambios no guardados.",
+                    "Confirmar cierre",
+                    JOptionPane.YES_NO_OPTION
+                );
 
-    // Agregar asignaturas
-    try {
-        curso.agregarAsignatura("Matemáticas");
-        curso.agregarAsignatura("Física");
-    } catch (AsignaturaException e) {
-        e.printStackTrace();
-    }
-
-    // Agregar recursos digitales
-    try {
-        curso.agregarRecursoDigital("Matemáticas", new RecursoDigital(
-            "Guía Álgebra",
-            "https://recursos.edu/matematicas/algebra.pdf",
-            "Ejercicios de factorización"
-        ));
-        curso.agregarRecursoDigital("Física", new RecursoDigital(
-            "Simulador Movimiento",
-            "https://simuladores.edu/fisica/movimiento",
-            "Simula trayectorias y aceleración"
-        ));
-    } catch (AsignaturaException e) {
-        e.printStackTrace();
-    }
-
-    // Agregar alumnos
-    curso.getListaAlumnos().add(new Alumno("11111111-1", "Ana Torres", "ana@correo.cl", "+56911111111", null));
-    curso.getListaAlumnos().add(new Alumno("22222222-2", "Luis Pérez", "luis@correo.cl", "+56922222222", null));
-
-    // Asociar asignaturas al profesor
-    ArrayList<String> asignaturas = new ArrayList<>();
-    asignaturas.add("Matemáticas");
-    asignaturas.add("Física");
-    prof.getAsignaturasPorCurso().put(curso, asignaturas);
-
-    // Crear controlador de prueba
-    Controlador control = new Controlador() {
-        @Override
-        public void mostrarRecursosAlumno(String nombre, ArrayList<RecursoDigital> recursos) {
-            System.out.println("Asignatura seleccionada: " + nombre);
-            for (RecursoDigital r : recursos) {
-                System.out.println("- " + r.getTituloMaterial() + " (" + r.getUrl() + ")");
+                if (opcion == JOptionPane.YES_OPTION) {
+                    dispose(); // Cerramos
+                }
             }
-        }
-    };
-
-    // Lanzar ventana
-    SwingUtilities.invokeLater(() -> {
-        new MenuAsignaturasProfesor(control, prof, curso).setVisible(true);
-    });
-}
-
+        });
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Volver;
     private javax.swing.JTextArea datosCurso;

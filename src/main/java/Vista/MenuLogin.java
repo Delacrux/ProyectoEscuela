@@ -39,6 +39,7 @@ public class MenuLogin extends javax.swing.JFrame {
 
         botonEnviar.setBackground(new java.awt.Color(19, 19, 63));
         botonEnviar.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        botonEnviar.setForeground(new java.awt.Color(255, 255, 255));
         botonEnviar.setText("LOGIN");
         botonEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,14 +95,7 @@ public class MenuLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
          rut = entradaRut.getText();
          control.procesarLogin(control, rut);
-         
-        
     }//GEN-LAST:event_botonEnviarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Titulo;

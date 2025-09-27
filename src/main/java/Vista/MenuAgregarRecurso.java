@@ -2,19 +2,25 @@ package Vista;
 
 import Modelo.RecursoDigital;
 import Controlador.Controlador;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MenuAgregarRecurso extends javax.swing.JFrame {
     
     private Controlador control;
     private ArrayList<RecursoDigital> materiales;
-    MenuRecursosProfesor padre;
+    MenuAsignaturaProfesor padre;
     
-    public MenuAgregarRecurso(MenuRecursosProfesor padre, Controlador control, ArrayList<RecursoDigital> materiales) {
+    public MenuAgregarRecurso(MenuAsignaturaProfesor padre, Controlador control, ArrayList<RecursoDigital> materiales) {
         this.control = control;
         this.materiales = materiales;
         this.padre = padre;
+        configurarVentana();
         initComponents();
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
 
     @SuppressWarnings("unchecked")
@@ -38,13 +44,13 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
         jLabel1.setText("Url");
 
-        jLabel2.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
         jLabel2.setText("Detalles");
 
-        jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
         jLabel3.setText("Titulo");
 
         entradaUrl.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
@@ -62,7 +68,7 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
         });
 
         botonAgregar.setBackground(new java.awt.Color(102, 0, 102));
-        botonAgregar.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
+        botonAgregar.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         botonAgregar.setForeground(new java.awt.Color(255, 255, 255));
         botonAgregar.setText("AGREGAR");
         botonAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -76,13 +82,8 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(305, 305, 305)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(327, 327, 327)
-                        .addComponent(jLabel1)))
+                .addGap(305, 305, 305)
+                .addComponent(jLabel3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -99,6 +100,10 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
                 .addGap(253, 253, 253)
                 .addComponent(botonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(256, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(327, 327, 327)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +122,7 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
                 .addComponent(entradaDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(botonAgregar)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,6 +153,25 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonAgregarActionPerformed
 
+    private void configurarVentana() {
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // bloquea cierre directo
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int opcion = JOptionPane.showConfirmDialog(
+                    MenuAgregarRecurso.this, // ventana actual
+                    "¿Deseas cerrar esta ventana? Se perderán los cambios no guardados.",
+                    "Confirmar cierre",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    dispose(); // Cerramos
+                }
+            }
+        });
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

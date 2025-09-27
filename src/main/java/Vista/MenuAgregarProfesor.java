@@ -6,6 +6,8 @@ import Controlador.Controlador;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,7 +28,9 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
     public MenuAgregarProfesor(Controlador control, ArrayList<Curso> listaDeCursos) {
         this.control = control;
         this.listaDeCursos = listaDeCursos;
+        configurarVentana();
         initComponents();
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         llenarTablaCursos();
         llenarListaAsignaturas();
         
@@ -67,16 +71,16 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.CardLayout());
 
-        jLabel2.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel2.setText("RUT");
 
-        jLabel3.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel3.setText("NOMBRE");
 
-        jLabel4.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel4.setText("CORREO");
 
-        jLabel5.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel5.setText("TELEFONO");
 
         entradaRut.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -88,7 +92,8 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
         entradaTelefono.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         botonGuardar.setBackground(new java.awt.Color(102, 0, 102));
-        botonGuardar.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        botonGuardar.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        botonGuardar.setForeground(new java.awt.Color(255, 255, 255));
         botonGuardar.setText("GUARDAR");
         botonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,10 +101,10 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel6.setText("ESPECIALIDAD");
 
-        jLabel1.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
         jLabel1.setText("Datos Profesor");
 
         entradaEspecialidad.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -108,40 +113,41 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
         panelDatos.setLayout(panelDatosLayout);
         panelDatosLayout.setHorizontalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(botonGuardar)
-                .addGap(279, 279, 279))
             .addGroup(panelDatosLayout.createSequentialGroup()
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGap(298, 298, 298)
+                        .addComponent(jLabel3))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGap(322, 322, 322)
                         .addComponent(jLabel2))
-                    .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(panelDatosLayout.createSequentialGroup()
-                            .addGap(298, 298, 298)
-                            .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel5)))
-                        .addGroup(panelDatosLayout.createSequentialGroup()
-                            .addGap(304, 304, 304)
-                            .addComponent(jLabel4))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
-                            .addGap(273, 273, 273)
-                            .addComponent(jLabel6)
-                            .addGap(49, 49, 49)))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGap(231, 231, 231)
                         .addComponent(jLabel1))
                     .addGroup(panelDatosLayout.createSequentialGroup()
                         .addGap(196, 196, 196)
                         .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(entradaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(entradaRut, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(entradaTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(entradaCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(entradaEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(entradaEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(entradaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(entradaTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGap(283, 283, 283)
+                        .addComponent(jLabel5))
+                    .addGroup(panelDatosLayout.createSequentialGroup()
+                        .addGap(295, 295, 295)
+                        .addComponent(jLabel4)))
                 .addContainerGap(204, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
+                        .addComponent(botonGuardar)
+                        .addGap(279, 279, 279))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(261, 261, 261))))
         );
         panelDatosLayout.setVerticalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,14 +174,14 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(entradaEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(botonGuardar)
                 .addGap(30, 30, 30))
         );
 
         jPanel1.add(panelDatos, "card2");
 
-        jLabel7.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
         jLabel7.setText("¿En qué curso impartirá clases?");
 
         listaAsignaturas.setModel(new javax.swing.AbstractListModel<String>() {
@@ -186,7 +192,8 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
         jScrollPane2.setViewportView(listaAsignaturas);
 
         botonFinalizar.setBackground(new java.awt.Color(102, 0, 102));
-        botonFinalizar.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 36)); // NOI18N
+        botonFinalizar.setFont(new java.awt.Font("SansSerif", 0, 36)); // NOI18N
+        botonFinalizar.setForeground(new java.awt.Color(255, 255, 255));
         botonFinalizar.setText("FINALIZAR");
         botonFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,10 +232,10 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
             tablaCursos.getColumnModel().getColumn(1).setMaxWidth(0);
         }
 
-        jLabel8.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel8.setText("Asignaturas");
 
-        jLabel9.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 24)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel9.setText("Cursos");
 
         javax.swing.GroupLayout panelListasLayout = new javax.swing.GroupLayout(panelListas);
@@ -246,7 +253,7 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
                         .addGroup(panelListasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addGap(0, 198, Short.MAX_VALUE))))
+                        .addContainerGap(168, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelListasLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel9)
@@ -355,38 +362,25 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
          asignaturasCurso.put(cursoSeleccionado, seleccionadas);
          nuevoProfe.setAsignaturasPorCurso(asignaturasCurso);
          control.agregarProfesor(nuevoProfe);
- 
+         this.dispose();
     }//GEN-LAST:event_botonFinalizarActionPerformed
 
+    private void configurarVentana() {
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // bloquea cierre directo
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int opcion = JOptionPane.showConfirmDialog(
+                    MenuAgregarProfesor.this, // ventana actual
+                    "¿Deseas cerrar esta ventana? Se perderán los cambios no guardados.",
+                    "Confirmar cierre",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    dispose(); // Cerramos
                 }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuAgregarProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuAgregarProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuAgregarProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuAgregarProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new MenuAgregarProfesor().setVisible(true);
             }
         });
     }

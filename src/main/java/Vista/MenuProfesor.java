@@ -4,16 +4,19 @@ import Modelo.Profesor;
 import Controlador.Controlador;
 import java.awt.event.*;
 import java.util.Set;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class MenuCursosProfesor extends javax.swing.JFrame {
+public class MenuProfesor extends javax.swing.JFrame {
 
     private Profesor docente;
     private Controlador control;
     
-    public MenuCursosProfesor(Controlador control, Profesor docente) {
+    public MenuProfesor(Controlador control, Profesor docente) {
         this.docente = docente;
         this.control = control;
+        configurarVentana(this);
         initComponents();
         Bienvenida.setText("Bienvenido/a profesor/a " + docente.getNombreApellido());
         llenarTablaCursos(docente.getAsignaturasPorCurso().keySet());
@@ -52,6 +55,27 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
         datosProfesor.setEditable(false);
     }
     
+    private void configurarVentana(JFrame ventana) {
+        ventana.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //No sale directamente
+
+        ventana.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int opcion = JOptionPane.showConfirmDialog(
+                    ventana,
+                    "Cerrando programa, quiere guardar los cambios?",
+                    "Confirmar cierre",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    control.guardarDatos(); // guardamos
+                }
+                ventana.dispose(); // cerramos
+            }
+        });
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -63,7 +87,7 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         datosProfesor = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        Volver = new javax.swing.JButton();
+        botonGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,17 +140,11 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         jLabel2.setText("Datos del docente:");
 
-        Volver.setBackground(new java.awt.Color(102, 102, 102));
-        Volver.setText("VOLVER");
-        Volver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Volver.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                VolverMouseClicked(evt);
-            }
-        });
-        Volver.addActionListener(new java.awt.event.ActionListener() {
+        botonGuardar.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        botonGuardar.setText("GUARDAR");
+        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VolverActionPerformed(evt);
+                botonGuardarActionPerformed(evt);
             }
         });
 
@@ -148,7 +166,7 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(botonGuardar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -157,7 +175,7 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(botonGuardar))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -173,17 +191,29 @@ public class MenuCursosProfesor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void VolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VolverMouseClicked
+    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+        int opcion = JOptionPane.showConfirmDialog(
+            this,
+            "¿Deseas guardar los cambios realizados?",
+            "Confirmar guardado",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+        );
 
-    }//GEN-LAST:event_VolverMouseClicked
-
-    private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_VolverActionPerformed
+        if (opcion == JOptionPane.YES_OPTION) {
+            control.guardarDatos(); // guardado directo
+            JOptionPane.showMessageDialog(
+                this,
+                "Los datos han sido guardados correctamente.",
+                "Guardado exitoso",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_botonGuardarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Bienvenida;
-    private javax.swing.JButton Volver;
+    private javax.swing.JButton botonGuardar;
     private javax.swing.JTextArea datosProfesor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

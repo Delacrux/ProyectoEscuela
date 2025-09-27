@@ -10,13 +10,13 @@ import Modelo.RecursoDigital;
 import Vista.MenuAdmin;
 import Vista.MenuAgregarProfesor;
 import Vista.MenuAgregarRecurso;
-import Vista.MenuAsignaturasAdmin;
-import Vista.MenuAsignaturasAlumno;
-import Vista.MenuAsignaturasProfesor;
-import Vista.MenuCursosProfesor;
+import Vista.MenuCursoAdmin;
+import Vista.MenuAlumno;
+import Vista.MenuCursoProfesor;
+import Vista.MenuProfesor;
 import Vista.MenuLogin;
-import Vista.MenuRecursosAlumno;
-import Vista.MenuRecursosProfesor;
+import Vista.MenuAsignaturaAlumno;
+import Vista.MenuAsignaturaProfesor;
 import java.util.*;
 
 
@@ -58,7 +58,7 @@ public class Controlador {
              System.out.println("Alumno encontrado con exito");
              Alumno encontrado = (Alumno)buscado;
              ventanaLogin.dispose();
-             new MenuAsignaturasAlumno(this, encontrado).setVisible(true);
+             new MenuAlumno(this, encontrado).setVisible(true);
          }
          
          else{
@@ -66,8 +66,8 @@ public class Controlador {
              if(buscado!=null){
                  System.out.println("Profesor encontrado con exito");
                  Profesor encontrado = (Profesor)buscado;
-                 ventanaLogin.dispose(); // cierra el login
-                 new MenuCursosProfesor(control, encontrado).setVisible(true); 
+                 ventanaLogin.dispose(); 
+                 new MenuProfesor(control, encontrado).setVisible(true); 
              }
          }
          
@@ -76,7 +76,7 @@ public class Controlador {
     
     public void mostrarRecursosAlumno(String nombre, ArrayList<RecursoDigital> recursos){
         
-        MenuRecursosAlumno ventanaRecursos = new MenuRecursosAlumno(nombre, recursos);
+        MenuAsignaturaAlumno ventanaRecursos = new MenuAsignaturaAlumno(nombre, recursos);
         ventanaRecursos.setVisible(true);
     }
     
@@ -96,13 +96,13 @@ public class Controlador {
     }
     
     public void mostrarRecursosProfesor(String nombre, ArrayList<RecursoDigital> recursos){
-        MenuRecursosProfesor ventanaRecursos = new MenuRecursosProfesor(this, nombre, recursos);
+        MenuAsignaturaProfesor ventanaRecursos = new MenuAsignaturaProfesor(this, nombre, recursos);
         ventanaRecursos.setVisible(true);
     }
     
     public void mostrarAsignaturasProfesor(Controlador control, Profesor docente, Curso curso){
         
-        MenuAsignaturasProfesor ventanaAsignaturas = new MenuAsignaturasProfesor(control, docente, curso);
+        MenuCursoProfesor ventanaAsignaturas = new MenuCursoProfesor(control, docente, curso);
         ventanaAsignaturas.setVisible(true);
         
     }
@@ -114,7 +114,7 @@ public class Controlador {
     
     public void mostrarAsignaturasAdmin(String identificador){
 
-        new MenuAsignaturasAdmin(this, sistema.buscarCursoSistema(identificador)).setVisible(true);
+        new MenuCursoAdmin(this, sistema.buscarCursoSistema(identificador)).setVisible(true);
     }
     
     public void agregarProfesor(Profesor profesorNuevo){
@@ -136,7 +136,7 @@ public class Controlador {
         
     }
     
-    public void mostrarMenuAgregarRecurso(MenuRecursosProfesor padre, ArrayList<RecursoDigital> materiales){
+    public void mostrarMenuAgregarRecurso(MenuAsignaturaProfesor padre, ArrayList<RecursoDigital> materiales){
         
         new MenuAgregarRecurso(padre, this, materiales).setVisible(true);
     }
@@ -166,6 +166,10 @@ public class Controlador {
     public void eliminarRecursoDigital(RecursoDigital recurso, ArrayList<RecursoDigital> materiales){
         
         materiales.remove(recurso);
+    }
+    
+    public void guardarDatos(){
+        sistema.guardadoDeDatos();
     }
     
     

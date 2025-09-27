@@ -5,12 +5,12 @@ import Controlador.Controlador;
 import javax.swing.*;
 import java.util.*;
 
-public class MenuAsignaturasAlumno extends javax.swing.JFrame {
+public class MenuAlumno extends javax.swing.JFrame {
     
     private Alumno estudiante;
     private Controlador control;
     
-    public MenuAsignaturasAlumno(Controlador control, Alumno estudiante) {
+    public MenuAlumno(Controlador control, Alumno estudiante) {
         this.estudiante = estudiante;
         this.control = control;
         bienvenida.setText("Bienvenido/a " + estudiante.getNombreApellido());
@@ -48,7 +48,6 @@ public class MenuAsignaturasAlumno extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Volver = new javax.swing.JButton();
         tituloAsignaturas = new javax.swing.JLabel();
         bienvenida = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -59,20 +58,6 @@ public class MenuAsignaturasAlumno extends javax.swing.JFrame {
         tituloCurso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Volver.setBackground(new java.awt.Color(102, 102, 102));
-        Volver.setText("VOLVER");
-        Volver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Volver.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                VolverMouseClicked(evt);
-            }
-        });
-        Volver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VolverActionPerformed(evt);
-            }
-        });
 
         tituloAsignaturas.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         tituloAsignaturas.setText("Asignaturas:");
@@ -107,9 +92,7 @@ public class MenuAsignaturasAlumno extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
@@ -128,9 +111,7 @@ public class MenuAsignaturasAlumno extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bienvenida))
+                .addComponent(bienvenida)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
@@ -150,17 +131,8 @@ public class MenuAsignaturasAlumno extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void VolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VolverMouseClicked
-
-    }//GEN-LAST:event_VolverMouseClicked
-
-    private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_VolverActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Volver;
     private javax.swing.JLabel bienvenida;
     private javax.swing.JTextArea datosAlumno;
     private javax.swing.JScrollPane jScrollPane1;
