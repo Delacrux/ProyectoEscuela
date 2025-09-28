@@ -18,7 +18,7 @@ public class MenuProfesor extends javax.swing.JFrame {
         this.control = control;
         configurarVentana(this);
         initComponents();
-        Bienvenida.setText("Bienvenido/a profesor/a " + docente.getNombreApellido());
+        Bienvenida.setText("Bienvenido/a " + docente.getNombreApellido());
         llenarTablaCursos(docente.getAsignaturasPorCurso().keySet());
         llenarDatosProfesor();
 
@@ -36,17 +36,6 @@ public class MenuProfesor extends javax.swing.JFrame {
                 c
             });
         }
-        
-         tablaCursos.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-               int fila = tablaCursos.getSelectedRow();
-               
-               if (fila != -1) {
-                   Curso cursoSeleccionado = (Curso) tablaCursos.getValueAt(fila, 2);
-                   control.mostrarAsignaturasProfesor(control, docente, cursoSeleccionado);
-               }
-            }
-        });
          
     }
 
@@ -121,6 +110,11 @@ public class MenuProfesor extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaCursos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaCursosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaCursos);
         if (tablaCursos.getColumnModel().getColumnCount() > 0) {
             tablaCursos.getColumnModel().getColumn(0).setResizable(false);
@@ -165,8 +159,8 @@ public class MenuProfesor extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Bienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonGuardar)))
                 .addContainerGap())
         );
@@ -175,9 +169,9 @@ public class MenuProfesor extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonGuardar))
-                .addGap(18, 18, 18)
+                    .addComponent(botonGuardar)
+                    .addComponent(Bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -211,6 +205,17 @@ public class MenuProfesor extends javax.swing.JFrame {
             );
         }
     }//GEN-LAST:event_botonGuardarActionPerformed
+
+    private void tablaCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCursosMouseClicked
+        if(evt.getClickCount()==2){
+            int fila = tablaCursos.getSelectedRow();
+
+            if (fila != -1) {
+                Curso cursoSeleccionado = (Curso) tablaCursos.getValueAt(fila, 2);
+                control.mostrarAsignaturasProfesor(control, docente, cursoSeleccionado);
+            }
+        }
+    }//GEN-LAST:event_tablaCursosMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Bienvenida;

@@ -54,6 +54,7 @@ public class Controlador {
          
          if(rut.equals("20878643")){
              new MenuAdmin(this, sistema.getListaCursos(), sistema.getListaProfesores()).setVisible(true);
+             ventanaLogin.dispose();
          }
          
          Persona buscado = (Persona)sistema.buscarAlumnoSistema(rut);

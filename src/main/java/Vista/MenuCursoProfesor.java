@@ -25,6 +25,7 @@ public class MenuCursoProfesor extends javax.swing.JFrame {
         tituloCurso.setText(curso.getIdentificador());
         mostrarListaAsignaturas();
         mostrarPanelAlumnos();
+        mostrarDatosCurso();
         
     }
     
@@ -38,13 +39,6 @@ public class MenuCursoProfesor extends javax.swing.JFrame {
         listaAsignaturas.setModel(modelo);
         listaAsignaturas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        listaAsignaturas.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                String asignatura = listaAsignaturas.getSelectedValue();
-                ArrayList<RecursoDigital> recursos = curso.getRecursosPorAsignatura().get(asignatura);
-                control.mostrarRecursosProfesor(asignatura, recursos);
-            }
-        });
     }
     
     public void mostrarPanelAlumnos(){
@@ -118,6 +112,7 @@ public class MenuCursoProfesor extends javax.swing.JFrame {
         tituloCurso.setText("jLabel1");
 
         datosCurso.setColumns(20);
+        datosCurso.setFont(new java.awt.Font("Sans Serif Collection", 0, 18)); // NOI18N
         datosCurso.setRows(5);
         jScrollPane3.setViewportView(datosCurso);
 
@@ -155,8 +150,8 @@ public class MenuCursoProfesor extends javax.swing.JFrame {
                             .addComponent(tituloAlumnos)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(tituloCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tituloCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -187,23 +182,28 @@ public class MenuCursoProfesor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void panelAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelAlumnosMouseClicked
-        String nombre = panelAlumnos.getSelectedValue();
-        ArrayList<Alumno> lista = curso.getListaAlumnos();
-        Alumno alumno = null;
-        for(Alumno a : lista){
-            if(a.getNombreApellido().equals(nombre)){
-                alumno = a;
-                break;
-            }
-        }
-        
+
         if(evt.getClickCount()==2){
+            String nombre = panelAlumnos.getSelectedValue();
+            ArrayList<Alumno> lista = curso.getListaAlumnos();
+            Alumno alumno = null;
+            for(Alumno a : lista){
+                if(a.getNombreApellido().equals(nombre)){
+                    alumno = a;
+                    break;
+                }
+            }
+            
             JOptionPane.showMessageDialog(this, alumno.mostrarDatos(), "Datos del Alumno", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_panelAlumnosMouseClicked
 
     private void listaAsignaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaAsignaturasMouseClicked
-        // TODO add your handling code here:
+        if(evt.getClickCount()==2){
+            String asignatura = listaAsignaturas.getSelectedValue();
+            ArrayList<RecursoDigital> recursos = curso.getRecursosPorAsignatura().get(asignatura);
+            control.mostrarRecursosProfesor(asignatura, recursos);
+        }
     }//GEN-LAST:event_listaAsignaturasMouseClicked
 
     private void VolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VolverMouseClicked
