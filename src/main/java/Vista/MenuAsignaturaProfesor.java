@@ -183,11 +183,12 @@ public class MenuAsignaturaProfesor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablaRecursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaRecursosMouseClicked
-
-        int fila = tablaRecursos.getSelectedRow();
-        if (fila != -1) {
-            RecursoDigital recursoSeleccionado = (RecursoDigital) tablaRecursos.getValueAt(fila, 3); 
-            mostrarDatosRecurso(recursoSeleccionado);
+        if(evt.getClickCount()==2){
+            int fila = tablaRecursos.getSelectedRow();
+            if (fila != -1) {
+                RecursoDigital recursoSeleccionado = (RecursoDigital) tablaRecursos.getValueAt(fila, 3); 
+                mostrarDatosRecurso(recursoSeleccionado);
+            }
         }
     }//GEN-LAST:event_tablaRecursosMouseClicked
 

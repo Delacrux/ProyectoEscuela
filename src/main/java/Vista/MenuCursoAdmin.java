@@ -357,17 +357,17 @@ public class MenuCursoAdmin extends javax.swing.JFrame {
 
     private void listaAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaAlumnosMouseClicked
         
-        String nombre = listaAlumnos.getSelectedValue();
-        ArrayList<Alumno> lista = curso.getListaAlumnos();
-        Alumno alumno = null;
-        for(Alumno a : lista){
-            if(a.getNombreApellido().equals(nombre)){
-                alumno = a;
-                break;
-            }
-        }
-        
         if(evt.getClickCount()==2){
+            String nombre = listaAlumnos.getSelectedValue();
+            ArrayList<Alumno> lista = curso.getListaAlumnos();
+            Alumno alumno = null;
+            for(Alumno a : lista){
+                if(a.getNombreApellido().equals(nombre)){
+                    alumno = a;
+                    break;
+                }
+            }
+            
             JOptionPane.showMessageDialog(this, alumno.mostrarDatos(), "Datos del Alumno", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_listaAlumnosMouseClicked

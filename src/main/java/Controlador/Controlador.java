@@ -185,6 +185,10 @@ public class Controlador {
         sistema.guardadoDeDatos();
     }
     
+    public void generarReporte(){
+        sistema.generarReporte();
+    }
+    
     
     public static void main(String[] args){
         

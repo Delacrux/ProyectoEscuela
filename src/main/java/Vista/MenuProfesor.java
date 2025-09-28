@@ -72,6 +72,7 @@ public class MenuProfesor extends javax.swing.JFrame {
                     control.guardarDatos(); // guardamos
                 }
                 ventana.dispose(); // cerramos
+                control.generarReporte();
             }
         });
     }

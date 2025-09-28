@@ -2,6 +2,8 @@ package Vista;
 import Modelo.*;
 import Modelo.RecursoDigital;
 import Controlador.Controlador;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import java.util.*;
 
@@ -13,9 +15,12 @@ public class MenuAlumno extends javax.swing.JFrame {
     public MenuAlumno(Controlador control, Alumno estudiante) {
         this.estudiante = estudiante;
         this.control = control;
-        bienvenida.setText("Bienvenido/a " + estudiante.getNombreApellido());
         initComponents();
+        configurarVentana();
+        bienvenida.setText("Bienvenido/a " + estudiante.getNombreApellido());
+        tituloCurso.setText("Curso: " + estudiante.getCurso().getIdentificador());
         mostrarPanelAsignaturas();
+        mostrarDatosAlumno();
         
     }
     
@@ -27,14 +32,6 @@ public class MenuAlumno extends javax.swing.JFrame {
 
         listaAsignaturas.setModel(modelo);
         listaAsignaturas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        listaAsignaturas.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                String index = listaAsignaturas.getSelectedValue();
-                ArrayList<RecursoDigital> recursos = estudiante.getCurso().getRecursosPorAsignatura().get(index);
-                control.mostrarRecursosAlumno(index, recursos);
-            }
-        });
 
     }
     
@@ -70,6 +67,11 @@ public class MenuAlumno extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        listaAsignaturas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaAsignaturasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaAsignaturas);
 
         tituloDatos.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
@@ -87,12 +89,10 @@ public class MenuAlumno extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(bienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
@@ -104,8 +104,8 @@ public class MenuAlumno extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tituloAsignaturas)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(42, 42, 42))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,6 +131,35 @@ public class MenuAlumno extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void listaAsignaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaAsignaturasMouseClicked
+        if(evt.getClickCount()==2){
+            String index = listaAsignaturas.getSelectedValue();
+            ArrayList<RecursoDigital> recursos = estudiante.getCurso().getRecursosPorAsignatura().get(index);
+            control.mostrarRecursosAlumno(index, recursos);
+        }
+    }//GEN-LAST:event_listaAsignaturasMouseClicked
+
+    private void configurarVentana() {
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // bloquea cierre directo
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int opcion = JOptionPane.showConfirmDialog(
+                    MenuAlumno.this, // ventana actual
+                    "¿Deseas cerrar el programa?",
+                    "Confirmar cierre",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    dispose(); // Cerramos
+                    control.generarReporte();
+                }
+            }
+        });
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bienvenida;

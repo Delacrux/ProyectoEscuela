@@ -1,5 +1,6 @@
 package Vista;
 import Modelo.RecursoDigital;
+import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -7,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class MenuAsignaturaAlumno extends javax.swing.JFrame {
     
-    /** Creates new form RecursosAsignaturaFrame */
     public MenuAsignaturaAlumno(String asignatura, ArrayList<RecursoDigital> materiales) {
         initComponents();
         tituloAsignatura.setText(asignatura);
@@ -23,7 +23,8 @@ public class MenuAsignaturaAlumno extends javax.swing.JFrame {
             modelo.addRow(new Object[]{
                 a.getTituloMaterial(),
                 a.getUrl(),
-                a.getDetalles()
+                a.getDetalles(),
+                a
             });
         }
 
@@ -48,20 +49,20 @@ public class MenuAsignaturaAlumno extends javax.swing.JFrame {
 
         tablaRecursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Titulo", "Url", "Detalles"
+                "Titulo", "Url", "Detalles", "null"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -82,6 +83,9 @@ public class MenuAsignaturaAlumno extends javax.swing.JFrame {
             tablaRecursos.getColumnModel().getColumn(0).setResizable(false);
             tablaRecursos.getColumnModel().getColumn(1).setResizable(false);
             tablaRecursos.getColumnModel().getColumn(2).setResizable(false);
+            tablaRecursos.getColumnModel().getColumn(3).setMinWidth(0);
+            tablaRecursos.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tablaRecursos.getColumnModel().getColumn(3).setMaxWidth(0);
         }
 
         Volver.setText("VOLVER");
@@ -138,11 +142,12 @@ public class MenuAsignaturaAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_VolverActionPerformed
 
     private void tablaRecursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaRecursosMouseClicked
-
-        int fila = tablaRecursos.getSelectedRow();
-        if (fila != -1) {
-            RecursoDigital recursoSeleccionado = (RecursoDigital) tablaRecursos.getValueAt(fila, 3); 
-            mostrarDatosRecurso(recursoSeleccionado);
+        if(evt.getClickCount()==2){
+            int fila = tablaRecursos.getSelectedRow();
+            if (fila != -1) {
+                RecursoDigital recursoSeleccionado = (RecursoDigital) tablaRecursos.getValueAt(fila, 3); 
+                mostrarDatosRecurso(recursoSeleccionado);
+            }
         }
     }//GEN-LAST:event_tablaRecursosMouseClicked
 
@@ -159,7 +164,7 @@ public class MenuAsignaturaAlumno extends javax.swing.JFrame {
         JOptionPane.INFORMATION_MESSAGE
     );
 }
-        
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Volver;
     private javax.swing.JScrollPane jScrollPane1;

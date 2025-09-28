@@ -323,12 +323,11 @@ public class MenuAdmin extends javax.swing.JFrame {
                     control.guardarDatos(); // guardamos
                 }
                 dispose(); // cerrar la ventana
+                control.generarReporte();
             }
         });
     }
 
- 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonEliminar;
