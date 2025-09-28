@@ -1,0 +1,25 @@
+Reporte de Gesti�n Escolar
+=========================
+
+Estad�sticas Generales:
+Total Profesores: 3
+Total Alumnos: 3
+Total Cursos: 4
+Total Asignaturas: 3
+
+Profesores:
+- 11111111 | Martina López | Matemáticas
+- 22222222 | Diego Rojas | Física
+- 33333333 | Sofía Ramírez | Biología
+
+Cursos:
+- 1roA
+- 2doB
+- 3roC
+- 
+
+Asignaturas:
+- Matemáticas
+- Lenguaje
+- Ciencia
+

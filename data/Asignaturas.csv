@@ -1,4 +1,6 @@
-NombreAsignatura
-Matematicas
-Lenguaje 
-Ciencias
+Curso,Asignatura,Titulo,URL,Detalle
+1roA,Matemáticas,Guía,pdfs/matematicas_guia.pdf,Material de apoyo para Matemáticas
+1roA,Matemáticas,video,video\mp4,video de clase
+1roA,Matemáticas,Gu�a2 ,gu�a2.pdf,2da Gu�a de clase
+2doB,Ciencia,Guía,pdfs/ciencia_guia.pdf,Material de apoyo para Ciencia
+3roC,Lenguaje,Guía,pdfs/Lenguaje_guia.pdf,Material de apoyo para Lenguaje

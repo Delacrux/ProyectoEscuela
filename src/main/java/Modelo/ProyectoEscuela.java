@@ -543,23 +543,23 @@ public void llenadoDeAsignaturas(Curso curso) {
                 if (curso.getIdentificador().equals(cursoCSV)) {
                     String asignatura = campos[1].trim();
 
-                    if (!curso.getRecursosPorAsignatura().containsKey(asignatura)) {
-                        String titulo = campos[2].trim();
-                        String url = campos[3].trim();
-                        String detalle = campos[4].trim();
+                    String titulo = campos[2].trim();
+                    String url = campos[3].trim();
+                    String detalle = campos[4].trim();
 
+                    if (!curso.getRecursosPorAsignatura().containsKey(asignatura)) {
                         try {
                             curso.agregarAsignatura(asignatura);
                             System.out.println("Asignatura " + asignatura + " agregada correctamente al curso " + curso.getIdentificador());
                         } catch (AsignaturaException e) {
                             System.out.println("Error al agregar Asignatura: " + e.getMessage());
                         }
-
-                        try {
-                            curso.agregarRecursoDigital(asignatura, new RecursoDigital(titulo, url, detalle));
-                        } catch (AsignaturaException error) {
-                            System.out.println("Error al agregar recurso: " + error);
-                        }
+                    }
+                    // Agregar recurso digital sin limpiar lista previa
+                    try {
+                        curso.agregarRecursoDigital(asignatura, new RecursoDigital(titulo, url, detalle));
+                    } catch (AsignaturaException error) {
+                        System.out.println("Error al agregar recurso: " + error);
                     }
                 }
             }
@@ -568,6 +568,7 @@ public void llenadoDeAsignaturas(Curso curso) {
         System.out.println("Error al leer Asignaturas.csv: " + e.getMessage());
     }
 }
+
 
 
     public void llenadoDeCursos(){
@@ -702,25 +703,45 @@ public void guardarAlumnos() {
 }
     
 public void guardarAsignaturas() {
-    StringBuilder contenido = new StringBuilder();
-    try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/asignaturas.csv"))) {
-        String encabezado = "NombreAsignatura";
-        bw.write(encabezado);
+    File carpeta = new File("data");
+    if (!carpeta.exists()) {
+        carpeta.mkdir();
+    }
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/Asignaturas.csv"))) {
+        // Escribir encabezado del CSV
+        bw.write("Curso,Asignatura,Titulo,URL,Detalle");
         bw.newLine();
-        contenido.append(encabezado).append("\n");
 
-        ArrayList<String> listaAsignaturas = listaAsignaturasTotales();
-        for (String asignatura : listaAsignaturas) {
-            bw.write(asignatura);
-            bw.newLine();
-            contenido.append(asignatura).append("\n");
+        // Recorrer todos los cursos y escribir sus asignaturas
+        for (Curso curso : listaCursos) {
+            escribirAsignaturasCurso(bw, curso);
         }
         System.out.println("Asignaturas guardadas correctamente.");
-        System.out.println("Contenido guardado:\n" + contenido.toString());
     } catch (IOException e) {
         System.out.println("Error al guardar asignaturas: " + e.getMessage());
     }
 }
+
+private void escribirAsignaturasCurso(BufferedWriter bw, Curso curso) throws IOException {
+    String idCurso = curso.getIdentificador();
+
+    // Recorrer asignaturas y recursos digitales
+    for (String asignatura : curso.getRecursosPorAsignatura().keySet()) {
+        ArrayList<RecursoDigital> recursos = curso.getRecursosPorAsignatura().get(asignatura);
+
+        for (RecursoDigital recurso : recursos) {
+            String linea = crearLineaCSV(idCurso, asignatura, recurso);
+            bw.write(linea);
+            bw.newLine();
+        }
+    }
+}
+
+private String crearLineaCSV(String curso, String asignatura, RecursoDigital recurso) {
+    // Crear línea del CSV con valores separados por coma
+    return String.join(",",curso,asignatura,recurso.getTituloMaterial(),recurso.getUrl(),recurso.getDetalles());
+}
+
 
 public void leerAsignaturasGuardadas() {
         File carpeta = new File("data");
