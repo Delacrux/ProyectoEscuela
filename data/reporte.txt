@@ -4,7 +4,7 @@ Reporte de Gestión Escolar
 Estadísticas Generales:
 Total Profesores: 3
 Total Alumnos: 3
-Total Cursos: 4
+Total Cursos: 3
 Total Asignaturas: 3
 
 Profesores:
@@ -16,7 +16,6 @@ Cursos:
 - 1roA
 - 2doB
 - 3roC
-- 
 
 Asignaturas:
 - MatemÃ¡ticas
