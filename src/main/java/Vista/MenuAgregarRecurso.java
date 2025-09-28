@@ -145,11 +145,15 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
         String titulo = entradaTitulo.getText();
         String url = entradaUrl.getText();
         
-        if(!detalles.isEmpty() && !titulo.isEmpty() && !url.isEmpty()){
+        if(!detalles.isBlank() && !titulo.isBlank()&& !url.isBlank()){
             RecursoDigital recurso = new RecursoDigital(titulo, url, detalles);
             control.agregarRecursoDigital(recurso, materiales);
-            padre.llenarTablaAsignaturas();
+            padre.llenarTablaRecursos();
             this.dispose();
+        }
+        
+        else{
+            JOptionPane.showMessageDialog(this, "Error al agregar Recurso: Datos en blanco");
         }
     }//GEN-LAST:event_botonAgregarActionPerformed
 
@@ -169,38 +173,6 @@ public class MenuAgregarRecurso extends javax.swing.JFrame {
                 if (opcion == JOptionPane.YES_OPTION) {
                     dispose(); // Cerramos
                 }
-            }
-        });
-    }
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuAgregarRecurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuAgregarRecurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuAgregarRecurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuAgregarRecurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //new MenuAgregarRecurso().setVisible(true);
             }
         });
     }

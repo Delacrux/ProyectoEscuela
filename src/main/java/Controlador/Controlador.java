@@ -34,6 +34,10 @@ public class Controlador {
         for (Alumno a : sistema.getListaAlumnos()) {
             System.out.println("- " + a.getNombreApellido() + " (" + a.getRut() + ")");
         }
+        System.out.println("Cursos en sistema: " + sistema.getListaCursos().size());
+        for (Curso c : sistema.getListaCursos()) {
+            System.out.println("- " + c.getIdentificador());
+        }
         
         mostrarLogin();
     }
@@ -73,6 +77,15 @@ public class Controlador {
          
          
     }
+    
+    public String estadisticasSistema(){
+        String stats = "Cantidad de Cursos: " + sistema.getListaCursos().size() + "\n" +
+                "Cantidad de Alumnos: " + sistema.getListaAlumnos().size() + "\n" +
+                "Cantidad de Profesores: " + sistema.getListaProfesores().size() + "\n" +
+                "\nAsignatura con más recursos: " + sistema.asignaturaConMasRecursos().keySet();
+        
+        return stats;
+    } 
     
     public void mostrarRecursosAlumno(String nombre, ArrayList<RecursoDigital> recursos){
         

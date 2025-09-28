@@ -342,8 +342,13 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
         telefono = entradaTelefono.getText();
         correo = entradaCorreo.getText();
         especialidad = entradaEspecialidad.getText();
-        CardLayout layoutTarjetas = (CardLayout) jPanel1.getLayout();
-        layoutTarjetas.next(jPanel1);
+        if(!rut.isBlank() && !nombre.isBlank() && !telefono.isBlank() && !correo.isBlank() && !especialidad.isBlank()){
+            CardLayout layoutTarjetas = (CardLayout) jPanel1.getLayout();
+            layoutTarjetas.next(jPanel1);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Error al agregar Profesor: Datos en blanco");
+        }
         
     }//GEN-LAST:event_botonGuardarActionPerformed
 
@@ -351,7 +356,7 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
         
          ArrayList<String> seleccionadas = new ArrayList(listaAsignaturas.getSelectedValuesList());
          
-         if (seleccionadas.isEmpty()) {
+         if (seleccionadas.isEmpty() || cursoSeleccionado == null) {
             JOptionPane.showMessageDialog(this, "Debes seleccionar al menos una asignatura.");
             return;
         }

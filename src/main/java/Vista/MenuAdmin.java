@@ -22,6 +22,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         initComponents();
         llenarListaCursos();
         llenarTablaProfesores();
+        llenarEstadisticas();
     }
     
     @SuppressWarnings("unchecked")
@@ -210,11 +211,13 @@ public class MenuAdmin extends javax.swing.JFrame {
         control.mostrarAsignaturasAdmin((String)listaCursos.getSelectedValue());
     }//GEN-LAST:event_listaCursosMouseClicked
 
+    private void llenarEstadisticas(){
+        textoEstadisticas.setText(control.estadisticasSistema());
+    }
     
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
         control.mostrarAgregarProfesor(listaDeCursos);
     }//GEN-LAST:event_botonAgregarActionPerformed
-    
     
     //Clickear tabla profesores
     private void tablaProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProfesoresMouseClicked
@@ -248,6 +251,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                 if (profesorAEliminar != null) {
                     control.eliminarProfesor(profesorAEliminar); 
                     llenarTablaProfesores();
+                    llenarEstadisticas();
                 }
              }
         }
@@ -270,6 +274,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                 "Guardado exitoso",
                 JOptionPane.INFORMATION_MESSAGE
             );
+            llenarEstadisticas();
         }
     }//GEN-LAST:event_botonGuardarActionPerformed
 
