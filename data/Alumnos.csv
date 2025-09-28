@@ -1,4 +1,4 @@
-RUT,NombreApellido,Correo,Telefono,CursoID
+Rut,NombreApellido,Correo,Telefono,Curso
 12345678,Lucas Pérez,lucas@escuela.cl,912345678,1roA
 23456789,Ana Torres,ana@escuela.cl,987654321,2doB
 34567890,Tomás Silva,tomas@escuela.cl,934567890,3roC

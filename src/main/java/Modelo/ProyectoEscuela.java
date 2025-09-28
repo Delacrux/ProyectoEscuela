@@ -20,6 +20,10 @@ public class ProyectoEscuela {
     private ArrayList<Alumno> listaAlumnos;
     private ArrayList<Curso> listaCursos;
     private Scanner scanner;
+    private static int totalProfesores = 0;
+    private static int totalAlumnos= 0;
+    private static int totalCursos = 0;
+    private static int totalAsignaturas = 0;
     
     // ------------------------------------------------------------- Constructor  -------------------------------------------------------------
     public ProyectoEscuela() {
@@ -420,7 +424,7 @@ public class ProyectoEscuela {
         llenadoDeAlumnos();
         System.out.println("Datos cargados correctamente");
     }
-    
+    //------------------------------ Llenado de Datos  ------------------------------
   private ArrayList <String []> leerLineasProfesores(String rutaArchivo ){
         ArrayList<String[]> registros = new ArrayList<>();
         try (Scanner sc  = new Scanner (new File(rutaArchivo))){
@@ -586,8 +590,73 @@ public void llenadoDeAsignaturas(Curso curso) {
             System.out.println("Error al leer cursos.csv: " + e.getMessage());
         }
     }
-  
- public void guardarCursos() {
+  //------------------------------ Generación de reporte  ------------------------------
+    
+    public void actualizarEstadisticas( ){
+        totalProfesores = listaProfesores.size();
+        totalAlumnos = listaAlumnos.size();
+        totalCursos = listaCursos.size();
+        totalAsignaturas = listaAsignaturasTotales().size();
+    }
+    private String encabezadoReporte(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Reporte de Gestión Escolar\n");
+        sb.append("=========================\n\n");
+        sb.append("Estadísticas Generales:\n");
+        sb.append("Total Profesores: ").append(totalProfesores).append("\n");
+        sb.append("Total Alumnos: ").append(totalAlumnos).append("\n");
+        sb.append("Total Cursos: ").append(totalCursos).append("\n");
+        sb.append("Total Asignaturas: ").append(totalAsignaturas).append("\n\n");
+        return sb.toString();
+    }
+    
+    private String  reporteProfesores(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Profesores:\n");
+        for (Profesor p : listaProfesores ){
+            sb.append("- ").append(p.getRut()).append(" | ").append(p.getNombreApellido()).append(" | ").append(p.getEspecialidad()).append("\n");
+        }
+        sb.append("\n");
+        return sb.toString();
+    }
+    private String reporteCursos (){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cursos:\n");
+        for (Curso c : listaCursos){
+            sb.append("- ").append(c.getIdentificador()).append("\n"); 
+        }
+        sb.append("\n");
+        return sb.toString();
+    }
+    private String reporteAsignaturas(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Asignaturas:\n");
+        for (String a : listaAsignaturasTotales()){
+            sb.append("- ").append(a).append("\n");
+        }
+        sb.append("\n");
+        return sb.toString();
+    }
+    
+    
+    public void generarReporte(){
+        actualizarEstadisticas();
+        File carpeta  = new File("data"); 
+        if(!carpeta.exists()) carpeta.mkdir();
+        try(BufferedWriter bw  = new BufferedWriter (new FileWriter("data/reporte.txt"))){
+            bw.write(encabezadoReporte());
+            bw.write(reporteProfesores());
+            bw.write(reporteCursos());
+            bw.write(reporteAsignaturas());
+            System.out.println("Reporte generado correctamente en 'data/reporte.txt'.");
+        }catch (IOException e){
+            System.out.println("error al generar reporte: " + e.getMessage());
+        }
+        
+        
+    }
+    //------------------------------ Guardado de datos  ------------------------------
+    public void guardarCursos() {
     File carpeta = new File("data");
     if (!carpeta.exists()) {
         carpeta.mkdir();
@@ -640,7 +709,7 @@ public void guardarAsignaturas() {
         bw.newLine();
         contenido.append(encabezado).append("\n");
 
-        ArrayList<String> listaAsignaturas = listaAsignaturasDisponibles();
+        ArrayList<String> listaAsignaturas = listaAsignaturasTotales();
         for (String asignatura : listaAsignaturas) {
             bw.write(asignatura);
             bw.newLine();
@@ -734,6 +803,7 @@ public void leerAsignaturasGuardadas() {
        ProyectoEscuela sistema = new ProyectoEscuela();
        sistema.llenarDatos();
        sistema.menuInicial();
+       sistema.generarReporte();
        sistema.guardadoDeDatos();
        sistema.scanner.close();
     }

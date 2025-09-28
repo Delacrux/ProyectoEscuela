@@ -1,7 +1,4 @@
-curso,asignatura,tipoRecurso,urlRecurso,detalleRecurso
-1roA,Matemáticas,Guía,pdfs/matematicas_guia.pdf,Material de apoyo para Matemáticas
-1roA,Matemáticas,Video,videos/matematicas_video.mp4,Clase grabada de Matemáticas
-2doB,Ciencia,Guía,pdfs/ciencia_guia.pdf,Material de apoyo para Ciencia
-2doB,Ciencia,Video,videos/ciencia_video.mp4,Clase grabada de Ciencia
-3roC,Lenguaje,Guía,pdfs/Lenguaje_guia.pdf,Material de apoyo para Lenguaje
-3roC,Lenguaje,Video,videos/Lenguaje_video.mp4,Clase grabada de Lenguaje
+NombreAsignatura
+Matemáticas
+Lenguaje 
+Ciencias
