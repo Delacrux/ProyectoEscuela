@@ -49,7 +49,6 @@ public class Controlador {
          System.out.println("Login comenzado con exito");
          
          if(rut.equals("20878643")){
-             ventanaLogin.dispose();
              new MenuAdmin(this, sistema.getListaCursos(), sistema.getListaProfesores()).setVisible(true);
          }
          
