@@ -424,6 +424,7 @@ public class ProyectoEscuela {
         llenadoDeAlumnos();
         System.out.println("Datos cargados correctamente");
     }
+
     //------------------------------ Llenado de Datos  ------------------------------
   private ArrayList <String []> leerLineasProfesores(String rutaArchivo ){
         ArrayList<String[]> registros = new ArrayList<>();
@@ -454,20 +455,57 @@ public class ProyectoEscuela {
         return new Profesor(campos[0].trim(), campos[1].trim(),campos[2].trim(), campos[3].trim(),campos[4].trim());
         
     }
+    private ArrayList <String []> leerLineasProfesorCurso(String rutaArchivo ){
+        ArrayList<String[]> registros = new ArrayList<>();
+        try (Scanner sc  = new Scanner (new File(rutaArchivo))){
+            boolean primeraLinea = true; 
+            while(sc.hasNextLine()){
+                String linea = sc.nextLine();
+                if(primeraLinea)
+                {
+                    primeraLinea = false;
+                    continue; 
+                }
+                String [] campos  = linea.split(",");
+                registros.add(campos);
+            }
+        }catch (FileNotFoundException e){
+            System.out.println("Error al leer Profesor_Curso.csv:  " + e.getMessage());
+        }
+        return registros; 
+
+    }
     private boolean asignarCursoJefe(Profesor profesor){
         for(Curso c : listaCursos){
             if(c.getProfesorJefe() == null){
                 c.setProfesorJefe(profesor);
-                
-                HashMap <Curso, ArrayList<String>>  mapa = profesor.getAsignaturasPorCurso();
-                mapa.put(c, new ArrayList<>(c.getRecursosPorAsignatura().keySet()));
-                System.out.println("Profesor " + profesor.getNombreApellido() + " asignado como jefe de curso " + c.getIdentificador());
-                return true; 
             }
+                
+                ArrayList<String[]> registros = leerLineasProfesorCurso ("data/Profesor_Curso.csv");
+                HashMap<Curso,ArrayList<String>>  mapa;
+                
+                for(String[] campos :  registros){
+                    mapa = new HashMap<>();
+                    String rut = campos[0].trim();
+                    String id = campos[1].trim();
+                    
+                    if(c.getIdentificador().equals(id) && profesor.getRut().equals(rut))
+                    {
+                         ArrayList<String>asig = new ArrayList<>();
+                         for(int  i = 2; i < campos.length; i++){
+                             asig.add(campos[i]);
+                         }
+                         mapa.put(c,asig);
+                         profesor.setAsignaturasPorCurso(mapa);
+                    }
+                   
+                }
+                
         }
         System.out.println("No hay cursos disponibles para asignar al profesor  " + profesor.getNombreApellido());
         return false;
     }
+    
     public void llenadoDeProfesores(){
         ArrayList<String[]> registros = leerLineasProfesores ("data/profesores.csv");
         for(String[] campos :  registros){
@@ -555,7 +593,7 @@ public void llenadoDeAsignaturas(Curso curso) {
                             System.out.println("Error al agregar Asignatura: " + e.getMessage());
                         }
                     }
-                    // Agregar recurso digital sin limpiar lista previa
+                  
                     try {
                         curso.agregarRecursoDigital(asignatura, new RecursoDigital(titulo, url, detalle));
                     } catch (AsignaturaException error) {
@@ -774,6 +812,20 @@ public void leerAsignaturasGuardadas() {
             );
             bw.write(linea);
             bw.newLine();
+            }
+        }catch(IOException e ){
+            System.out.println("Error al guardar profesores:  " + e.getMessage());
+        }
+        
+        try(BufferedWriter bw  = new BufferedWriter(new FileWriter ("data/Profesor_Curso.csv"))){
+            bw.write("RutProfesor,IdCurso,Asignaturas");
+            bw.newLine();
+            
+            for (Profesor profe: listaProfesores){
+                Curso cursoSeleccionado = profe.getAsignaturasPorCurso().keySet().iterator().next();
+                String linea = String.join(",",profe.getRut(),cursoSeleccionado.getIdentificador() ,String.join(",", profe.getAsignaturasEnCurso(cursoSeleccionado)));
+                bw.write(linea);
+                bw.newLine();
             }
         }catch(IOException e ){
             System.out.println("Error al guardar profesores:  " + e.getMessage());
