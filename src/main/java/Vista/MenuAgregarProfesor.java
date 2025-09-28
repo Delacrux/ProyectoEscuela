@@ -343,8 +343,13 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
         correo = entradaCorreo.getText();
         especialidad = entradaEspecialidad.getText();
         if(!rut.isBlank() && !nombre.isBlank() && !telefono.isBlank() && !correo.isBlank() && !especialidad.isBlank()){
-            CardLayout layoutTarjetas = (CardLayout) jPanel1.getLayout();
-            layoutTarjetas.next(jPanel1);
+            
+            if(rut.matches("\\d+")){
+                CardLayout layoutTarjetas = (CardLayout) jPanel1.getLayout();
+                layoutTarjetas.next(jPanel1);
+            }
+            
+            else JOptionPane.showMessageDialog(this, "Error al agregar Profesor: Rut no numerico");
         }
         else{
             JOptionPane.showMessageDialog(this, "Error al agregar Profesor: Datos en blanco");

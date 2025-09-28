@@ -291,7 +291,21 @@ public class MenuCursoAdmin extends javax.swing.JFrame {
             String rutAlumno = rut.getText();
             String correoAlumno = correo.getText();
             String telefonoAlumno = telefono.getText();
-            estudiante = new Alumno(rutAlumno, nombreAlumno, correoAlumno, telefonoAlumno, curso);
+            if(!nombreAlumno.isBlank() && !rutAlumno.isBlank() && !correoAlumno.isBlank() && !telefonoAlumno.isBlank()){
+                
+                if(rutAlumno.matches("\\d+")){
+                    estudiante = new Alumno(rutAlumno, nombreAlumno, correoAlumno, telefonoAlumno, curso);
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Error al agregar Alumno: Rut no numerico");
+                    return;
+                }
+            }
+            
+            else{
+                JOptionPane.showMessageDialog(this, "Error al agregar Alumno: Datos en blanco");
+                return;
+            }
         }
         
         try{

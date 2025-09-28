@@ -1,6 +1,10 @@
 package Vista;
 
 import Controlador.Controlador;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MenuLogin extends javax.swing.JFrame {
     
@@ -10,6 +14,7 @@ public class MenuLogin extends javax.swing.JFrame {
     public MenuLogin(Controlador control) {
         this.control = control;
         initComponents();
+        control.generarReporte();
     }
 
     @SuppressWarnings("unchecked")
@@ -96,7 +101,7 @@ public class MenuLogin extends javax.swing.JFrame {
          rut = entradaRut.getText();
          control.procesarLogin(control, rut);
     }//GEN-LAST:event_botonEnviarActionPerformed
-
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Titulo;
     private javax.swing.JButton botonEnviar;
