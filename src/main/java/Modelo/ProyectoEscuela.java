@@ -168,113 +168,7 @@ public class ProyectoEscuela {
         return null;
     }
     
-    // ------------------------------  AGREGAR  ------------------------------ 
-    public Profesor crearYAgregarProfesor(String rut, String nombreApellido, String especialidad, String correo, String telefono) {
-        if (buscarProfesorSistema(rut) == null ) {
-            Profesor nuevoProfesor = new Profesor(rut, nombreApellido, especialidad, correo, telefono);
-            listaProfesores.add(nuevoProfesor);
-            return nuevoProfesor;
-        }
-        return null;
-    }
-   
-    public Alumno crearYAgregarAlumno(String rut, String nombreApellido, String correo, String telefono, Curso curso)  throws AlumnoException {
-        Curso cursoAlumno = buscarCursoSistema(curso.getIdentificador());
-        if (buscarAlumnoSistema(rut) == null && cursoAlumno != null) {
-            Alumno nuevoAlumno = new Alumno(rut, nombreApellido, correo, telefono, cursoAlumno);
-            listaAlumnos.add(nuevoAlumno);
-            cursoAlumno.agregarAlumno(nuevoAlumno);
-            return nuevoAlumno;
-        }
-        return null;
-    }
-    
-    public Curso crearYAgregarCurso(String rutProfeJefe, String identificador) {
-        Profesor profesorJefe = buscarProfesorSistema(rutProfeJefe);
-        
-        if (buscarCursoSistema(identificador) == null && profesorJefe != null) {
-            Curso nuevoCurso = new Curso(profesorJefe, identificador);
-            listaCursos.add(nuevoCurso);
-            return nuevoCurso;
-        }
-        return null;
-    }
-    
-    //----------------- GESTIONAR AGREGAR --------------------  
-    public void gestionarCrearProfesor() {
-        System.out.println("Rutprofe");
-        String rut =  scanner.nextLine();
-        System.out.println("nombre profe");
-        String nombreApellido = scanner.nextLine();
-        System.out.println("especialidad");
-        String especialidad = scanner.nextLine();
-        System.out.println("correoo");
-        String correo = scanner.nextLine();
-        System.out.println("telefono");
-        String telefono = scanner.nextLine();
-        
-        if (crearYAgregarProfesor(rut, nombreApellido, especialidad, correo, telefono) == null) {
-            System.out.println("falló");
-        }
-        else {
-            System.out.println("profesor creado y agregado con exito");
-        }
-    }
-    
-    /*public void gestionarCrearAlumno() {
-        System.out.println("rut alumno");
-        String rut =  scanner.nextLine();
-        System.out.println("nombre alumno");
-        String nombreApellido = scanner.nextLine();
-        System.out.println("correo  alumno");
-        String correo = scanner.nextLine();
-        System.out.println("telefono  alumno");
-        String telefono = scanner.nextLine();
-        System.out.println("curso del alumno");
-        String curso = scanner.nextLine();
-        
-        try {
-            Alumno alumno = crearYAgregarAlumno(rut, nombreApellido, correo, telefono, curso);
-            if ( alumno != null) {
-                System.out.println("Alumno creado y agregado con exito");
-            }
-            else {
-                System.out.println("falló");
-            }
-        } catch (AlumnoException e) {
-            System.out.println("Error " + e.getMessage());
-        }
-    }*/
-    
-    public void gestionarCrearCurso() {
-        System.out.println("Identificador del curso");
-        String identificador = scanner.nextLine();
-        System.out.println("nombre del profe jefe");
-        String rutProfeJefe = scanner.nextLine();
-        
-        if (crearYAgregarCurso(rutProfeJefe, identificador) == null) {
-            System.out.println("falló");
-        }
-        else {
-            System.out.println("curso creado con exito");
-        }
-    }
-    
     // ------------------------------  ELIMINAR  ------------------------------ 
-    public Profesor eliminarProfesor(String rutProfesor) {
-        Profesor profesor = buscarProfesorSistema(rutProfesor);
-        if (profesor != null) {
-            for ( Curso curso : listaCursos ) {
-                if (curso.getProfesorJefe() != null && curso.getProfesorJefe().equals(profesor)) {
-                    curso.setProfesorJefe(null);
-                }
-            }
-            listaProfesores.remove(profesor);
-            return profesor;
-        }
-        return null;
-    }
-    
     public Alumno eliminarAlumno(String rutAlumno) throws AlumnoException {
         Alumno alumno = buscarAlumnoSistema(rutAlumno);
         if (alumno != null) {
@@ -304,117 +198,6 @@ public class ProyectoEscuela {
         }
         return null;
     }
-    
-    //----------------- GESTIONAR ELIMINAR  --------------------  
-    public void gestionarEliminarProfesor() {
-        System.out.println("Rut del profe a eliminar");
-        String rut = scanner.nextLine();
-        
-        if (eliminarProfesor(rut) == null) {
-            System.out.println("falló");
-        }
-        else {
-            System.out.println("Profesor eliminado con exito.");
-        }
-    }
-    
-    public void gestionarEliminarAlumno() {
-        System.out.println("Rut del Alumno a eliminar");
-        String rut = scanner.nextLine();
-        
-        try {
-            Alumno alumno = eliminarAlumno(rut);
-            if (alumno != null) {
-                System.out.println("Alumno eliminado con exito.");
-            }
-            else {
-                System.out.println("falló");
-            }
-            
-        } catch (AlumnoException e) {
-            System.out.println("Error " + e.getMessage());
-        }
-    }
-    
-    public void gestionarEliminarCurso() {
-        System.out.println("Identificador del curso a eliminar");
-        String identificador = scanner.nextLine();
-        
-        if (eliminarCurso(identificador) == null) {
-            System.out.println("falló");
-        }
-        else {
-            System.out.println("Curso eliminado con exito.");
-        }
-    }
-    
-    // ------------------------------  MOSTRAR   ------------------------------ 
-    public void mostrarCursosMenu() {
-        int i;
-        for (i = 0 ; i < listaCursos.size() ; i++) {
-            System.out.println((i+1) + ". " + listaCursos.get(i).getIdentificador());
-        }
-    }
-    
-    public ArrayList <Curso> mostrarCursosProfesor(Profesor profesor) {
-        Set<Curso> lista = profesor.getCursosAsignados();
-        int i = 1;
-        for (Curso curso : lista) {
-            System.out.println(i + ". " + curso.getIdentificador());
-            i++;
-        }
-        ArrayList<Curso> arraylist = new ArrayList<>(lista);
-        return arraylist;
-    }
-    
-    public ArrayList<String> mostrarAsignaturasProfesor(Profesor profesor, Curso curso) {
-        ArrayList<String> lista = profesor.getAsignaturasEnCurso(curso);
-        for (int i = 0 ; i < lista.size() ; i++) {
-            String asignatura = lista.get(i);
-            System.out.println((i + 1) + ". " + asignatura);
-        }
-        return lista;
-    }
-    
-    // ------------------------------  MOSTRAR SISTEMA  ------------------------------ 
-    
-    public void mostrarCursosSistema() {
-        System.out.println("Cantidad de cursos registrados en el sistema: " + listaCursos.size());
-        for (int i = 0 ; i < listaCursos.size() ; i++) {
-            System.out.println((i + 1) + ". " +listaCursos.get(i).getIdentificador());
-        }
-    }
-    
-    public void mostrarProfesoresSistema() {
-        System.out.println("Cantidad de profesores registrados en el sistema: " + listaProfesores.size());
-        for (int i = 0 ; i < listaProfesores.size() ; i++) {
-            Profesor profesor = listaProfesores.get(i);
-            System.out.println((i + 1) + ". " + profesor.nombreApellido + " - " + profesor.rut );
-        }
-    }
-    
-    public void mostrarAlumnosSistema() {
-        System.out.println("Cantidad de alumnos registrados en el sistema: " + listaAlumnos.size());
-        for (int i = 0 ; i < listaAlumnos.size() ; i++) {
-            Alumno alumno = listaAlumnos.get(i);
-            System.out.println((i + 1) + ". " + alumno.nombreApellido + " - " + alumno.rut );
-        }
-    }
-    
-    // ------------------------------  Métodos menú ------------------------------ 
-    
-   public void gestionarAgregarMaterial() {
-       System.out.println("Título del nuevo recurso digital");
-       String titulo = scanner.nextLine();
-       
-       System.out.println("URL del material.");
-       String url = scanner.nextLine();
-       
-       System.out.println("Detalles extras.");
-       String detalle = scanner.nextLine();
-       
-       RecursoDigital recurso = new RecursoDigital(titulo, url, detalle);
-   }
    
        //------------------------------ DATOS INICIALES  ------------------------------
     public void llenarDatos() {
@@ -426,7 +209,7 @@ public class ProyectoEscuela {
     }
 
     //------------------------------ Llenado de Datos  ------------------------------
-  private ArrayList <String []> leerLineasProfesores(String rutaArchivo ){
+    private ArrayList <String []> leerLineasProfesores(String rutaArchivo ){
         ArrayList<String[]> registros = new ArrayList<>();
         try (Scanner sc  = new Scanner (new File(rutaArchivo))){
             boolean primeraLinea = true; 
@@ -566,46 +349,46 @@ public class ProyectoEscuela {
         System.out.println("Error al leer Alumnos.csv: " + e.getMessage());
     }
 }
-public void llenadoDeAsignaturas(Curso curso) {
-    try (Scanner sc = new Scanner(new File("data/Asignaturas.csv"))) {
-        boolean primeraLinea = true;
-        while (sc.hasNextLine()) {
-            String linea = sc.nextLine();
-            if (primeraLinea) {
-                primeraLinea = false;
-                continue;
-            }
-            String[] campos = linea.split(",");
-            if (campos.length >= 5) {
-                String cursoCSV = campos[0].trim();
-                if (curso.getIdentificador().equals(cursoCSV)) {
-                    String asignatura = campos[1].trim();
+    public void llenadoDeAsignaturas(Curso curso) {
+        try (Scanner sc = new Scanner(new File("data/Asignaturas.csv"))) {
+            boolean primeraLinea = true;
+            while (sc.hasNextLine()) {
+                String linea = sc.nextLine();
+                if (primeraLinea) {
+                    primeraLinea = false;
+                    continue;
+                }
+                String[] campos = linea.split(",");
+                if (campos.length >= 5) {
+                    String cursoCSV = campos[0].trim();
+                    if (curso.getIdentificador().equals(cursoCSV)) {
+                        String asignatura = campos[1].trim();
 
-                    String titulo = campos[2].trim();
-                    String url = campos[3].trim();
-                    String detalle = campos[4].trim();
+                        String titulo = campos[2].trim();
+                        String url = campos[3].trim();
+                        String detalle = campos[4].trim();
 
-                    if (!curso.getRecursosPorAsignatura().containsKey(asignatura)) {
-                        try {
-                            curso.agregarAsignatura(asignatura);
-                            System.out.println("Asignatura " + asignatura + " agregada correctamente al curso " + curso.getIdentificador());
-                        } catch (AsignaturaException e) {
-                            System.out.println("Error al agregar Asignatura: " + e.getMessage());
+                        if (!curso.getRecursosPorAsignatura().containsKey(asignatura)) {
+                            try {
+                                curso.agregarAsignatura(asignatura);
+                                System.out.println("Asignatura " + asignatura + " agregada correctamente al curso " + curso.getIdentificador());
+                            } catch (AsignaturaException e) {
+                                System.out.println("Error al agregar Asignatura: " + e.getMessage());
+                            }
                         }
-                    }
-                  
-                    try {
-                        curso.agregarRecursoDigital(asignatura, new RecursoDigital(titulo, url, detalle));
-                    } catch (AsignaturaException error) {
-                        System.out.println("Error al agregar recurso: " + error);
+
+                        try {
+                            curso.agregarRecursoDigital(asignatura, new RecursoDigital(titulo, url, detalle));
+                        } catch (AsignaturaException error) {
+                            System.out.println("Error al agregar recurso: " + error);
+                        }
                     }
                 }
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("Error al leer Asignaturas.csv: " + e.getMessage());
         }
-    } catch (FileNotFoundException e) {
-        System.out.println("Error al leer Asignaturas.csv: " + e.getMessage());
     }
-}
 
 
 
@@ -714,74 +497,74 @@ public void llenadoDeAsignaturas(Curso curso) {
     }
 }
 
-public void guardarAlumnos() {
-    File carpeta = new File("data");
-    if (!carpeta.exists()) {
-        carpeta.mkdir();
-    }
-    try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/Alumnos.csv"))) {
-        bw.write("Rut,NombreApellido,Correo,Telefono,Curso");
-        bw.newLine();
-
-        for (Alumno alumno : listaAlumnos) {
-            String linea = String.join(",",
-                alumno.getRut(),
-                alumno.getNombreApellido(),
-                alumno.getCorreo(),
-                alumno.getTelefono(),
-                alumno.getCurso().getIdentificador()
-            );
-            bw.write(linea);
+    public void guardarAlumnos() {
+        File carpeta = new File("data");
+        if (!carpeta.exists()) {
+            carpeta.mkdir();
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/Alumnos.csv"))) {
+            bw.write("Rut,NombreApellido,Correo,Telefono,Curso");
             bw.newLine();
+
+            for (Alumno alumno : listaAlumnos) {
+                String linea = String.join(",",
+                    alumno.getRut(),
+                    alumno.getNombreApellido(),
+                    alumno.getCorreo(),
+                    alumno.getTelefono(),
+                    alumno.getCurso().getIdentificador()
+                );
+                bw.write(linea);
+                bw.newLine();
+            }
+            System.out.println("Alumnos guardados correctamente.");
+        } catch (IOException e) {
+            System.out.println("Error al guardar alumnos: " + e.getMessage());
         }
-        System.out.println("Alumnos guardados correctamente.");
-    } catch (IOException e) {
-        System.out.println("Error al guardar alumnos: " + e.getMessage());
     }
-}
-    
-public void guardarAsignaturas() {
-    File carpeta = new File("data");
-    if (!carpeta.exists()) {
-        carpeta.mkdir();
-    }
-    try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/Asignaturas.csv"))) {
-        // Escribir encabezado del CSV
-        bw.write("Curso,Asignatura,Titulo,URL,Detalle");
-        bw.newLine();
 
-        // Recorrer todos los cursos y escribir sus asignaturas
-        for (Curso curso : listaCursos) {
-            escribirAsignaturasCurso(bw, curso);
+    public void guardarAsignaturas() {
+        File carpeta = new File("data");
+        if (!carpeta.exists()) {
+            carpeta.mkdir();
         }
-        System.out.println("Asignaturas guardadas correctamente.");
-    } catch (IOException e) {
-        System.out.println("Error al guardar asignaturas: " + e.getMessage());
-    }
-}
-
-private void escribirAsignaturasCurso(BufferedWriter bw, Curso curso) throws IOException {
-    String idCurso = curso.getIdentificador();
-
-    // Recorrer asignaturas y recursos digitales
-    for (String asignatura : curso.getRecursosPorAsignatura().keySet()) {
-        ArrayList<RecursoDigital> recursos = curso.getRecursosPorAsignatura().get(asignatura);
-
-        for (RecursoDigital recurso : recursos) {
-            String linea = crearLineaCSV(idCurso, asignatura, recurso);
-            bw.write(linea);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("data/Asignaturas.csv"))) {
+            // Escribir encabezado del CSV
+            bw.write("Curso,Asignatura,Titulo,URL,Detalle");
             bw.newLine();
+
+            // Recorrer todos los cursos y escribir sus asignaturas
+            for (Curso curso : listaCursos) {
+                escribirAsignaturasCurso(bw, curso);
+            }
+            System.out.println("Asignaturas guardadas correctamente.");
+        } catch (IOException e) {
+            System.out.println("Error al guardar asignaturas: " + e.getMessage());
         }
     }
-}
 
-private String crearLineaCSV(String curso, String asignatura, RecursoDigital recurso) {
-    // Crear línea del CSV con valores separados por coma
-    return String.join(",",curso,asignatura,recurso.getTituloMaterial(),recurso.getUrl(),recurso.getDetalles());
-}
+    private void escribirAsignaturasCurso(BufferedWriter bw, Curso curso) throws IOException {
+        String idCurso = curso.getIdentificador();
+
+        // Recorrer asignaturas y recursos digitales
+        for (String asignatura : curso.getRecursosPorAsignatura().keySet()) {
+            ArrayList<RecursoDigital> recursos = curso.getRecursosPorAsignatura().get(asignatura);
+
+            for (RecursoDigital recurso : recursos) {
+                String linea = crearLineaCSV(idCurso, asignatura, recurso);
+                bw.write(linea);
+                bw.newLine();
+            }
+        }
+    }
+
+    private String crearLineaCSV(String curso, String asignatura, RecursoDigital recurso) {
+        // Crear línea del CSV con valores separados por coma
+        return String.join(",",curso,asignatura,recurso.getTituloMaterial(),recurso.getUrl(),recurso.getDetalles());
+    }
 
 
-public void leerAsignaturasGuardadas() {
+    public void leerAsignaturasGuardadas() {
         File carpeta = new File("data");
         if (!carpeta.exists()) {
             carpeta.mkdir();
@@ -795,7 +578,6 @@ public void leerAsignaturasGuardadas() {
         System.out.println("Error al leer asignaturas guardadas: " + e.getMessage());
     }
 }
-
 
     public void guardarProfesores(){
         File carpeta = new File("data");
@@ -841,41 +623,10 @@ public void leerAsignaturasGuardadas() {
         leerAsignaturasGuardadas();
     }
     
-
-    // ------------------------------------------------------------- LOGIN -------------------------------------------------------------
-    
-    public void menuInicial () {
-        System.out.println("Bienvenido");
-        System.out.println("Ingrese su rut. Ej: 123456789");
-        String rut = scanner.nextLine();
-        
-        if (rut.equals("Admin")) {
-            //menuAdministador();
-        }
-        else {
-            Alumno alumno;
-            alumno = buscarAlumnoSistema(rut);
-            if (alumno != null) {
-                //menuAlumno(alumno);
-            }
-            else {
-                Profesor profesor;
-                profesor = buscarProfesorSistema(rut);
-                if (profesor != null) {
-                    //menuProfesor(profesor);
-                }
-                else {
-                    System.out.println("Rut no encontrado");
-                }
-            }
-        }
-    }
-    
     // ------------------------------------------------------------- MAIN  -------------------------------------------------------------
     public static void main(String[] args) {
        ProyectoEscuela sistema = new ProyectoEscuela();
        sistema.llenarDatos();
-       sistema.menuInicial();
        sistema.generarReporte();
        sistema.guardadoDeDatos();
        sistema.scanner.close();
