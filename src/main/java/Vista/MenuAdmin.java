@@ -216,7 +216,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     }
     
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
-        control.mostrarAgregarProfesor(listaDeCursos);
+        control.mostrarAgregarProfesor(listaDeCursos, this);
     }//GEN-LAST:event_botonAgregarActionPerformed
     
     //Clickear tabla profesores

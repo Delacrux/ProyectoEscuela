@@ -92,6 +92,7 @@ public class MenuCursoAdmin extends javax.swing.JFrame {
         tituloAlumnos.setText("Estadísticas Curso:");
 
         botonAgregarAsig.setBackground(new java.awt.Color(0, 102, 0));
+        botonAgregarAsig.setForeground(new java.awt.Color(255, 255, 255));
         botonAgregarAsig.setText("Agregar");
         botonAgregarAsig.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,6 +101,7 @@ public class MenuCursoAdmin extends javax.swing.JFrame {
         });
 
         botonAgregarAlum.setBackground(new java.awt.Color(0, 102, 0));
+        botonAgregarAlum.setForeground(new java.awt.Color(255, 255, 255));
         botonAgregarAlum.setText("Agregar");
         botonAgregarAlum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,6 +134,7 @@ public class MenuCursoAdmin extends javax.swing.JFrame {
         jScrollPane2.setViewportView(listaAlumnos);
 
         botonEliminarAsig.setBackground(new java.awt.Color(102, 0, 0));
+        botonEliminarAsig.setForeground(new java.awt.Color(255, 255, 255));
         botonEliminarAsig.setText("Eliminar");
         botonEliminarAsig.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,6 +143,7 @@ public class MenuCursoAdmin extends javax.swing.JFrame {
         });
 
         botonEliminarAlum.setBackground(new java.awt.Color(102, 0, 0));
+        botonEliminarAlum.setForeground(new java.awt.Color(255, 255, 255));
         botonEliminarAlum.setText("Eliminar");
         botonEliminarAlum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -310,6 +314,7 @@ public class MenuCursoAdmin extends javax.swing.JFrame {
         
         try{
             curso.agregarAlumno(estudiante);
+            control.agregarAlumno(estudiante);
             
         }catch(AlumnoException e){
             JOptionPane.showMessageDialog(this, "Error al agregar alumno: " + e);

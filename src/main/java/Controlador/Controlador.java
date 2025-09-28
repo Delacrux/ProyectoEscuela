@@ -120,9 +120,9 @@ public class Controlador {
         
     }
     
-    public void mostrarAgregarProfesor(ArrayList<Curso> listaCursos){
+    public void mostrarAgregarProfesor(ArrayList<Curso> listaCursos, MenuAdmin ventana){
         
-        new MenuAgregarProfesor(this, listaCursos).setVisible(true);
+        new MenuAgregarProfesor(ventana, this, listaCursos).setVisible(true);
     }
     
     public void mostrarAsignaturasAdmin(String identificador){

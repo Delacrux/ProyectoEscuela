@@ -23,19 +23,18 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
     private Controlador control;
     private ArrayList<Curso> listaDeCursos;
     private Curso cursoSeleccionado;
+    MenuAdmin padre;
     
     
-    public MenuAgregarProfesor(Controlador control, ArrayList<Curso> listaDeCursos) {
+    public MenuAgregarProfesor(MenuAdmin padre, Controlador control, ArrayList<Curso> listaDeCursos) {
         this.control = control;
         this.listaDeCursos = listaDeCursos;
+        this.padre = padre;
         configurarVentana();
         initComponents();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         llenarTablaCursos();
         llenarListaAsignaturas();
-        
-        
-        
     }
 
 
@@ -372,6 +371,7 @@ public class MenuAgregarProfesor extends javax.swing.JFrame {
          asignaturasCurso.put(cursoSeleccionado, seleccionadas);
          nuevoProfe.setAsignaturasPorCurso(asignaturasCurso);
          control.agregarProfesor(nuevoProfe);
+         padre.llenarTablaProfesores();
          this.dispose();
     }//GEN-LAST:event_botonFinalizarActionPerformed
 
