@@ -208,7 +208,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listaCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaCursosMouseClicked
-        control.mostrarAsignaturasAdmin((String)listaCursos.getSelectedValue());
+        if(evt.getClickCount()==2) control.mostrarAsignaturasAdmin((String)listaCursos.getSelectedValue());
     }//GEN-LAST:event_listaCursosMouseClicked
 
     private void llenarEstadisticas(){
